@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 
 function UsersPage() {
   const [users, setUsers] = useState([]);
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
   const [editingUserId, setEditingUserId] = useState(null);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
@@ -25,7 +25,6 @@ function UsersPage() {
 
   const handleDeleteUser = (id) => {
     const isConfirmed = window.confirm("Bạn có chắc muốn xóa user này không?");
-
     if (!isConfirmed) return;
 
     const updatedUsers = users.filter((user) => user.id !== id);
@@ -84,9 +83,14 @@ function UsersPage() {
     setEditingUserId(user.id);
   };
 
+  const filteredUsers = users.filter((user) =>
+    user.name.toLowerCase().includes(search.toLowerCase()),
+  );
+
   return (
-    <div className="users-page">
-      <h1 className="users-title">Users</h1>
+    <div className="p-6">
+      <h1 className="text-3xl font-bold mb-6">Users</h1>
+
       <div className="flex gap-3 mb-6 flex-wrap">
         <input
           className="border border-slate-300 rounded px-3 py-2"
@@ -109,6 +113,14 @@ function UsersPage() {
           onChange={(e) => setCity(e.target.value)}
         />
 
+        <input
+          type="text"
+          placeholder="Search user..."
+          className="border border-slate-300 rounded px-3 py-2"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+
         <button
           onClick={handleAddOrUpdateUser}
           className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
@@ -119,7 +131,7 @@ function UsersPage() {
         {editingUserId && (
           <button
             onClick={resetForm}
-            className="bg-gray-400 text-white px-4 py-2 rounded"
+            className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500"
           >
             Cancel
           </button>
@@ -139,18 +151,14 @@ function UsersPage() {
           </thead>
 
           <tbody>
-            {users.map((user) => (
+            {filteredUsers.map((user) => (
               <tr key={user.id} className="border-t">
                 <td className="p-3">{user.id}</td>
-
                 <td className="p-3">{user.name}</td>
-
                 <td className="p-3">{user.email}</td>
-
                 <td className="p-3">
                   {user.address.street}, {user.address.city}
                 </td>
-
                 <td className="p-3 flex gap-2">
                   <button
                     onClick={() => handleEditUser(user)}
