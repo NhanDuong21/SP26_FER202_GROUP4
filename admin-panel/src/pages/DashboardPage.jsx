@@ -1,9 +1,9 @@
-function DashBoard() {
+function DashboardPage() {
   return (
     <div style={{ padding: "20px" }}>
-      <h1>Admin</h1>
+      <h1>Dashboard</h1>
       <p>Welcome to admin panel</p>
     </div>
   );
 }
-export default DashBoard;
+export default DashboardPage;
