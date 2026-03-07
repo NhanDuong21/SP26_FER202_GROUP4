@@ -1,41 +1,31 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function Sidebar() {
+  const menuClass = ({ isActive }) =>
+    `px-4 py-2 rounded transition ${
+      isActive ? "bg-slate-700" : "hover:bg-slate-700"
+    }`;
+
   return (
-    <div
-      style={{
-        width: "220px",
-        background: "#1e293b",
-        color: "white",
-        padding: "20px",
-        height: "100vh",
-      }}
-    >
-      <h2>Admin</h2>
+    <div className="w-64 bg-slate-900 text-white min-h-screen p-6">
+      <h1 className="text-2xl font-bold mb-8">Admin Panel</h1>
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "12px",
-          marginTop: "20px",
-        }}
-      >
-        <Link to="/" style={{ color: "white", textDecoration: "none" }}>
+      <div className="flex flex-col gap-2">
+        <NavLink to="/" className={menuClass}>
           Dashboard
-        </Link>
+        </NavLink>
 
-        <Link to="/users" style={{ color: "white", textDecoration: "none" }}>
+        <NavLink to="/users" className={menuClass}>
           Users
-        </Link>
+        </NavLink>
 
-        <Link to="/posts" style={{ color: "white", textDecoration: "none" }}>
+        <NavLink to="/posts" className={menuClass}>
           Posts
-        </Link>
+        </NavLink>
 
-        <Link to="/comments" style={{ color: "white", textDecoration: "none" }}>
+        <NavLink to="/comments" className={menuClass}>
           Comments
-        </Link>
+        </NavLink>
       </div>
     </div>
   );

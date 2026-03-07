@@ -4,13 +4,14 @@ import DashboardPage from "./pages/DashboardPage";
 import UsersPage from "./pages/UsersPage";
 import PostsPage from "./pages/PostsPage";
 import CommentsPage from "./pages/CommentsPage";
+import "./App.css";
 
 function App() {
   return (
-    <div style={{ display: "flex" }}>
+    <div className="flex min-h-screen bg-slate-100">
       <Sidebar />
 
-      <div style={{ flex: 1 }}>
+      <div className="flex-1 p-8">
         <Routes>
           <Route path="/" element={<DashboardPage />} />
           <Route path="/users" element={<UsersPage />} />
