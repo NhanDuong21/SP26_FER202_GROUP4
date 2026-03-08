@@ -1,6 +1,7 @@
 import StatCard from "../components/dashboard/StatCard";
 import RecentOrdersTable from "../components/dashboard/RecentOrdersTable";
 import { recentOrders } from "../data/ordersData";
+import RevenueChart from "../components/dashboard/RevenueChart";
 import {
   dashboardStats,
   monthlyRevenue,
@@ -8,8 +9,6 @@ import {
 } from "../data/dashboardData";
 
 function DashboardPage() {
-  const maxRevenue = Math.max(...monthlyRevenue.map((item) => item.revenue));
-
   return (
     <div className="p-6 bg-slate-50 min-h-screen">
       {/* Header */}
@@ -42,38 +41,8 @@ function DashboardPage() {
       </div>
 
       <div className="mt-8 grid grid-cols-1 gap-6 xl:grid-cols-3">
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm xl:col-span-2">
-          <h2 className="mb-6 text-xl font-semibold text-slate-800">
-            Doanh thu theo tháng
-          </h2>
-
-          <div className="flex h-72 items-end justify-between gap-3">
-            {monthlyRevenue.map((item) => {
-              const heightPercent = (item.revenue / maxRevenue) * 100;
-
-              return (
-                <div
-                  key={item.month}
-                  className="flex flex-1 flex-col items-center justify-end"
-                >
-                  <div className="mb-2 text-xs text-slate-400">
-                    {(item.revenue / 1000000).toFixed(1)}M
-                  </div>
-
-                  <div className="flex h-56 w-full items-end">
-                    <div
-                      className="w-full rounded-t-xl bg-indigo-500 transition hover:bg-indigo-600"
-                      style={{ height: `${heightPercent}%` }}
-                    />
-                  </div>
-
-                  <div className="mt-3 text-sm font-medium text-slate-500">
-                    {item.month}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+        <div className="xl:col-span-2">
+          <RevenueChart data={monthlyRevenue} />
         </div>
 
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
