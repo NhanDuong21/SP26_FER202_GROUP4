@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import UserModal from "../components/users/UserModal";
 import UserTable from "../components/users/UserTable";
+import { userService } from "../services/userService";
 
 function UsersPage() {
   const [users, setUsers] = useState([]);
@@ -17,13 +18,8 @@ function UsersPage() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Không thể tải danh sách users");
-        }
-        return res.json();
-      })
+    userService
+      .getUsers() //services
       .then((data) => {
         setUsers(data);
       })
