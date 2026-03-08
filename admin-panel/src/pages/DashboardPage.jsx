@@ -1,81 +1,119 @@
-import { useEffect, useState } from "react";
 import StatCard from "../components/dashboard/StatCard";
-import { Users, FileText, MessageSquare, CheckSquare } from "lucide-react";
+import RecentOrdersTable from "../components/dashboard/RecentOrdersTable";
+import { recentOrders } from "../data/ordersData";
+import {
+  dashboardStats,
+  monthlyRevenue,
+  orderStatusData,
+} from "../data/dashboardData";
 
 function DashboardPage() {
-  const [stats, setStats] = useState({
-    users: 0,
-    posts: 0,
-    comments: 0,
-    todos: 0,
-  });
-
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const [usersRes, postsRes, commentsRes, todosRes] = await Promise.all([
-          fetch("https://jsonplaceholder.typicode.com/users"),
-          fetch("https://jsonplaceholder.typicode.com/posts"),
-          fetch("https://jsonplaceholder.typicode.com/comments"),
-          fetch("https://jsonplaceholder.typicode.com/todos"),
-        ]);
-
-        const users = await usersRes.json();
-        const posts = await postsRes.json();
-        const comments = await commentsRes.json();
-        const todos = await todosRes.json();
-
-        setStats({
-          users: users.length,
-          posts: posts.length,
-          comments: comments.length,
-          todos: todos.length,
-        });
-      } catch (error) {
-        console.error("Error fetching dashboard stats:", error);
-      }
-    };
-
-    fetchStats();
-  }, []);
+  const maxRevenue = Math.max(...monthlyRevenue.map((item) => item.revenue));
 
   return (
-    <div className="p-6">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-slate-800">Dashboard</h1>
-        <p className="mt-1 text-slate-500">
-          Welcome back! Here is an overview of your admin panel.
+    <div className="p-6 bg-slate-50 min-h-screen">
+      {/* Header */}
+      {/* Stats Cards */}
+      {/* Revenue + Order Status */}
+      {/* Recent Orders */}
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold text-slate-900">Dashboard</h1>
+        <p className="mt-2 text-slate-500">
+          Tổng quan về hoạt động kinh doanh và chỉ số quan trọng
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <StatCard
-          title="Total Users"
-          value={stats.users}
-          subtitle="Registered users"
-          icon={<Users size={22} />}
-        />
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
+        {dashboardStats.map((item) => {
+          const Icon = item.icon;
 
-        <StatCard
-          title="Total Posts"
-          value={stats.posts}
-          subtitle="Published posts"
-          icon={<FileText size={22} />}
-        />
+          return (
+            <StatCard
+              key={item.id}
+              title={item.title}
+              value={item.value}
+              subtitle={item.subtitle}
+              change={item.change}
+              trend={item.trend}
+              icon={<Icon size={22} />}
+            />
+          );
+        })}
+      </div>
 
-        <StatCard
-          title="Total Comments"
-          value={stats.comments}
-          subtitle="User feedback"
-          icon={<MessageSquare size={22} />}
-        />
+      <div className="mt-8 grid grid-cols-1 gap-6 xl:grid-cols-3">
+        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm xl:col-span-2">
+          <h2 className="mb-6 text-xl font-semibold text-slate-800">
+            Doanh thu theo tháng
+          </h2>
 
-        <StatCard
-          title="Total Todos"
-          value={stats.todos}
-          subtitle="Task records"
-          icon={<CheckSquare size={22} />}
-        />
+          <div className="flex h-72 items-end justify-between gap-3">
+            {monthlyRevenue.map((item) => {
+              const heightPercent = (item.revenue / maxRevenue) * 100;
+
+              return (
+                <div
+                  key={item.month}
+                  className="flex flex-1 flex-col items-center justify-end"
+                >
+                  <div className="mb-2 text-xs text-slate-400">
+                    {(item.revenue / 1000000).toFixed(1)}M
+                  </div>
+
+                  <div className="flex h-56 w-full items-end">
+                    <div
+                      className="w-full rounded-t-xl bg-indigo-500 transition hover:bg-indigo-600"
+                      style={{ height: `${heightPercent}%` }}
+                    />
+                  </div>
+
+                  <div className="mt-3 text-sm font-medium text-slate-500">
+                    {item.month}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <h2 className="mb-6 text-xl font-semibold text-slate-800">
+            Trạng thái đơn hàng
+          </h2>
+
+          <div className="space-y-5">
+            {orderStatusData.map((item) => (
+              <div key={item.id}>
+                <div className="mb-2 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className={`h-3 w-3 rounded-full ${item.color}`} />
+                    <span className="text-sm font-medium text-slate-600">
+                      {item.label}
+                    </span>
+                  </div>
+                  <span className="text-sm font-semibold text-slate-800">
+                    {item.value}%
+                  </span>
+                </div>
+
+                <div className="h-3 w-full rounded-full bg-slate-100">
+                  <div
+                    className={`h-3 rounded-full ${item.color}`}
+                    style={{ width: `${item.value}%` }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 rounded-xl bg-slate-50 p-4">
+            <p className="text-sm text-slate-500">Tổng đơn hàng tháng này</p>
+            <p className="mt-1 text-2xl font-bold text-slate-900">1,234</p>
+          </div>
+        </div>
+      </div>
+      <div className="mt-8">
+        <RecentOrdersTable orders={recentOrders} />
       </div>
     </div>
   );
