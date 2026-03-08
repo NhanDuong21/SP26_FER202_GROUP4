@@ -1,11 +1,11 @@
 import { Routes, Route } from "react-router-dom";
-import Sidebar from "./components/Sidebar";
+import Sidebar from "./components/layout/Sidebar";
 
 import DashboardPage from "./pages/DashboardPage";
 import UsersPage from "./pages/UsersPage";
 import PostsPage from "./pages/PostsPage";
 import CommentsPage from "./pages/CommentsPage";
-import Topbar from "./components/Topbar";
+import Topbar from "./components/layout/Topbar";
 
 import "./App.css";
 
