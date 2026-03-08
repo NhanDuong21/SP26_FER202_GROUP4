@@ -8,11 +8,25 @@ function UsersPage() {
   const [editingUserId, setEditingUserId] = useState(null);
   const [search, setSearch] = useState("");
 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
-      .then((response) => response.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Không thể tải danh sách users");
+        }
+        return res.json();
+      })
       .then((data) => {
         setUsers(data);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi fetch users:", error);
+        setError(error.message);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -86,6 +100,26 @@ function UsersPage() {
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(search.toLowerCase()),
   );
+
+  if (loading) {
+    return (
+      <div className="p-6">
+        <h1 className="text-3xl font-bold mb-6">Users</h1>
+        <div className="text-slate-600 text-lg">Loading users...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="p-6">
+        <h1 className="text-3xl font-bold mb-6">Users</h1>
+        <div className="rounded-lg bg-red-100 px-4 py-3 text-red-700">
+          {error}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6">
