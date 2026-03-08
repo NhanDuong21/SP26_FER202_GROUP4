@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import UserModal from "../components/users/UserModal";
+import UserTable from "../components/users/UserTable";
 
 function UsersPage() {
   const [users, setUsers] = useState([]);
@@ -174,47 +176,11 @@ function UsersPage() {
         </button>
       </div>
 
-      <div className="bg-white rounded-lg shadow overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-slate-100">
-            <tr>
-              <th className="text-left p-3">ID</th>
-              <th className="text-left p-3">Name</th>
-              <th className="text-left p-3">Email</th>
-              <th className="text-left p-3">Address</th>
-              <th className="text-left p-3">Action</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {currentUsers.map((user) => (
-              <tr key={user.id} className="border-t">
-                <td className="p-3">{user.id}</td>
-                <td className="p-3">{user.name}</td>
-                <td className="p-3">{user.email}</td>
-                <td className="p-3">
-                  {user.address.street}, {user.address.city}
-                </td>
-                <td className="p-3 flex gap-2">
-                  <button
-                    onClick={() => handleEditUser(user)}
-                    className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
-                  >
-                    Edit
-                  </button>
-
-                  <button
-                    onClick={() => handleDeleteUser(user.id)}
-                    className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <UserTable
+        users={currentUsers}
+        handleEditUser={handleEditUser}
+        handleDeleteUser={handleDeleteUser}
+      />
       <div className="flex justify-center items-center gap-2 mt-6">
         <button
           onClick={() => setCurrentPage(currentPage - 1)}
@@ -236,62 +202,18 @@ function UsersPage() {
           Next
         </button>
       </div>
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white w-full max-w-md rounded-xl shadow-lg p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-2xl font-bold">
-                {editingUserId ? "Edit User" : "Add User"}
-              </h2>
-              <button
-                onClick={handleCloseModal}
-                className="text-slate-500 hover:text-slate-700 text-xl"
-              >
-                ×
-              </button>
-            </div>
-
-            <div className="flex flex-col gap-3">
-              <input
-                className="border border-slate-300 rounded px-3 py-2"
-                placeholder="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-
-              <input
-                className="border border-slate-300 rounded px-3 py-2"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-
-              <input
-                className="border border-slate-300 rounded px-3 py-2"
-                placeholder="City"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-              />
-
-              <div className="flex justify-end gap-2 mt-4">
-                <button
-                  onClick={handleCloseModal}
-                  className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500"
-                >
-                  Cancel
-                </button>
-
-                <button
-                  onClick={handleAddOrUpdateUser}
-                  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-                >
-                  {editingUserId ? "Update User" : "Add User"}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <UserModal
+        isModalOpen={isModalOpen}
+        handleCloseModal={handleCloseModal}
+        editingUserId={editingUserId}
+        name={name}
+        setName={setName}
+        email={email}
+        setEmail={setEmail}
+        city={city}
+        setCity={setCity}
+        handleAddOrUpdateUser={handleAddOrUpdateUser}
+      />
     </div>
   );
 }
