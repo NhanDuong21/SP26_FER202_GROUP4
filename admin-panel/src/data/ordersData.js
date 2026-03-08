@@ -1,0 +1,42 @@
+export const recentOrders = [
+  {
+    id: "#ORD001",
+    customer: "Nguyễn Văn An",
+    product: "Áo sơ mi nam basic",
+    total: "₫450,000",
+    date: "01/03/2025",
+    status: "Delivered",
+  },
+  {
+    id: "#ORD002",
+    customer: "Trần Minh Anh",
+    product: "Váy midi nữ",
+    total: "₫620,000",
+    date: "02/03/2025",
+    status: "Processing",
+  },
+  {
+    id: "#ORD003",
+    customer: "Lê Quốc Bảo",
+    product: "Túi xách da mini",
+    total: "₫890,000",
+    date: "03/03/2025",
+    status: "Cancelled",
+  },
+  {
+    id: "#ORD004",
+    customer: "Phạm Thu Hà",
+    product: "Áo blazer nữ",
+    total: "₫1,150,000",
+    date: "04/03/2025",
+    status: "Delivered",
+  },
+  {
+    id: "#ORD005",
+    customer: "Ngô Gia Hân",
+    product: "Quần jeans ống suông",
+    total: "₫540,000",
+    date: "05/03/2025",
+    status: "Processing",
+  },
+];
