@@ -5,18 +5,18 @@ import DashboardPage from "./pages/DashboardPage";
 import UsersPage from "./pages/UsersPage";
 import PostsPage from "./pages/PostsPage";
 import CommentsPage from "./pages/CommentsPage";
+import Topbar from "./components/Topbar";
 
 import "./App.css";
 
 function App() {
   return (
     <div className="flex min-h-screen bg-slate-100">
-      {/* Sidebar */}
       <Sidebar />
 
-      {/* Main content */}
       <main className="flex flex-1 flex-col">
-        {/* Page content */}
+        <Topbar />
+
         <div className="flex-1 p-8">
           <Routes>
             <Route path="/" element={<DashboardPage />} />
