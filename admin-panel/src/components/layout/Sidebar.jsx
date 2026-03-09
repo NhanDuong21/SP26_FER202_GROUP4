@@ -75,7 +75,7 @@ function Sidebar() {
 
         <div>
           <h1 className="text-xl font-bold tracking-wide">G4 FASHION</h1>
-          <p className="text-sm text-slate-300">TRANG QUẢN TRỊ</p>
+          <p className="text-sm text-slate-300">ADMIN PAGE</p>
         </div>
       </div>
 

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import UserModal from "../components/users/UserModal";
 import UserTable from "../components/users/UserTable";
 import { userService } from "../services/userService";
@@ -17,15 +18,17 @@ function UsersPage() {
   const usersPerPage = 5;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   useEffect(() => {
     userService
-      .getUsers() //services
+      .getUsers()
       .then((data) => {
         setUsers(data);
       })
       .catch((error) => {
         console.error("Lỗi khi fetch users:", error);
         setError(error.message);
+        toast.error("Không thể tải danh sách users");
       })
       .finally(() => {
         setLoading(false);
@@ -45,6 +48,7 @@ function UsersPage() {
 
     const updatedUsers = users.filter((user) => user.id !== id);
     setUsers(updatedUsers);
+    toast.success("Xóa user thành công");
 
     if (editingUserId === id) {
       resetForm();
@@ -53,7 +57,7 @@ function UsersPage() {
 
   const handleAddOrUpdateUser = () => {
     if (!name || !email || !city) {
-      alert("Vui lòng nhập đầy đủ thông tin");
+      toast.error("Vui lòng nhập đầy đủ thông tin");
       return;
     }
 
@@ -73,6 +77,7 @@ function UsersPage() {
       );
 
       setUsers(updatedUsers);
+      toast.success("Cập nhật user thành công");
       resetForm();
       setIsModalOpen(false);
       return;
@@ -90,6 +95,7 @@ function UsersPage() {
     };
 
     setUsers([newUser, ...users]);
+    toast.success("Thêm user thành công");
     resetForm();
     setIsModalOpen(false);
   };
@@ -116,7 +122,6 @@ function UsersPage() {
     user.name.toLowerCase().includes(search.toLowerCase()),
   );
 
-  //pagination
   const totalPages = Math.max(
     1,
     Math.ceil(filteredUsers.length / usersPerPage),
@@ -127,12 +132,11 @@ function UsersPage() {
 
   const currentUsers = filteredUsers.slice(startIndex, endIndex);
 
-  //effect load
   if (loading) {
     return (
       <div className="p-6">
-        <h1 className="text-3xl font-bold mb-6">Users</h1>
-        <div className="text-slate-600 text-lg">Loading users...</div>
+        <h1 className="mb-6 text-3xl font-bold">Users</h1>
+        <div className="text-lg text-slate-600">Loading users...</div>
       </div>
     );
   }
@@ -140,7 +144,7 @@ function UsersPage() {
   if (error) {
     return (
       <div className="p-6">
-        <h1 className="text-3xl font-bold mb-6">Users</h1>
+        <h1 className="mb-6 text-3xl font-bold">Users</h1>
         <div className="rounded-lg bg-red-100 px-4 py-3 text-red-700">
           {error}
         </div>
@@ -150,13 +154,13 @@ function UsersPage() {
 
   return (
     <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6">Users</h1>
+      <h1 className="mb-6 text-3xl font-bold">Users</h1>
 
-      <div className="flex gap-3 mb-6 flex-wrap justify-between items-center">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <input
           type="text"
           placeholder="Search user..."
-          className="border border-slate-300 rounded px-3 py-2"
+          className="rounded border border-slate-300 px-3 py-2"
           value={search}
           onChange={(e) => {
             setSearch(e.target.value);
@@ -166,7 +170,7 @@ function UsersPage() {
 
         <button
           onClick={handleOpenAddModal}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
         >
           Add User
         </button>
@@ -177,27 +181,29 @@ function UsersPage() {
         handleEditUser={handleEditUser}
         handleDeleteUser={handleDeleteUser}
       />
-      <div className="flex justify-center items-center gap-2 mt-6">
+
+      <div className="mt-6 flex items-center justify-center gap-2">
         <button
           onClick={() => setCurrentPage(currentPage - 1)}
           disabled={currentPage === 1}
-          className="px-4 py-2 rounded bg-slate-200 hover:bg-slate-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="rounded bg-slate-200 px-4 py-2 hover:bg-slate-300 disabled:cursor-not-allowed disabled:opacity-50"
         >
           Prev
         </button>
 
-        <span className="text-slate-700 font-medium">
+        <span className="font-medium text-slate-700">
           Page {currentPage} / {totalPages}
         </span>
 
         <button
           onClick={() => setCurrentPage(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="px-4 py-2 rounded bg-slate-200 hover:bg-slate-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="rounded bg-slate-200 px-4 py-2 hover:bg-slate-300 disabled:cursor-not-allowed disabled:opacity-50"
         >
           Next
         </button>
       </div>
+
       <UserModal
         isModalOpen={isModalOpen}
         handleCloseModal={handleCloseModal}
