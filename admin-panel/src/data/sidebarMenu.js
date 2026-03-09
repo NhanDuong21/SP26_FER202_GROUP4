@@ -1,7 +1,7 @@
 import {
   LayoutDashboard,
   FolderKanban,
-  BadgeCent,
+  BadgePercent,
   Package,
   ShoppingCart,
   Users,
@@ -17,42 +17,47 @@ export const sidebarMenu = [
     icon: LayoutDashboard,
   },
   {
+    title: "Khách hàng",
+    path: "/customers",
+    icon: Users,
+  },
+  {
+    title: "Bài viết",
+    path: "/posts",
+    icon: FileText,
+  },
+  {
+    title: "Bình luận",
+    path: "/comments",
+    icon: MessageSquare,
+  },
+  {
+    title: "Sản phẩm",
+    path: "/products",
+    icon: Package,
+  },
+  {
+    title: "Đơn hàng",
+    path: "/orders",
+    icon: ShoppingCart,
+  },
+  {
+    title: "Thương hiệu",
+    path: "/brands",
+    icon: BadgePercent,
+  },
+  {
+    title: "Danh mục",
+    path: "/categories",
+    icon: FolderKanban,
+  },
+  {
     title: "Users",
     path: "/users",
     icon: Users,
   },
   {
-    title: "Posts",
-    path: "/posts",
-    icon: FileText,
-  },
-  {
-    title: "Comments",
-    path: "/comments",
-    icon: MessageSquare,
-  },
-  {
-    title: "Products",
-    path: "/products",
-    icon: Package,
-  },
-  {
-    title: "Orders",
-    path: "/orders",
-    icon: ShoppingCart,
-  },
-  {
-    title: "Brands",
-    path: "/brands",
-    icon: BadgeCent,
-  },
-  {
-    title: "Categories",
-    path: "/categories",
-    icon: FolderKanban,
-  },
-  {
-    title: "Settings",
+    title: "Cài đặt",
     path: "/settings",
     icon: Settings,
   },
