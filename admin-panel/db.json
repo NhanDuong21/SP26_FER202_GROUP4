@@ -1,0 +1,119 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "name": "Admin G4",
+            "email": "admin@g4fashion.com",
+            "role": "admin",
+            "status": "active"
+        },
+        {
+            "id": 2,
+            "name": "Staff Lan",
+            "email": "lan@g4fashion.com",
+            "role": "staff",
+            "status": "active"
+        }
+    ],
+    "customers": [
+        {
+            "id": 1,
+            "name": "Nguyen Van A",
+            "email": "a@gmail.com",
+            "phone": "0909000001",
+            "totalOrders": 3,
+            "status": "active"
+        },
+        {
+            "id": 2,
+            "name": "Tran Thi B",
+            "email": "b@gmail.com",
+            "phone": "0909000002",
+            "totalOrders": 1,
+            "status": "inactive"
+        }
+    ],
+    "products": [
+        {
+            "id": 1,
+            "name": "Oversized Blazer",
+            "category": "Blazer",
+            "brand": "G4 Studio",
+            "price": 1250000,
+            "stock": 12,
+            "status": "active",
+            "image": "https://via.placeholder.com/100x100?text=Blazer"
+        },
+        {
+            "id": 2,
+            "name": "Classic White Shirt",
+            "category": "Shirt",
+            "brand": "G4 Basic",
+            "price": 650000,
+            "stock": 20,
+            "status": "active",
+            "image": "https://via.placeholder.com/100x100?text=Shirt"
+        }
+    ],
+    "orders": [
+        {
+            "id": 1,
+            "customerName": "Nguyen Van A",
+            "orderDate": "2026-03-08",
+            "totalAmount": 1900000,
+            "status": "pending"
+        },
+        {
+            "id": 2,
+            "customerName": "Tran Thi B",
+            "orderDate": "2026-03-07",
+            "totalAmount": 650000,
+            "status": "completed"
+        }
+    ],
+    "brands": [
+        {
+            "id": 1,
+            "name": "G4 Studio",
+            "origin": "Vietnam",
+            "status": "active"
+        },
+        {
+            "id": 2,
+            "name": "G4 Basic",
+            "origin": "Vietnam",
+            "status": "active"
+        }
+    ],
+    "categories": [
+        {
+            "id": 1,
+            "name": "Blazer",
+            "description": "Modern blazer collection",
+            "status": "active"
+        },
+        {
+            "id": 2,
+            "name": "Shirt",
+            "description": "Formal and casual shirts",
+            "status": "active"
+        }
+    ],
+    "posts": [
+        {
+            "id": 1,
+            "title": "Spring Collection 2026",
+            "author": "Admin G4",
+            "status": "published"
+        }
+    ],
+    "comments": [
+        {
+            "id": 1,
+            "postId": 1,
+            "name": "Nguyen Van A",
+            "content": "Bộ sưu tập đẹp quá!",
+            "status": "visible"
+        }
+    ]
+}
