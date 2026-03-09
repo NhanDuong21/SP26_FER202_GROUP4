@@ -1,486 +1,497 @@
 {
-    "users": [
-        {
-            "id": 1,
-            "name": "Admin G4",
-            "email": "admin@g4fashion.com",
-            "role": "admin",
-            "status": "active"
-        },
-        {
-            "id": 2,
-            "name": "Staff Lan",
-            "email": "lan@g4fashion.com",
-            "role": "staff",
-            "status": "active"
-        },
-        {
-            "id": 3,
-            "name": "Staff Minh",
-            "email": "minh@g4fashion.com",
-            "role": "staff",
-            "status": "active"
-        },
-        {
-            "id": 4,
-            "name": "Staff Hoa",
-            "email": "hoa@g4fashion.com",
-            "role": "staff",
-            "status": "inactive"
-        },
-        {
-            "id": 5,
-            "name": "Staff Tuan",
-            "email": "tuan@g4fashion.com",
-            "role": "staff",
-            "status": "active"
-        }
-    ],
-    "customers": [
-        {
-            "id": 1,
-            "name": "Nguyen Van A",
-            "email": "a@gmail.com",
-            "phone": "0909000001",
-            "totalOrders": 3,
-            "status": "active"
-        },
-        {
-            "id": 2,
-            "name": "Tran Thi B",
-            "email": "b@gmail.com",
-            "phone": "0909000002",
-            "totalOrders": 1,
-            "status": "inactive"
-        },
-        {
-            "id": 3,
-            "name": "Le Van C",
-            "email": "c@gmail.com",
-            "phone": "0909000003",
-            "totalOrders": 5,
-            "status": "active"
-        },
-        {
-            "id": 4,
-            "name": "Pham Thi D",
-            "email": "d@gmail.com",
-            "phone": "0909000004",
-            "totalOrders": 2,
-            "status": "active"
-        },
-        {
-            "id": 5,
-            "name": "Hoang Van E",
-            "email": "e@gmail.com",
-            "phone": "0909000005",
-            "totalOrders": 0,
-            "status": "inactive"
-        },
-        {
-            "id": 6,
-            "name": "Nguyen Thi F",
-            "email": "f@gmail.com",
-            "phone": "0909000006",
-            "totalOrders": 4,
-            "status": "active"
-        }
-    ],
-    "products": [
-        {
-            "id": 1,
-            "name": "Oversized Blazer",
-            "category": "Blazer",
-            "brand": "G4 Studio",
-            "price": 1250000,
-            "stock": 12,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p1/200/200"
-        },
-        {
-            "id": 2,
-            "name": "Classic White Shirt",
-            "category": "Shirt",
-            "brand": "G4 Basic",
-            "price": 650000,
-            "stock": 20,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p2/200/200"
-        },
-        {
-            "id": 3,
-            "name": "Black Slim Pants",
-            "category": "Pants",
-            "brand": "G4 Studio",
-            "price": 890000,
-            "stock": 18,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p3/200/200"
-        },
-        {
-            "id": 4,
-            "name": "Denim Jacket",
-            "category": "Jacket",
-            "brand": "G4 Premium",
-            "price": 1450000,
-            "stock": 10,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p4/200/200"
-        },
-        {
-            "id": 5,
-            "name": "Casual Hoodie",
-            "category": "Hoodie",
-            "brand": "G4 Basic",
-            "price": 750000,
-            "stock": 25,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p5/200/200"
-        },
-        {
-            "id": 6,
-            "name": "Formal Black Blazer",
-            "category": "Blazer",
-            "brand": "G4 Premium",
-            "price": 1350000,
-            "stock": 8,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p6/200/200"
-        },
-        {
-            "id": 7,
-            "name": "Blue Denim Shirt",
-            "category": "Shirt",
-            "brand": "G4 Studio",
-            "price": 720000,
-            "stock": 16,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p7/200/200"
-        },
-        {
-            "id": 8,
-            "name": "Grey Jogger Pants",
-            "category": "Pants",
-            "brand": "G4 Basic",
-            "price": 680000,
-            "stock": 22,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p8/200/200"
-        },
-        {
-            "id": 9,
-            "name": "Leather Jacket",
-            "category": "Jacket",
-            "brand": "Urban Wear",
-            "price": 2100000,
-            "stock": 6,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p9/200/200"
-        },
-        {
-            "id": 10,
-            "name": "Street Style Hoodie",
-            "category": "Hoodie",
-            "brand": "Urban Wear",
-            "price": 820000,
-            "stock": 14,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p10/200/200"
-        },
-        {
-            "id": 11,
-            "name": "Beige Casual Blazer",
-            "category": "Blazer",
-            "brand": "G4 Studio",
-            "price": 1190000,
-            "stock": 13,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p11/200/200"
-        },
-        {
-            "id": 12,
-            "name": "Oxford Blue Shirt",
-            "category": "Shirt",
-            "brand": "G4 Premium",
-            "price": 780000,
-            "stock": 15,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p12/200/200"
-        },
-        {
-            "id": 13,
-            "name": "Khaki Chinos Pants",
-            "category": "Pants",
-            "brand": "G4 Basic",
-            "price": 710000,
-            "stock": 17,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p13/200/200"
-        },
-        {
-            "id": 14,
-            "name": "Vintage Denim Jacket",
-            "category": "Jacket",
-            "brand": "Urban Wear",
-            "price": 1580000,
-            "stock": 9,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p14/200/200"
-        },
-        {
-            "id": 15,
-            "name": "Minimal Hoodie",
-            "category": "Hoodie",
-            "brand": "G4 Basic",
-            "price": 730000,
-            "stock": 21,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p15/200/200"
-        },
-        {
-            "id": 16,
-            "name": "Grey Office Blazer",
-            "category": "Blazer",
-            "brand": "G4 Premium",
-            "price": 1420000,
-            "stock": 7,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p16/200/200"
-        },
-        {
-            "id": 17,
-            "name": "Black Formal Shirt",
-            "category": "Shirt",
-            "brand": "G4 Studio",
-            "price": 690000,
-            "stock": 18,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p17/200/200"
-        },
-        {
-            "id": 18,
-            "name": "Relax Fit Pants",
-            "category": "Pants",
-            "brand": "Urban Wear",
-            "price": 760000,
-            "stock": 20,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p18/200/200"
-        },
-        {
-            "id": 19,
-            "name": "Winter Puffer Jacket",
-            "category": "Jacket",
-            "brand": "Urban Wear",
-            "price": 2350000,
-            "stock": 5,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p19/200/200"
-        },
-        {
-            "id": 20,
-            "name": "Sport Hoodie",
-            "category": "Hoodie",
-            "brand": "G4 Studio",
-            "price": 790000,
-            "stock": 16,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p20/200/200"
-        },
-        {
-            "id": 21,
-            "name": "Light Grey Blazer",
-            "category": "Blazer",
-            "brand": "G4 Studio",
-            "price": 1210000,
-            "stock": 11,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p21/200/200"
-        },
-        {
-            "id": 22,
-            "name": "Stripe Office Shirt",
-            "category": "Shirt",
-            "brand": "G4 Premium",
-            "price": 810000,
-            "stock": 14,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p22/200/200"
-        },
-        {
-            "id": 23,
-            "name": "Classic Black Pants",
-            "category": "Pants",
-            "brand": "G4 Studio",
-            "price": 870000,
-            "stock": 19,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p23/200/200"
-        },
-        {
-            "id": 24,
-            "name": "Bomber Jacket",
-            "category": "Jacket",
-            "brand": "Urban Wear",
-            "price": 1680000,
-            "stock": 8,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p24/200/200"
-        },
-        {
-            "id": 25,
-            "name": "Zip Hoodie",
-            "category": "Hoodie",
-            "brand": "G4 Basic",
-            "price": 700000,
-            "stock": 23,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p25/200/200"
-        },
-        {
-            "id": 26,
-            "name": "Slim Fit Blazer",
-            "category": "Blazer",
-            "brand": "G4 Premium",
-            "price": 1480000,
-            "stock": 9,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p26/200/200"
-        },
-        {
-            "id": 27,
-            "name": "Cotton Casual Shirt",
-            "category": "Shirt",
-            "brand": "G4 Basic",
-            "price": 640000,
-            "stock": 26,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p27/200/200"
-        },
-        {
-            "id": 28,
-            "name": "Cargo Pants",
-            "category": "Pants",
-            "brand": "Urban Wear",
-            "price": 830000,
-            "stock": 17,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p28/200/200"
-        },
-        {
-            "id": 29,
-            "name": "Long Coat Jacket",
-            "category": "Jacket",
-            "brand": "G4 Premium",
-            "price": 2450000,
-            "stock": 6,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p29/200/200"
-        },
-        {
-            "id": 30,
-            "name": "Graphic Hoodie",
-            "category": "Hoodie",
-            "brand": "Urban Wear",
-            "price": 860000,
-            "stock": 15,
-            "status": "active",
-            "image": "https://picsum.photos/seed/p30/200/200"
-        }
-    ],
-    "orders": [
-        {
-            "id": 1,
-            "customerName": "Nguyen Van A",
-            "orderDate": "2026-03-08",
-            "totalAmount": 1900000,
-            "status": "pending"
-        },
-        {
-            "id": 2,
-            "customerName": "Tran Thi B",
-            "orderDate": "2026-03-07",
-            "totalAmount": 650000,
-            "status": "completed"
-        },
-        {
-            "id": 3,
-            "customerName": "Le Van C",
-            "orderDate": "2026-03-06",
-            "totalAmount": 2150000,
-            "status": "completed"
-        },
-        {
-            "id": 4,
-            "customerName": "Pham Thi D",
-            "orderDate": "2026-03-05",
-            "totalAmount": 1450000,
-            "status": "pending"
-        },
-        {
-            "id": 5,
-            "customerName": "Nguyen Thi F",
-            "orderDate": "2026-03-04",
-            "totalAmount": 750000,
-            "status": "cancelled"
-        }
-    ],
-    "brands": [
-        {
-            "id": 1,
-            "name": "G4 Studio",
-            "origin": "Vietnam",
-            "status": "active"
-        },
-        {
-            "id": 2,
-            "name": "G4 Basic",
-            "origin": "Vietnam",
-            "status": "active"
-        },
-        {
-            "id": 3,
-            "name": "G4 Premium",
-            "origin": "Korea",
-            "status": "active"
-        },
-        {
-            "id": 4,
-            "name": "Urban Wear",
-            "origin": "USA",
-            "status": "inactive"
-        }
-    ],
-    "categories": [
-        {
-            "id": 1,
-            "name": "Blazer",
-            "description": "Modern blazer collection",
-            "status": "active"
-        },
-        {
-            "id": 2,
-            "name": "Shirt",
-            "description": "Formal and casual shirts",
-            "status": "active"
-        },
-        {
-            "id": 3,
-            "name": "Pants",
-            "description": "Fashion pants",
-            "status": "active"
-        },
-        {
-            "id": 4,
-            "name": "Jacket",
-            "description": "Winter and denim jackets",
-            "status": "active"
-        },
-        {
-            "id": 5,
-            "name": "Hoodie",
-            "description": "Casual hoodies",
-            "status": "active"
-        }
-    ]
+  "users": [
+    {
+      "id": "1",
+      "name": "Admin G4",
+      "email": "admin@g4fashion.com",
+      "role": "admin",
+      "status": "active"
+    },
+    {
+      "id": "2",
+      "name": "Staff Lan",
+      "email": "lan@g4fashion.com",
+      "role": "staff",
+      "status": "active"
+    },
+    {
+      "id": "3",
+      "name": "Staff Minh",
+      "email": "minh@g4fashion.com",
+      "role": "staff",
+      "status": "active"
+    },
+    {
+      "id": "4",
+      "name": "Staff Hoa",
+      "email": "hoa@g4fashion.com",
+      "role": "staff",
+      "status": "inactive"
+    },
+    {
+      "id": "5",
+      "name": "Staff Tuan",
+      "email": "tuan@g4fashion.com",
+      "role": "staff",
+      "status": "active"
+    }
+  ],
+  "customers": [
+    {
+      "id": "1",
+      "name": "Nguyen Van A",
+      "email": "a@gmail.com",
+      "phone": "0909000001",
+      "totalOrders": 3,
+      "status": "active"
+    },
+    {
+      "id": "2",
+      "name": "Tran Thi B",
+      "email": "b@gmail.com",
+      "phone": "0909000002",
+      "totalOrders": 1,
+      "status": "inactive"
+    },
+    {
+      "id": "3",
+      "name": "Le Van C",
+      "email": "c@gmail.com",
+      "phone": "0909000003",
+      "totalOrders": 5,
+      "status": "active"
+    },
+    {
+      "id": "4",
+      "name": "Pham Thi D",
+      "email": "d@gmail.com",
+      "phone": "0909000004",
+      "totalOrders": 2,
+      "status": "active"
+    },
+    {
+      "id": "5",
+      "name": "Hoang Van E",
+      "email": "e@gmail.com",
+      "phone": "0909000005",
+      "totalOrders": 0,
+      "status": "inactive"
+    },
+    {
+      "id": "6",
+      "name": "Nguyen Thi F",
+      "email": "f@gmail.com",
+      "phone": "0909000006",
+      "totalOrders": 4,
+      "status": "active"
+    }
+  ],
+  "products": [
+    {
+      "name": "Oversized Blazer",
+      "category": "Blazer",
+      "brand": "G4 Studio",
+      "price": 1250000,
+      "stock": 12,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p1/200/200",
+      "id": "1"
+    },
+    {
+      "id": "2",
+      "name": "Classic White Shirt",
+      "category": "Shirt",
+      "brand": "G4 Basic",
+      "price": 650000,
+      "stock": 20,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p2/200/200"
+    },
+    {
+      "id": "3",
+      "name": "Black Slim Pants",
+      "category": "Pants",
+      "brand": "G4 Studio",
+      "price": 890000,
+      "stock": 18,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p3/200/200"
+    },
+    {
+      "id": "4",
+      "name": "Denim Jacket",
+      "category": "Jacket",
+      "brand": "G4 Premium",
+      "price": 1450000,
+      "stock": 10,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p4/200/200"
+    },
+    {
+      "id": "5",
+      "name": "Casual Hoodie",
+      "category": "Hoodie",
+      "brand": "G4 Basic",
+      "price": 750000,
+      "stock": 25,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p5/200/200"
+    },
+    {
+      "id": "6",
+      "name": "Formal Black Blazer",
+      "category": "Blazer",
+      "brand": "G4 Premium",
+      "price": 1350000,
+      "stock": 8,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p6/200/200"
+    },
+    {
+      "id": "7",
+      "name": "Blue Denim Shirt",
+      "category": "Shirt",
+      "brand": "G4 Studio",
+      "price": 720000,
+      "stock": 16,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p7/200/200"
+    },
+    {
+      "id": "8",
+      "name": "Grey Jogger Pants",
+      "category": "Pants",
+      "brand": "G4 Basic",
+      "price": 680000,
+      "stock": 22,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p8/200/200"
+    },
+    {
+      "id": "9",
+      "name": "Leather Jacket",
+      "category": "Jacket",
+      "brand": "Urban Wear",
+      "price": 2100000,
+      "stock": 6,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p9/200/200"
+    },
+    {
+      "id": "10",
+      "name": "Street Style Hoodie",
+      "category": "Hoodie",
+      "brand": "Urban Wear",
+      "price": 820000,
+      "stock": 14,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p10/200/200"
+    },
+    {
+      "id": "11",
+      "name": "Beige Casual Blazer",
+      "category": "Blazer",
+      "brand": "G4 Studio",
+      "price": 1190000,
+      "stock": 13,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p11/200/200"
+    },
+    {
+      "id": "12",
+      "name": "Oxford Blue Shirt",
+      "category": "Shirt",
+      "brand": "G4 Premium",
+      "price": 780000,
+      "stock": 15,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p12/200/200"
+    },
+    {
+      "id": "13",
+      "name": "Khaki Chinos Pants",
+      "category": "Pants",
+      "brand": "G4 Basic",
+      "price": 710000,
+      "stock": 17,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p13/200/200"
+    },
+    {
+      "id": "14",
+      "name": "Vintage Denim Jacket",
+      "category": "Jacket",
+      "brand": "Urban Wear",
+      "price": 1580000,
+      "stock": 9,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p14/200/200"
+    },
+    {
+      "id": "15",
+      "name": "Minimal Hoodie",
+      "category": "Hoodie",
+      "brand": "G4 Basic",
+      "price": 730000,
+      "stock": 21,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p15/200/200"
+    },
+    {
+      "id": "16",
+      "name": "Grey Office Blazer",
+      "category": "Blazer",
+      "brand": "G4 Premium",
+      "price": 1420000,
+      "stock": 7,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p16/200/200"
+    },
+    {
+      "id": "17",
+      "name": "Black Formal Shirt",
+      "category": "Shirt",
+      "brand": "G4 Studio",
+      "price": 690000,
+      "stock": 18,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p17/200/200"
+    },
+    {
+      "id": "18",
+      "name": "Relax Fit Pants",
+      "category": "Pants",
+      "brand": "Urban Wear",
+      "price": 760000,
+      "stock": 20,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p18/200/200"
+    },
+    {
+      "id": "19",
+      "name": "Winter Puffer Jacket",
+      "category": "Jacket",
+      "brand": "Urban Wear",
+      "price": 2350000,
+      "stock": 5,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p19/200/200"
+    },
+    {
+      "id": "20",
+      "name": "Sport Hoodie",
+      "category": "Hoodie",
+      "brand": "G4 Studio",
+      "price": 790000,
+      "stock": 16,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p20/200/200"
+    },
+    {
+      "id": "21",
+      "name": "Light Grey Blazer",
+      "category": "Blazer",
+      "brand": "G4 Studio",
+      "price": 1210000,
+      "stock": 11,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p21/200/200"
+    },
+    {
+      "id": "22",
+      "name": "Stripe Office Shirt",
+      "category": "Shirt",
+      "brand": "G4 Premium",
+      "price": 810000,
+      "stock": 14,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p22/200/200"
+    },
+    {
+      "id": "23",
+      "name": "Classic Black Pants",
+      "category": "Pants",
+      "brand": "G4 Studio",
+      "price": 870000,
+      "stock": 19,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p23/200/200"
+    },
+    {
+      "id": "24",
+      "name": "Bomber Jacket",
+      "category": "Jacket",
+      "brand": "Urban Wear",
+      "price": 1680000,
+      "stock": 8,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p24/200/200"
+    },
+    {
+      "id": "25",
+      "name": "Zip Hoodie",
+      "category": "Hoodie",
+      "brand": "G4 Basic",
+      "price": 700000,
+      "stock": 23,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p25/200/200"
+    },
+    {
+      "id": "26",
+      "name": "Slim Fit Blazer",
+      "category": "Blazer",
+      "brand": "G4 Premium",
+      "price": 1480000,
+      "stock": 9,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p26/200/200"
+    },
+    {
+      "id": "27",
+      "name": "Cotton Casual Shirt",
+      "category": "Shirt",
+      "brand": "G4 Basic",
+      "price": 640000,
+      "stock": 26,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p27/200/200"
+    },
+    {
+      "id": "28",
+      "name": "Cargo Pants",
+      "category": "Pants",
+      "brand": "Urban Wear",
+      "price": 830000,
+      "stock": 17,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p28/200/200"
+    },
+    {
+      "id": "29",
+      "name": "Long Coat Jacket",
+      "category": "Jacket",
+      "brand": "G4 Premium",
+      "price": 2450000,
+      "stock": 6,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p29/200/200"
+    },
+    {
+      "id": "30",
+      "name": "Graphic Hoodie",
+      "category": "Hoodie",
+      "brand": "Urban Wear",
+      "price": 860000,
+      "stock": 15,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p30/200/200"
+    },
+    {
+      "id": "9d41",
+      "name": "sd",
+      "category": "ads",
+      "brand": "ád",
+      "price": 23,
+      "stock": 23,
+      "status": "inactive",
+      "image": "2323"
+    }
+  ],
+  "orders": [
+    {
+      "id": "1",
+      "customerName": "Nguyen Van A",
+      "orderDate": "2026-03-08",
+      "totalAmount": 1900000,
+      "status": "pending"
+    },
+    {
+      "id": "2",
+      "customerName": "Tran Thi B",
+      "orderDate": "2026-03-07",
+      "totalAmount": 650000,
+      "status": "completed"
+    },
+    {
+      "id": "3",
+      "customerName": "Le Van C",
+      "orderDate": "2026-03-06",
+      "totalAmount": 2150000,
+      "status": "completed"
+    },
+    {
+      "id": "4",
+      "customerName": "Pham Thi D",
+      "orderDate": "2026-03-05",
+      "totalAmount": 1450000,
+      "status": "pending"
+    },
+    {
+      "id": "5",
+      "customerName": "Nguyen Thi F",
+      "orderDate": "2026-03-04",
+      "totalAmount": 750000,
+      "status": "cancelled"
+    }
+  ],
+  "brands": [
+    {
+      "id": "1",
+      "name": "G4 Studio",
+      "origin": "Vietnam",
+      "status": "active"
+    },
+    {
+      "id": "2",
+      "name": "G4 Basic",
+      "origin": "Vietnam",
+      "status": "active"
+    },
+    {
+      "id": "3",
+      "name": "G4 Premium",
+      "origin": "Korea",
+      "status": "active"
+    },
+    {
+      "id": "4",
+      "name": "Urban Wear",
+      "origin": "USA",
+      "status": "inactive"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Blazer",
+      "description": "Modern blazer collection",
+      "status": "active"
+    },
+    {
+      "id": "2",
+      "name": "Shirt",
+      "description": "Formal and casual shirts",
+      "status": "active"
+    },
+    {
+      "id": "3",
+      "name": "Pants",
+      "description": "Fashion pants",
+      "status": "active"
+    },
+    {
+      "id": "4",
+      "name": "Jacket",
+      "description": "Winter and denim jackets",
+      "status": "active"
+    },
+    {
+      "id": "5",
+      "name": "Hoodie",
+      "description": "Casual hoodies",
+      "status": "active"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

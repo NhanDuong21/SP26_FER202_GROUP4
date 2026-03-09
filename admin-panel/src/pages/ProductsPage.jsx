@@ -20,10 +20,11 @@ function ProductsPage() {
       setLoading(true);
       setError("");
       const data = await productService.getAll();
-      setProducts(data);
+      setProducts(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error("Fetch products error:", err);
       setError("Không thể tải danh sách sản phẩm.");
+      setProducts([]);
     } finally {
       setLoading(false);
     }
@@ -112,6 +113,7 @@ function ProductsPage() {
       </div>
 
       <ProductModal
+        key={editingProduct?.id ?? "new"}
         open={openModal}
         onClose={() => {
           setOpenModal(false);

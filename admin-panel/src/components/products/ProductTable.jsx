@@ -1,4 +1,4 @@
-function ProductTable({ products }) {
+function ProductTable({ products, onEdit, onDelete }) {
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full border-collapse">

@@ -1,38 +1,25 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-const initialForm = {
-  name: "",
-  category: "",
-  brand: "",
-  price: "",
-  stock: "",
-  status: "active",
-  image: "",
-};
+function getInitialForm(product) {
+  return {
+    name: product?.name || "",
+    category: product?.category || "",
+    brand: product?.brand || "",
+    price: product?.price || "",
+    stock: product?.stock || "",
+    status: product?.status || "active",
+    image: product?.image || "",
+  };
+}
 
 function ProductModal({ open, onClose, onSubmit, product }) {
-  const [formData, setFormData] = useState(initialForm);
-
-  useEffect(() => {
-    if (product) {
-      setFormData({
-        name: product.name || "",
-        category: product.category || "",
-        brand: product.brand || "",
-        price: product.price || "",
-        stock: product.stock || "",
-        status: product.status || "active",
-        image: product.image || "",
-      });
-    } else {
-      setFormData(initialForm);
-    }
-  }, [product, open]);
+  const [formData, setFormData] = useState(() => getInitialForm(product));
 
   if (!open) return null;
 
   function handleChange(e) {
     const { name, value } = e.target;
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -44,8 +31,8 @@ function ProductModal({ open, onClose, onSubmit, product }) {
 
     onSubmit({
       ...formData,
-      price: Number(formData.price),
-      stock: Number(formData.stock),
+      price: Number(formData.price || 0),
+      stock: Number(formData.stock || 0),
     });
   }
 
@@ -56,6 +43,7 @@ function ProductModal({ open, onClose, onSubmit, product }) {
           <h2 className="text-xl font-bold text-slate-800">
             {product ? "Cập nhật sản phẩm" : "Thêm sản phẩm"}
           </h2>
+
           <button
             onClick={onClose}
             className="rounded-lg px-3 py-2 text-slate-500 hover:bg-slate-100"
@@ -169,6 +157,27 @@ function ProductModal({ open, onClose, onSubmit, product }) {
             />
           </div>
 
+          <div className="md:col-span-2">
+            <label className="mb-1 block text-sm font-medium text-slate-700">
+              Xem trước ảnh
+            </label>
+
+            <div className="flex h-40 w-40 items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
+              <img
+                src={
+                  formData.image ||
+                  "https://via.placeholder.com/160x160?text=No+Image"
+                }
+                alt="preview"
+                className="h-full w-full object-cover"
+                onError={(e) => {
+                  e.target.src =
+                    "https://via.placeholder.com/160x160?text=No+Image";
+                }}
+              />
+            </div>
+          </div>
+
           <div className="md:col-span-2 flex justify-end gap-3 pt-4">
             <button
               type="button"
@@ -177,6 +186,7 @@ function ProductModal({ open, onClose, onSubmit, product }) {
             >
               Hủy
             </button>
+
             <button
               type="submit"
               className="rounded-xl bg-slate-900 px-5 py-3 font-medium text-white hover:bg-slate-800"
