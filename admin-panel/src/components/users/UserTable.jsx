@@ -1,14 +1,14 @@
 function UserTable({ users, handleEditUser, handleDeleteUser }) {
   return (
-    <div className="bg-white rounded-lg shadow overflow-hidden">
+    <div className="overflow-hidden rounded-lg bg-white shadow">
       <table className="w-full">
         <thead className="bg-slate-100">
           <tr>
-            <th className="text-left p-3">ID</th>
-            <th className="text-left p-3">Name</th>
-            <th className="text-left p-3">Email</th>
-            <th className="text-left p-3">Address</th>
-            <th className="text-left p-3">Action</th>
+            <th className="p-3 text-left">ID</th>
+            <th className="p-3 text-left">Name</th>
+            <th className="p-3 text-left">Email</th>
+            <th className="p-3 text-left">Address</th>
+            <th className="p-3 text-left">Action</th>
           </tr>
         </thead>
 
@@ -22,17 +22,17 @@ function UserTable({ users, handleEditUser, handleDeleteUser }) {
                 <td className="p-3">
                   {user.address.street}, {user.address.city}
                 </td>
-                <td className="p-3 flex gap-2">
+                <td className="flex gap-2 p-3">
                   <button
                     onClick={() => handleEditUser(user)}
-                    className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
+                    className="rounded bg-yellow-500 px-3 py-1 text-white hover:bg-yellow-600"
                   >
                     Edit
                   </button>
 
                   <button
                     onClick={() => handleDeleteUser(user.id)}
-                    className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                    className="rounded bg-red-500 px-3 py-1 text-white hover:bg-red-600"
                   >
                     Delete
                   </button>

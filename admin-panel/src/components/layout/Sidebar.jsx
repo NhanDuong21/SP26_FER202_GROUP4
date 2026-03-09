@@ -1,69 +1,5 @@
 import { NavLink } from "react-router-dom";
-import {
-  LayoutDashboard,
-  BarChart3,
-  FolderKanban,
-  BadgeCent,
-  Package,
-  ShoppingCart,
-  Users,
-  FileText,
-  Tag,
-  Settings,
-} from "lucide-react";
-
-const menuItems = [
-  {
-    title: "Dashboard",
-    path: "/",
-    icon: LayoutDashboard,
-  },
-  {
-    title: "Thống kê",
-    path: "/analytics",
-    icon: BarChart3,
-  },
-  {
-    title: "Danh mục",
-    path: "/categories",
-    icon: FolderKanban,
-  },
-  {
-    title: "Thương hiệu",
-    path: "/brands",
-    icon: BadgeCent,
-  },
-  {
-    title: "Sản phẩm",
-    path: "/products",
-    icon: Package,
-  },
-  {
-    title: "Đơn hàng",
-    path: "/orders",
-    icon: ShoppingCart,
-  },
-  {
-    title: "Khách hàng",
-    path: "/users",
-    icon: Users,
-  },
-  {
-    title: "Bài viết",
-    path: "/posts",
-    icon: FileText,
-  },
-  {
-    title: "Chủ đề",
-    path: "/comments",
-    icon: Tag,
-  },
-  {
-    title: "Cài đặt",
-    path: "/settings",
-    icon: Settings,
-  },
-];
+import { sidebarMenu } from "../../data/sidebarMenu";
 
 function Sidebar() {
   return (
@@ -93,7 +29,7 @@ function Sidebar() {
       </div>
 
       <nav className="flex flex-1 flex-col gap-2">
-        {menuItems.map((item) => {
+        {sidebarMenu.map((item) => {
           const Icon = item.icon;
 
           return (
