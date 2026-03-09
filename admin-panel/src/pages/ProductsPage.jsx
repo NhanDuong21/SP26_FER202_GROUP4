@@ -34,10 +34,7 @@ function ProductsPage() {
       {!loading && !error && (
         <ul className="space-y-2">
           {products.map((product) => (
-            <li
-              key={product.id}
-              className="rounded-lg border border-slate-200 p-3"
-            >
+            <li key={product.id} className="rounded-lg border border-slate-200 p-3">
               {product.name} - {product.price?.toLocaleString("vi-VN")} đ
             </li>
           ))}

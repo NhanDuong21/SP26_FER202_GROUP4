@@ -5,8 +5,6 @@ import {
   Package,
   ShoppingCart,
   Users,
-  FileText,
-  MessageSquare,
   Settings,
 } from "lucide-react";
 
