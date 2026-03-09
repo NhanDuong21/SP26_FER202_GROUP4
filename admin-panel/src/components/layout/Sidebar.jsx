@@ -70,7 +70,7 @@ function Sidebar() {
     <aside className="flex min-h-screen w-72 flex-col bg-[#0f172a] px-4 py-5 text-white">
       <div className="mb-6 flex items-center gap-4 rounded-2xl bg-white/5 px-4 py-4">
         <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-lg font-bold text-slate-900">
-          7N
+          G4
         </div>
 
         <div>
