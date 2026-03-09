@@ -4,8 +4,6 @@ import Topbar from "./components/layout/Topbar";
 
 import DashboardPage from "./pages/DashboardPage";
 import UsersPage from "./pages/UsersPage";
-import PostsPage from "./pages/PostsPage";
-import CommentsPage from "./pages/CommentsPage";
 import ProductsPage from "./pages/ProductsPage";
 import OrdersPage from "./pages/OrdersPage";
 import CustomersPage from "./pages/CustomersPage";
@@ -27,8 +25,6 @@ function App() {
           <Routes>
             <Route path="/" element={<DashboardPage />} />
             <Route path="/users" element={<UsersPage />} />
-            <Route path="/posts" element={<PostsPage />} />
-            <Route path="/comments" element={<CommentsPage />} />
             <Route path="/products" element={<ProductsPage />} />
             <Route path="/orders" element={<OrdersPage />} />
             <Route path="/customers" element={<CustomersPage />} />

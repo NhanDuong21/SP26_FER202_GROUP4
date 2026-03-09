@@ -22,16 +22,6 @@ export const sidebarMenu = [
     icon: Users,
   },
   {
-    title: "Bài viết",
-    path: "/posts",
-    icon: FileText,
-  },
-  {
-    title: "Bình luận",
-    path: "/comments",
-    icon: MessageSquare,
-  },
-  {
     title: "Sản phẩm",
     path: "/products",
     icon: Package,
