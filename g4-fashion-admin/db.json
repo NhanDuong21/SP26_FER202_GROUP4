@@ -1,0 +1,53 @@
+{
+    "categories": [
+        {
+            "id": 1,
+            "name": "Áo thun",
+            "description": "Danh mục áo thun thời trang",
+            "status": "active"
+        },
+        {
+            "id": 2,
+            "name": "Quần jean",
+            "description": "Danh mục quần jean nam nữ",
+            "status": "active"
+        }
+    ],
+    "products": [
+        {
+            "id": 1,
+            "name": "Áo thun basic trắng",
+            "price": 199000,
+            "stock": 50,
+            "categoryId": 1,
+            "brandId": 1,
+            "status": "active"
+        }
+    ],
+    "brands": [
+        {
+            "id": 1,
+            "name": "G4 Basic",
+            "status": "active"
+        }
+    ],
+    "orders": [],
+    "customers": [],
+    "posts": [],
+    "messages": [],
+    "notifications": [],
+    "users": [
+        {
+            "id": 1,
+            "fullName": "Admin G4 Fashion",
+            "email": "admin@g4fashion.com"
+        }
+    ],
+    "settings": [
+        {
+            "id": 1,
+            "siteName": "G4 FASHION",
+            "hotline": "0123456789"
+        }
+    ]
+}
