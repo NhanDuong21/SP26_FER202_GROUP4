@@ -25,9 +25,9 @@ export default function ProductsPage() {
       setProducts(productsRes.data);
       setCategories(categoriesRes.data);
       setBrands(brandsRes.data);
-    } catch (error) {
-      console.error("Lỗi lấy dữ liệu sản phẩm:", error);
-      setError("Không thể kết nối json-server. Hãy kiểm tra port 3000.");
+    } catch (err) {
+      console.error("Lỗi lấy dữ liệu sản phẩm:", err);
+      setError("Không thể tải dữ liệu sản phẩm.");
     } finally {
       setLoading(false);
     }
@@ -38,36 +38,36 @@ export default function ProductsPage() {
   }, []);
 
   const getCategoryName = (categoryId) => {
-    const category = categories.find((item) => item.id === categoryId);
-    return category ? category.name : "Không xác định";
+    const found = categories.find((item) => item.id === categoryId);
+    return found ? found.name : "Không xác định";
   };
 
   const getBrandName = (brandId) => {
-    const brand = brands.find((item) => item.id === brandId);
-    return brand ? brand.name : "Không xác định";
+    const found = brands.find((item) => item.id === brandId);
+    return found ? found.name : "Không xác định";
   };
 
-  const getStatusLabel = (status) => {
+  const getStatusInfo = (status) => {
     switch (status) {
       case "selling":
         return {
-          text: "Đang bán",
+          label: "Đang bán",
           className: "bg-green-100 text-green-700",
         };
       case "paused":
         return {
-          text: "Tạm dừng",
+          label: "Tạm dừng",
           className: "bg-yellow-100 text-yellow-700",
         };
       case "out_of_stock":
         return {
-          text: "Hết hàng",
+          label: "Hết hàng",
           className: "bg-red-100 text-red-700",
         };
       default:
         return {
-          text: "Không rõ",
-          className: "bg-gray-100 text-gray-700",
+          label: "Không xác định",
+          className: "bg-slate-100 text-slate-700",
         };
     }
   };
@@ -75,20 +75,20 @@ export default function ProductsPage() {
   return (
     <div className="p-6">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Quản lý sản phẩm</h1>
-        <p className="text-sm text-gray-500 mt-1">
+        <h1 className="text-3xl font-bold text-slate-800">Quản lý sản phẩm</h1>
+        <p className="text-slate-500 mt-2">
           Danh sách tất cả sản phẩm trong hệ thống
         </p>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         {loading ? (
-          <div className="p-6 text-gray-500">Đang tải dữ liệu...</div>
+          <div className="p-6 text-slate-500">Đang tải dữ liệu...</div>
         ) : error ? (
           <div className="p-6 text-red-500">{error}</div>
         ) : (
           <table className="w-full text-sm">
-            <thead className="bg-gray-50 text-gray-700">
+            <thead className="bg-slate-50 text-slate-700">
               <tr>
                 <th className="px-4 py-3 text-left">Hình</th>
                 <th className="px-4 py-3 text-left">Mã SP</th>
@@ -100,48 +100,58 @@ export default function ProductsPage() {
                 <th className="px-4 py-3 text-left">Trạng thái</th>
               </tr>
             </thead>
+
             <tbody>
               {products.map((product) => {
-                const statusInfo = getStatusLabel(product.status);
+                const statusInfo = getStatusInfo(product.status);
 
                 return (
-                  <tr key={product.id} className="border-t border-gray-100">
+                  <tr key={product.id} className="border-t border-slate-100">
                     <td className="px-4 py-3">
                       <img
                         src={product.image}
                         alt={product.name}
-                        className="w-14 h-14 rounded-lg object-cover border"
+                        className="w-14 h-14 rounded-lg object-cover border border-slate-200"
                       />
                     </td>
-                    <td className="px-4 py-3 text-gray-600">{product.code}</td>
+
+                    <td className="px-4 py-3 text-slate-600">{product.code}</td>
+
                     <td className="px-4 py-3">
-                      <div className="font-medium text-gray-800">
+                      <div className="font-medium text-slate-800">
                         {product.name}
                       </div>
-                      <div className="text-xs text-gray-500 mt-1">
+                      <div className="text-xs text-slate-500 mt-1">
                         {product.slug}
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-gray-600">
+
+                    <td className="px-4 py-3 text-slate-600">
                       {getCategoryName(product.categoryId)}
                     </td>
-                    <td className="px-4 py-3 text-gray-600">
+
+                    <td className="px-4 py-3 text-slate-600">
                       {getBrandName(product.brandId)}
                     </td>
-                    <td className="px-4 py-3 text-gray-600">
+
+                    <td className="px-4 py-3 text-slate-600">
                       <div>{formatCurrency(product.salePrice)}</div>
                       {product.salePrice < product.price && (
-                        <div className="text-xs text-gray-400 line-through">
+                        <div className="text-xs text-slate-400 line-through">
                           {formatCurrency(product.price)}
                         </div>
                       )}
                     </td>
-                    <td className="px-4 py-3 text-gray-600">{product.stock}</td>
+
+                    <td className="px-4 py-3 text-slate-600">
+                      {product.stock}
+                    </td>
+
                     <td className="px-4 py-3">
                       <span
                         className={`px-3 py-1 rounded-full text-xs font-medium ${statusInfo.className}`}
                       >
-                        {statusInfo.text}
+                        {statusInfo.label}
                       </span>
                     </td>
                   </tr>
