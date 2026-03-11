@@ -1,10 +1,97 @@
-function CategoriesPage() {
+import { useEffect, useState } from "react";
+import { categoryService } from "../../services/categoryService";
+
+export default function CategoriesPage() {
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchCategories = async () => {
+    try {
+      setLoading(true);
+      const res = await categoryService.getAll();
+      setCategories(res.data);
+    } catch (error) {
+      console.error("Lỗi lấy danh mục:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const getParentName = (parentId) => {
+    if (!parentId) return "Danh mục gốc";
+    const parent = categories.find((item) => item.id === parentId);
+    return parent ? parent.name : "Không xác định";
+  };
+
   return (
-    <div className="rounded-xl bg-white p-6 shadow-sm">
-      <h1 className="mb-2 text-2xl font-bold text-slate-800">Danh mục</h1>
-      <p className="text-slate-600">Quản lý danh mục sản phẩm.</p>
+    <div className="p-6">
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-gray-800">Quản lý danh mục</h1>
+        <p className="text-sm text-gray-500 mt-1">
+          Danh sách tất cả danh mục sản phẩm
+        </p>
+      </div>
+
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        {loading ? (
+          <div className="p-6 text-gray-500">Đang tải dữ liệu...</div>
+        ) : (
+          <table className="w-full text-sm">
+            <thead className="bg-gray-50 text-gray-700">
+              <tr>
+                <th className="px-4 py-3 text-left">Hình</th>
+                <th className="px-4 py-3 text-left">Tên danh mục</th>
+                <th className="px-4 py-3 text-left">Slug</th>
+                <th className="px-4 py-3 text-left">Danh mục cha</th>
+                <th className="px-4 py-3 text-left">Số SP</th>
+                <th className="px-4 py-3 text-left">Trạng thái</th>
+                <th className="px-4 py-3 text-left">Cập nhật</th>
+              </tr>
+            </thead>
+            <tbody>
+              {categories.map((category) => (
+                <tr key={category.id} className="border-t border-gray-100">
+                  <td className="px-4 py-3">
+                    <img
+                      src={category.image}
+                      alt={category.name}
+                      className="w-12 h-12 rounded-lg object-cover border"
+                    />
+                  </td>
+                  <td className="px-4 py-3 font-medium text-gray-800">
+                    {category.name}
+                  </td>
+                  <td className="px-4 py-3 text-gray-600">{category.slug}</td>
+                  <td className="px-4 py-3 text-gray-600">
+                    {getParentName(category.parentId)}
+                  </td>
+                  <td className="px-4 py-3 text-gray-600">
+                    {category.productCount}
+                  </td>
+                  <td className="px-4 py-3">
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-medium ${
+                        category.status === "active"
+                          ? "bg-green-100 text-green-700"
+                          : "bg-red-100 text-red-700"
+                      }`}
+                    >
+                      {category.status === "active" ? "Hoạt động" : "Ngưng"}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 text-gray-600">
+                    {category.updatedAt}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 }
-
-export default CategoriesPage;
