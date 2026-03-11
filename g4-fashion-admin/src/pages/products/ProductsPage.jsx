@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { productService } from "../../services/productService";
 import { categoryService } from "../../services/categoryService";
 import { brandService } from "../../services/brandService";
-import { formatCurrency } from "../../utils/formatCurrency";
+import { formatCurrency } from "../../utils/categories/formatCurrency";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);

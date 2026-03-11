@@ -1,5 +1,14 @@
 import { useEffect } from "react";
 import { CalendarDays, FolderOpen, Package, Tag, X } from "lucide-react";
+import {
+  modalOverlayClass,
+  modalContainerClass,
+  modalHeaderClass,
+  modalCloseButtonClass,
+  infoItemClass,
+  secondaryButtonClass,
+} from "../../utils/categories/uiClasses";
+import { getCategoryStatusBadgeClass } from "../../utils/categories/categoryUi";
 
 export default function CategoryDetailModal({
   isOpen,
@@ -25,12 +34,9 @@ export default function CategoryDetailModal({
   };
 
   return (
-    <div
-      onClick={handleOverlayClick}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 px-4 backdrop-blur-sm"
-    >
-      <div className="w-full max-w-2xl rounded-[28px] bg-white shadow-2xl">
-        <div className="flex items-start justify-between border-b border-slate-200 px-6 py-5">
+    <div onClick={handleOverlayClick} className={modalOverlayClass}>
+      <div className={`${modalContainerClass} max-w-2xl`}>
+        <div className={modalHeaderClass}>
           <div className="flex items-start gap-3">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sky-600">
               <FolderOpen size={22} />
@@ -46,10 +52,7 @@ export default function CategoryDetailModal({
             </div>
           </div>
 
-          <button
-            onClick={onClose}
-            className="rounded-xl p-2 text-slate-500 hover:bg-slate-100"
-          >
+          <button onClick={onClose} className={modalCloseButtonClass}>
             <X size={20} />
           </button>
         </div>
@@ -64,7 +67,7 @@ export default function CategoryDetailModal({
           </div>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <div className={infoItemClass}>
               <p className="mb-2 flex items-center gap-2 text-sm text-slate-500">
                 <FolderOpen size={16} />
                 Tên danh mục
@@ -72,7 +75,7 @@ export default function CategoryDetailModal({
               <p className="font-semibold text-slate-800">{category.name}</p>
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <div className={infoItemClass}>
               <p className="mb-2 flex items-center gap-2 text-sm text-slate-500">
                 <Tag size={16} />
                 Slug
@@ -80,14 +83,14 @@ export default function CategoryDetailModal({
               <p className="font-semibold text-slate-800">{category.slug}</p>
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <div className={infoItemClass}>
               <p className="mb-2 text-sm text-slate-500">Danh mục cha</p>
               <p className="font-semibold text-slate-800">
                 {getParentName(category.parentId)}
               </p>
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <div className={infoItemClass}>
               <p className="mb-2 flex items-center gap-2 text-sm text-slate-500">
                 <Package size={16} />
                 Số sản phẩm
@@ -97,20 +100,14 @@ export default function CategoryDetailModal({
               </p>
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <div className={infoItemClass}>
               <p className="mb-2 text-sm text-slate-500">Trạng thái</p>
-              <span
-                className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
-                  category.status === "active"
-                    ? "bg-emerald-100 text-emerald-700"
-                    : "bg-rose-100 text-rose-700"
-                }`}
-              >
+              <span className={getCategoryStatusBadgeClass(category.status)}>
                 {category.status === "active" ? "Hoạt động" : "Ngưng hoạt động"}
               </span>
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <div className={infoItemClass}>
               <p className="mb-2 flex items-center gap-2 text-sm text-slate-500">
                 <CalendarDays size={16} />
                 Ngày cập nhật
@@ -123,10 +120,7 @@ export default function CategoryDetailModal({
         </div>
 
         <div className="border-t border-slate-200 px-6 py-4 text-right">
-          <button
-            onClick={onClose}
-            className="rounded-2xl bg-slate-200 px-4 py-2.5 font-medium text-slate-700 hover:bg-slate-300"
-          >
+          <button onClick={onClose} className={secondaryButtonClass}>
             Đóng
           </button>
         </div>

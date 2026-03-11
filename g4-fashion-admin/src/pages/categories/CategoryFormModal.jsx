@@ -1,5 +1,18 @@
 import { useEffect, useState } from "react";
-import { slugify } from "../../utils/slugify";
+import { FolderPlus, Link2, Tag, X } from "lucide-react";
+import { slugify } from "../../utils/categories/slugify";
+import {
+  inputClass,
+  inputWithIconClass,
+  modalOverlayClass,
+  modalContainerClass,
+  modalHeaderClass,
+  modalCloseButtonClass,
+  outlineButtonClass,
+  secondaryButtonClass,
+  primaryButtonClass,
+  previewBoxClass,
+} from "../../utils/categories/uiClasses";
 
 const initialFormData = {
   name: "",
@@ -24,22 +37,19 @@ export default function CategoryFormModal({
   useEffect(() => {
     if (!isOpen) return;
 
-    if (editingCategory) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setFormData({
-        name: editingCategory.name || "",
-        slug: editingCategory.slug || "",
-        parentId: editingCategory.parentId ?? "",
-        productCount: editingCategory.productCount || 0,
-        status: editingCategory.status || "active",
-        image: editingCategory.image || "",
-      });
-      setIsAutoSlug(false);
-    } else {
-      setFormData(initialFormData);
-      setIsAutoSlug(true);
-    }
-
+    const nextFormData = editingCategory
+      ? {
+          name: editingCategory.name || "",
+          slug: editingCategory.slug || "",
+          parentId: editingCategory.parentId ?? "",
+          productCount: editingCategory.productCount || 0,
+          status: editingCategory.status || "active",
+          image: editingCategory.image || "",
+        }
+      : initialFormData;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setFormData(nextFormData);
+    setIsAutoSlug(!editingCategory);
     setFormError("");
   }, [editingCategory, isOpen]);
 
@@ -47,24 +57,17 @@ export default function CategoryFormModal({
     if (!isOpen) return;
 
     const handleEsc = (e) => {
-      if (e.key === "Escape") {
-        onClose();
-      }
+      if (e.key === "Escape") onClose();
     };
 
     document.addEventListener("keydown", handleEsc);
-
-    return () => {
-      document.removeEventListener("keydown", handleEsc);
-    };
+    return () => document.removeEventListener("keydown", handleEsc);
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
   const handleOverlayClick = (e) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
+    if (e.target === e.currentTarget) onClose();
   };
 
   const handleChange = (e) => {
@@ -97,21 +100,19 @@ export default function CategoryFormModal({
   };
 
   const handleReset = () => {
-    if (editingCategory) {
-      setFormData({
-        name: editingCategory.name || "",
-        slug: editingCategory.slug || "",
-        parentId: editingCategory.parentId ?? "",
-        productCount: editingCategory.productCount || 0,
-        status: editingCategory.status || "active",
-        image: editingCategory.image || "",
-      });
-      setIsAutoSlug(false);
-    } else {
-      setFormData(initialFormData);
-      setIsAutoSlug(true);
-    }
+    const resetData = editingCategory
+      ? {
+          name: editingCategory.name || "",
+          slug: editingCategory.slug || "",
+          parentId: editingCategory.parentId ?? "",
+          productCount: editingCategory.productCount || 0,
+          status: editingCategory.status || "active",
+          image: editingCategory.image || "",
+        }
+      : initialFormData;
 
+    setFormData(resetData);
+    setIsAutoSlug(!editingCategory);
     setFormError("");
   };
 
@@ -124,13 +125,8 @@ export default function CategoryFormModal({
   };
 
   const validateForm = () => {
-    if (!formData.name.trim()) {
-      return "Tên danh mục không được để trống.";
-    }
-
-    if (!formData.slug.trim()) {
-      return "Slug không được để trống.";
-    }
+    if (!formData.name.trim()) return "Tên danh mục không được để trống.";
+    if (!formData.slug.trim()) return "Slug không được để trống.";
 
     const isSlugExist = categories.some(
       (item) =>
@@ -138,13 +134,8 @@ export default function CategoryFormModal({
         item.id !== editingCategory?.id,
     );
 
-    if (isSlugExist) {
-      return "Slug đã tồn tại.";
-    }
-
-    if (formData.productCount < 0) {
-      return "Số sản phẩm không được nhỏ hơn 0.";
-    }
+    if (isSlugExist) return "Slug đã tồn tại.";
+    if (formData.productCount < 0) return "Số sản phẩm không được nhỏ hơn 0.";
 
     return "";
   };
@@ -168,39 +159,39 @@ export default function CategoryFormModal({
   };
 
   return (
-    <div
-      onClick={handleOverlayClick}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 px-4 backdrop-blur-sm"
-    >
-      <div className="w-full max-w-2xl rounded-3xl bg-white shadow-2xl">
-        <div className="flex items-start justify-between border-b border-slate-200 px-6 py-5">
-          <div>
-            <h2 className="text-xl font-bold text-slate-800">
-              {editingCategory ? "Cập nhật danh mục" : "Thêm danh mục"}
-            </h2>
-            <p className="mt-1 text-sm text-slate-500">
-              Điền thông tin để lưu danh mục sản phẩm
-            </p>
+    <div onClick={handleOverlayClick} className={modalOverlayClass}>
+      <div className={`${modalContainerClass} max-w-2xl`}>
+        <div className={modalHeaderClass}>
+          <div className="flex items-start gap-3">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-100 text-blue-600">
+              <FolderPlus size={22} />
+            </div>
+
+            <div>
+              <h2 className="text-xl font-bold text-slate-800">
+                {editingCategory ? "Cập nhật danh mục" : "Thêm danh mục"}
+              </h2>
+              <p className="mt-1 text-sm text-slate-500">
+                Điền thông tin để lưu danh mục sản phẩm
+              </p>
+            </div>
           </div>
 
-          <button
-            onClick={onClose}
-            className="rounded-xl px-3 py-2 text-slate-500 transition hover:bg-slate-100"
-          >
-            ✕
+          <button onClick={onClose} className={modalCloseButtonClass}>
+            <X size={20} />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="px-6 py-5">
           {formError && (
-            <div className="mb-4 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+            <div className="mb-5 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
               {formError}
             </div>
           )}
 
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-slate-700">
+              <label className="mb-2 block text-sm font-medium text-slate-700">
                 Tên danh mục
               </label>
               <input
@@ -209,27 +200,34 @@ export default function CategoryFormModal({
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Ví dụ: Áo nam"
-                className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-500"
+                className={inputClass}
               />
             </div>
 
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-slate-700">
+              <label className="mb-2 block text-sm font-medium text-slate-700">
                 Slug
               </label>
               <div className="flex gap-2">
-                <input
-                  type="text"
-                  name="slug"
-                  value={formData.slug}
-                  onChange={handleChange}
-                  placeholder="ao-nam"
-                  className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-500"
-                />
+                <div className="relative flex-1">
+                  <Link2
+                    size={16}
+                    className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                  />
+                  <input
+                    type="text"
+                    name="slug"
+                    value={formData.slug}
+                    onChange={handleChange}
+                    placeholder="ao-nam"
+                    className={inputWithIconClass}
+                  />
+                </div>
+
                 <button
                   type="button"
                   onClick={handleGenerateSlug}
-                  className="whitespace-nowrap rounded-2xl border border-slate-300 px-4 py-3 text-sm text-slate-700 hover:bg-slate-50"
+                  className="rounded-2xl border border-slate-300 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
                 >
                   Tạo slug
                 </button>
@@ -237,14 +235,14 @@ export default function CategoryFormModal({
             </div>
 
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-slate-700">
+              <label className="mb-2 block text-sm font-medium text-slate-700">
                 Danh mục cha
               </label>
               <select
                 name="parentId"
                 value={formData.parentId}
                 onChange={handleChange}
-                className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-500"
+                className={inputClass}
               >
                 <option value="">Danh mục gốc</option>
                 {categories
@@ -258,7 +256,7 @@ export default function CategoryFormModal({
             </div>
 
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-slate-700">
+              <label className="mb-2 block text-sm font-medium text-slate-700">
                 Số sản phẩm
               </label>
               <input
@@ -266,27 +264,33 @@ export default function CategoryFormModal({
                 name="productCount"
                 value={formData.productCount}
                 onChange={handleChange}
-                className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-500"
+                className={inputClass}
               />
             </div>
 
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-slate-700">
+              <label className="mb-2 block text-sm font-medium text-slate-700">
                 Trạng thái
               </label>
-              <select
-                name="status"
-                value={formData.status}
-                onChange={handleChange}
-                className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-500"
-              >
-                <option value="active">Hoạt động</option>
-                <option value="inactive">Ngưng hoạt động</option>
-              </select>
+              <div className="relative">
+                <Tag
+                  size={16}
+                  className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                />
+                <select
+                  name="status"
+                  value={formData.status}
+                  onChange={handleChange}
+                  className={inputWithIconClass}
+                >
+                  <option value="active">Hoạt động</option>
+                  <option value="inactive">Ngưng hoạt động</option>
+                </select>
+              </div>
             </div>
 
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-slate-700">
+              <label className="mb-2 block text-sm font-medium text-slate-700">
                 Link hình ảnh
               </label>
               <input
@@ -295,14 +299,14 @@ export default function CategoryFormModal({
                 value={formData.image}
                 onChange={handleChange}
                 placeholder="https://dummyimage.com/80x80/..."
-                className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-500"
+                className={inputClass}
               />
             </div>
           </div>
 
           {formData.image && (
-            <div className="mt-4">
-              <p className="mb-2 text-sm font-medium text-slate-700">
+            <div className={previewBoxClass}>
+              <p className="mb-3 text-sm font-medium text-slate-700">
                 Xem trước hình ảnh
               </p>
               <img
@@ -320,7 +324,7 @@ export default function CategoryFormModal({
             <button
               type="button"
               onClick={handleReset}
-              className="rounded-2xl border border-slate-300 px-4 py-2.5 text-slate-700 hover:bg-slate-50"
+              className={outlineButtonClass}
             >
               Reset
             </button>
@@ -328,15 +332,12 @@ export default function CategoryFormModal({
             <button
               type="button"
               onClick={onClose}
-              className="rounded-2xl bg-slate-200 px-4 py-2.5 text-slate-700 hover:bg-slate-300"
+              className={secondaryButtonClass}
             >
               Hủy
             </button>
 
-            <button
-              type="submit"
-              className="rounded-2xl bg-blue-600 px-5 py-2.5 font-medium text-white hover:bg-blue-700"
-            >
+            <button type="submit" className={primaryButtonClass}>
               {editingCategory ? "Lưu thay đổi" : "Thêm danh mục"}
             </button>
           </div>

@@ -14,6 +14,19 @@ import { categoryService } from "../../services/categoryService";
 import CategoryFormModal from "./CategoryFormModal";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 import CategoryDetailModal from "./CategoryDetailModal";
+import {
+  statCardClass,
+  cardClass,
+  sectionHeaderClass,
+  primaryButtonClass,
+  tableHeaderCellClass,
+  tableCellClass,
+  iconActionButtonClass,
+} from "../../utils/categories/uiClasses";
+import {
+  getActionButtonColorClass,
+  getCategoryStatusBadgeClass,
+} from "../../utils/categories/categoryUi";
 
 export default function CategoriesPage() {
   const [categories, setCategories] = useState([]);
@@ -169,10 +182,7 @@ export default function CategoriesPage() {
           </p>
         </div>
 
-        <button
-          onClick={handleOpenCreate}
-          className="inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-5 py-3 font-medium text-white shadow-sm transition hover:bg-blue-700"
-        >
+        <button onClick={handleOpenCreate} className={primaryButtonClass}>
           <Plus size={18} />
           Thêm danh mục
         </button>
@@ -183,10 +193,7 @@ export default function CategoriesPage() {
           const Icon = card.icon;
 
           return (
-            <div
-              key={card.title}
-              className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
-            >
+            <div key={card.title} className={statCardClass}>
               <div className="flex items-start justify-between">
                 <div>
                   <p className="text-sm text-slate-500">{card.title}</p>
@@ -206,8 +213,8 @@ export default function CategoriesPage() {
         })}
       </div>
 
-      <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
-        <div className="flex items-center justify-between border-b border-slate-200 px-6 py-5">
+      <div className={cardClass}>
+        <div className={sectionHeaderClass}>
           <div>
             <h2 className="text-lg font-semibold text-slate-800">
               Danh sách danh mục
@@ -225,27 +232,15 @@ export default function CategoriesPage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full min-w-[900px] text-sm">
-              <thead className="bg-slate-50 text-slate-700">
+              <thead className="bg-slate-50">
                 <tr>
-                  <th className="px-6 py-4 text-left font-semibold">
-                    Hình ảnh
-                  </th>
-                  <th className="px-6 py-4 text-left font-semibold">
-                    Tên danh mục
-                  </th>
-                  <th className="px-6 py-4 text-left font-semibold">
-                    Danh mục cha
-                  </th>
-                  <th className="px-6 py-4 text-left font-semibold">
-                    Số sản phẩm
-                  </th>
-                  <th className="px-6 py-4 text-left font-semibold">
-                    Trạng thái
-                  </th>
-                  <th className="px-6 py-4 text-left font-semibold">
-                    Ngày cập nhật
-                  </th>
-                  <th className="px-6 py-4 text-center font-semibold">
+                  <th className={tableHeaderCellClass}>Hình ảnh</th>
+                  <th className={tableHeaderCellClass}>Tên danh mục</th>
+                  <th className={tableHeaderCellClass}>Danh mục cha</th>
+                  <th className={tableHeaderCellClass}>Số sản phẩm</th>
+                  <th className={tableHeaderCellClass}>Trạng thái</th>
+                  <th className={tableHeaderCellClass}>Ngày cập nhật</th>
+                  <th className={`${tableHeaderCellClass} text-center`}>
                     Thao tác
                   </th>
                 </tr>
@@ -257,7 +252,7 @@ export default function CategoriesPage() {
                     key={category.id}
                     className="border-t border-slate-100 transition hover:bg-slate-50/80"
                   >
-                    <td className="px-6 py-4">
+                    <td className={tableCellClass}>
                       <img
                         src={category.image}
                         alt={category.name}
@@ -265,7 +260,7 @@ export default function CategoriesPage() {
                       />
                     </td>
 
-                    <td className="px-6 py-4">
+                    <td className={tableCellClass}>
                       <div className="font-semibold text-slate-800">
                         {category.name}
                       </div>
@@ -274,7 +269,7 @@ export default function CategoriesPage() {
                       </div>
                     </td>
 
-                    <td className="px-6 py-4 text-slate-600">
+                    <td className={`${tableCellClass} text-slate-600`}>
                       {category.parentId ? (
                         <span className="inline-flex rounded-full bg-sky-50 px-3 py-1 text-xs font-medium text-sky-700">
                           {getParentName(category.parentId)}
@@ -284,19 +279,15 @@ export default function CategoriesPage() {
                       )}
                     </td>
 
-                    <td className="px-6 py-4">
+                    <td className={tableCellClass}>
                       <span className="font-semibold text-blue-600">
                         {category.productCount}
                       </span>
                     </td>
 
-                    <td className="px-6 py-4">
+                    <td className={tableCellClass}>
                       <span
-                        className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
-                          category.status === "active"
-                            ? "bg-emerald-100 text-emerald-700"
-                            : "bg-rose-100 text-rose-700"
-                        }`}
+                        className={getCategoryStatusBadgeClass(category.status)}
                       >
                         {category.status === "active"
                           ? "Hoạt động"
@@ -304,15 +295,17 @@ export default function CategoriesPage() {
                       </span>
                     </td>
 
-                    <td className="px-6 py-4 text-slate-600">
+                    <td className={`${tableCellClass} text-slate-600`}>
                       {category.updatedAt}
                     </td>
 
-                    <td className="px-6 py-4">
+                    <td className={tableCellClass}>
                       <div className="flex items-center justify-center gap-2">
                         <button
                           onClick={() => handleOpenDetail(category)}
-                          className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-sky-50 text-sky-700 transition hover:bg-sky-100"
+                          className={`${iconActionButtonClass} ${getActionButtonColorClass(
+                            "view",
+                          )}`}
                           title="Xem chi tiết"
                         >
                           <Eye size={18} />
@@ -320,7 +313,9 @@ export default function CategoriesPage() {
 
                         <button
                           onClick={() => handleOpenEdit(category)}
-                          className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700 transition hover:bg-emerald-100"
+                          className={`${iconActionButtonClass} ${getActionButtonColorClass(
+                            "edit",
+                          )}`}
                           title="Chỉnh sửa"
                         >
                           <Pencil size={18} />
@@ -328,7 +323,9 @@ export default function CategoriesPage() {
 
                         <button
                           onClick={() => handleOpenDelete(category)}
-                          className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-rose-50 text-rose-700 transition hover:bg-rose-100"
+                          className={`${iconActionButtonClass} ${getActionButtonColorClass(
+                            "delete",
+                          )}`}
                           title="Xóa"
                         >
                           <Trash2 size={18} />
