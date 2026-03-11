@@ -1,5 +1,15 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import {
+  FolderKanban,
+  Tag,
+  Package,
+  Layers3,
+  Plus,
+  Eye,
+  Pencil,
+  Trash2,
+} from "lucide-react";
 import { categoryService } from "../../services/categoryService";
 import CategoryFormModal from "./CategoryFormModal";
 import DeleteConfirmModal from "./DeleteConfirmModal";
@@ -120,47 +130,84 @@ export default function CategoriesPage() {
   );
   const rootCategories = categories.filter((item) => !item.parentId).length;
 
+  const statCards = [
+    {
+      title: "Tổng danh mục",
+      value: totalCategories,
+      icon: FolderKanban,
+      iconClass: "bg-sky-100 text-sky-600",
+    },
+    {
+      title: "Đang hoạt động",
+      value: activeCategories,
+      icon: Tag,
+      iconClass: "bg-emerald-100 text-emerald-600",
+    },
+    {
+      title: "Tổng sản phẩm",
+      value: totalProducts,
+      icon: Package,
+      iconClass: "bg-violet-100 text-violet-600",
+    },
+    {
+      title: "Danh mục gốc",
+      value: rootCategories,
+      icon: Layers3,
+      iconClass: "bg-amber-100 text-amber-600",
+    },
+  ];
+
   return (
     <div className="p-6">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-slate-800">Quản lý Danh mục</h1>
-        <p className="mt-2 text-slate-500">
-          Tổ chức và phân loại sản phẩm theo danh mục
-        </p>
+      <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight text-slate-800">
+            Quản lý Danh mục
+          </h1>
+          <p className="mt-2 text-slate-500">
+            Tổ chức và phân loại sản phẩm theo danh mục
+          </p>
+        </div>
+
+        <button
+          onClick={handleOpenCreate}
+          className="inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-5 py-3 font-medium text-white shadow-sm transition hover:bg-blue-700"
+        >
+          <Plus size={18} />
+          Thêm danh mục
+        </button>
       </div>
 
       <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
-          <p className="text-sm text-slate-500">Tổng danh mục</p>
-          <h3 className="mt-2 text-3xl font-bold text-slate-800">
-            {totalCategories}
-          </h3>
-        </div>
+        {statCards.map((card) => {
+          const Icon = card.icon;
 
-        <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
-          <p className="text-sm text-slate-500">Đang hoạt động</p>
-          <h3 className="mt-2 text-3xl font-bold text-emerald-600">
-            {activeCategories}
-          </h3>
-        </div>
+          return (
+            <div
+              key={card.title}
+              className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+            >
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-sm text-slate-500">{card.title}</p>
+                  <h3 className="mt-3 text-3xl font-bold text-slate-800">
+                    {card.value}
+                  </h3>
+                </div>
 
-        <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
-          <p className="text-sm text-slate-500">Tổng sản phẩm</p>
-          <h3 className="mt-2 text-3xl font-bold text-violet-600">
-            {totalProducts}
-          </h3>
-        </div>
-
-        <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
-          <p className="text-sm text-slate-500">Danh mục gốc</p>
-          <h3 className="mt-2 text-3xl font-bold text-amber-600">
-            {rootCategories}
-          </h3>
-        </div>
+                <div
+                  className={`flex h-12 w-12 items-center justify-center rounded-2xl ${card.iconClass}`}
+                >
+                  <Icon size={22} />
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
-        <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4">
+        <div className="flex items-center justify-between border-b border-slate-200 px-6 py-5">
           <div>
             <h2 className="text-lg font-semibold text-slate-800">
               Danh sách danh mục
@@ -169,31 +216,38 @@ export default function CategoriesPage() {
               Quản lý toàn bộ danh mục trong hệ thống
             </p>
           </div>
-
-          <button
-            onClick={handleOpenCreate}
-            className="rounded-2xl bg-blue-600 px-4 py-2.5 font-medium text-white hover:bg-blue-700"
-          >
-            + Thêm danh mục
-          </button>
         </div>
 
         {loading ? (
-          <div className="p-6 text-slate-500">Đang tải dữ liệu...</div>
+          <div className="px-6 py-10 text-slate-500">Đang tải dữ liệu...</div>
         ) : error ? (
-          <div className="p-6 text-red-500">{error}</div>
+          <div className="px-6 py-10 text-red-500">{error}</div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full min-w-[900px] text-sm">
               <thead className="bg-slate-50 text-slate-700">
                 <tr>
-                  <th className="px-4 py-4 text-left">Hình ảnh</th>
-                  <th className="px-4 py-4 text-left">Tên danh mục</th>
-                  <th className="px-4 py-4 text-left">Danh mục cha</th>
-                  <th className="px-4 py-4 text-left">Số sản phẩm</th>
-                  <th className="px-4 py-4 text-left">Trạng thái</th>
-                  <th className="px-4 py-4 text-left">Ngày cập nhật</th>
-                  <th className="px-4 py-4 text-center">Thao tác</th>
+                  <th className="px-6 py-4 text-left font-semibold">
+                    Hình ảnh
+                  </th>
+                  <th className="px-6 py-4 text-left font-semibold">
+                    Tên danh mục
+                  </th>
+                  <th className="px-6 py-4 text-left font-semibold">
+                    Danh mục cha
+                  </th>
+                  <th className="px-6 py-4 text-left font-semibold">
+                    Số sản phẩm
+                  </th>
+                  <th className="px-6 py-4 text-left font-semibold">
+                    Trạng thái
+                  </th>
+                  <th className="px-6 py-4 text-left font-semibold">
+                    Ngày cập nhật
+                  </th>
+                  <th className="px-6 py-4 text-center font-semibold">
+                    Thao tác
+                  </th>
                 </tr>
               </thead>
 
@@ -201,9 +255,9 @@ export default function CategoriesPage() {
                 {categories.map((category) => (
                   <tr
                     key={category.id}
-                    className="border-t border-slate-100 transition hover:bg-slate-50"
+                    className="border-t border-slate-100 transition hover:bg-slate-50/80"
                   >
-                    <td className="px-4 py-4">
+                    <td className="px-6 py-4">
                       <img
                         src={category.image}
                         alt={category.name}
@@ -211,35 +265,37 @@ export default function CategoriesPage() {
                       />
                     </td>
 
-                    <td className="px-4 py-4">
+                    <td className="px-6 py-4">
                       <div className="font-semibold text-slate-800">
                         {category.name}
                       </div>
                       <div className="mt-1 text-xs text-slate-500">
-                        {category.slug}
+                        /{category.slug}
                       </div>
                     </td>
 
-                    <td className="px-4 py-4 text-slate-600">
+                    <td className="px-6 py-4 text-slate-600">
                       {category.parentId ? (
-                        <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">
+                        <span className="inline-flex rounded-full bg-sky-50 px-3 py-1 text-xs font-medium text-sky-700">
                           {getParentName(category.parentId)}
                         </span>
                       ) : (
-                        "Danh mục gốc"
+                        <span className="text-slate-500">Danh mục gốc</span>
                       )}
                     </td>
 
-                    <td className="px-4 py-4 font-semibold text-blue-600">
-                      {category.productCount}
+                    <td className="px-6 py-4">
+                      <span className="font-semibold text-blue-600">
+                        {category.productCount}
+                      </span>
                     </td>
 
-                    <td className="px-4 py-4">
+                    <td className="px-6 py-4">
                       <span
-                        className={`rounded-full px-3 py-1 text-xs font-medium ${
+                        className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
                           category.status === "active"
-                            ? "bg-green-100 text-green-700"
-                            : "bg-red-100 text-red-700"
+                            ? "bg-emerald-100 text-emerald-700"
+                            : "bg-rose-100 text-rose-700"
                         }`}
                       >
                         {category.status === "active"
@@ -248,31 +304,34 @@ export default function CategoriesPage() {
                       </span>
                     </td>
 
-                    <td className="px-4 py-4 text-slate-600">
+                    <td className="px-6 py-4 text-slate-600">
                       {category.updatedAt}
                     </td>
 
-                    <td className="px-4 py-4">
+                    <td className="px-6 py-4">
                       <div className="flex items-center justify-center gap-2">
                         <button
                           onClick={() => handleOpenDetail(category)}
-                          className="rounded-xl bg-sky-50 px-3 py-2 text-sky-700 hover:bg-sky-100"
+                          className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-sky-50 text-sky-700 transition hover:bg-sky-100"
+                          title="Xem chi tiết"
                         >
-                          Xem
+                          <Eye size={18} />
                         </button>
 
                         <button
                           onClick={() => handleOpenEdit(category)}
-                          className="rounded-xl bg-emerald-50 px-3 py-2 text-emerald-700 hover:bg-emerald-100"
+                          className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700 transition hover:bg-emerald-100"
+                          title="Chỉnh sửa"
                         >
-                          Sửa
+                          <Pencil size={18} />
                         </button>
 
                         <button
                           onClick={() => handleOpenDelete(category)}
-                          className="rounded-xl bg-red-50 px-3 py-2 text-red-700 hover:bg-red-100"
+                          className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-rose-50 text-rose-700 transition hover:bg-rose-100"
+                          title="Xóa"
                         >
-                          Xóa
+                          <Trash2 size={18} />
                         </button>
                       </div>
                     </td>
@@ -283,7 +342,7 @@ export default function CategoriesPage() {
                   <tr>
                     <td
                       colSpan="7"
-                      className="px-4 py-10 text-center text-slate-500"
+                      className="px-6 py-12 text-center text-slate-500"
                     >
                       Chưa có danh mục nào.
                     </td>
