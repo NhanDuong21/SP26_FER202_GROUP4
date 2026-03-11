@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { categoryService } from "../../services/categoryService";
 import CategoryFormModal from "./CategoryFormModal";
 import DeleteConfirmModal from "./DeleteConfirmModal";
+import CategoryDetailModal from "./CategoryDetailModal";
 
 export default function CategoriesPage() {
   const [categories, setCategories] = useState([]);
@@ -14,6 +16,9 @@ export default function CategoriesPage() {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [deletingCategory, setDeletingCategory] = useState(null);
 
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
   const fetchCategories = async () => {
     try {
       setLoading(true);
@@ -24,6 +29,7 @@ export default function CategoriesPage() {
     } catch (err) {
       console.error("Lỗi lấy danh mục:", err);
       setError("Không thể tải dữ liệu danh mục.");
+      toast.error("Tải danh mục thất bại");
     } finally {
       setLoading(false);
     }
@@ -58,15 +64,17 @@ export default function CategoriesPage() {
     try {
       if (editingCategory) {
         await categoryService.update(editingCategory.id, payload);
+        toast.success("Cập nhật danh mục thành công");
       } else {
         await categoryService.create(payload);
+        toast.success("Thêm danh mục thành công");
       }
 
       await fetchCategories();
       handleCloseForm();
     } catch (err) {
       console.error("Lỗi lưu danh mục:", err);
-      alert("Không thể lưu danh mục.");
+      toast.error("Không thể lưu danh mục");
     }
   };
 
@@ -83,12 +91,23 @@ export default function CategoriesPage() {
   const handleConfirmDelete = async () => {
     try {
       await categoryService.remove(deletingCategory.id);
+      toast.success("Xóa danh mục thành công");
       await fetchCategories();
       handleCloseDelete();
     } catch (err) {
       console.error("Lỗi xóa danh mục:", err);
-      alert("Không thể xóa danh mục.");
+      toast.error("Không thể xóa danh mục");
     }
+  };
+
+  const handleOpenDetail = (category) => {
+    setSelectedCategory(category);
+    setIsDetailOpen(true);
+  };
+
+  const handleCloseDetail = () => {
+    setSelectedCategory(null);
+    setIsDetailOpen(false);
   };
 
   const totalCategories = categories.length;
@@ -111,28 +130,28 @@ export default function CategoriesPage() {
       </div>
 
       <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
           <p className="text-sm text-slate-500">Tổng danh mục</p>
           <h3 className="mt-2 text-3xl font-bold text-slate-800">
             {totalCategories}
           </h3>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
           <p className="text-sm text-slate-500">Đang hoạt động</p>
           <h3 className="mt-2 text-3xl font-bold text-emerald-600">
             {activeCategories}
           </h3>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
           <p className="text-sm text-slate-500">Tổng sản phẩm</p>
           <h3 className="mt-2 text-3xl font-bold text-violet-600">
             {totalProducts}
           </h3>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
           <p className="text-sm text-slate-500">Danh mục gốc</p>
           <h3 className="mt-2 text-3xl font-bold text-amber-600">
             {rootCategories}
@@ -140,7 +159,7 @@ export default function CategoriesPage() {
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
         <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4">
           <div>
             <h2 className="text-lg font-semibold text-slate-800">
@@ -153,7 +172,7 @@ export default function CategoriesPage() {
 
           <button
             onClick={handleOpenCreate}
-            className="rounded-xl bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+            className="rounded-2xl bg-blue-600 px-4 py-2.5 font-medium text-white hover:bg-blue-700"
           >
             + Thêm danh mục
           </button>
@@ -182,13 +201,13 @@ export default function CategoriesPage() {
                 {categories.map((category) => (
                   <tr
                     key={category.id}
-                    className="border-t border-slate-100 hover:bg-slate-50"
+                    className="border-t border-slate-100 transition hover:bg-slate-50"
                   >
                     <td className="px-4 py-4">
                       <img
                         src={category.image}
                         alt={category.name}
-                        className="h-14 w-14 rounded-xl border border-slate-200 object-cover"
+                        className="h-14 w-14 rounded-2xl border border-slate-200 object-cover"
                       />
                     </td>
 
@@ -236,15 +255,22 @@ export default function CategoriesPage() {
                     <td className="px-4 py-4">
                       <div className="flex items-center justify-center gap-2">
                         <button
+                          onClick={() => handleOpenDetail(category)}
+                          className="rounded-xl bg-sky-50 px-3 py-2 text-sky-700 hover:bg-sky-100"
+                        >
+                          Xem
+                        </button>
+
+                        <button
                           onClick={() => handleOpenEdit(category)}
-                          className="rounded-lg bg-emerald-50 px-3 py-2 text-emerald-700 hover:bg-emerald-100"
+                          className="rounded-xl bg-emerald-50 px-3 py-2 text-emerald-700 hover:bg-emerald-100"
                         >
                           Sửa
                         </button>
 
                         <button
                           onClick={() => handleOpenDelete(category)}
-                          className="rounded-lg bg-red-50 px-3 py-2 text-red-700 hover:bg-red-100"
+                          className="rounded-xl bg-red-50 px-3 py-2 text-red-700 hover:bg-red-100"
                         >
                           Xóa
                         </button>
@@ -282,6 +308,13 @@ export default function CategoriesPage() {
         onClose={handleCloseDelete}
         onConfirm={handleConfirmDelete}
         categoryName={deletingCategory?.name}
+      />
+
+      <CategoryDetailModal
+        isOpen={isDetailOpen}
+        onClose={handleCloseDetail}
+        category={selectedCategory}
+        getParentName={getParentName}
       />
     </div>
   );
