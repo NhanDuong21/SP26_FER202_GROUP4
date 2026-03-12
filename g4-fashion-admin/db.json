@@ -1,4 +1,20 @@
 {
+  "users": [
+    {
+      "id": "1",
+      "name": "Nguyen Van b",
+      "email": "admin@g4fashion.com",
+      "sex": "Male",
+      "date": "01/01/2000",
+      "password": "123456",
+      "role": "admin",
+      "avatar": "https://dummyimage.com/100x100/e5e7eb/9ca3af&text=AD",
+      "status": "active",
+      "phone": "0123456777",
+      "address": "123 Tran Hung Dao, Ca Mau City, Viet Nam",
+      "createdAt": "2024-12-01"
+    }
+  ],
   "categories": [
     {
       "id": "1",
