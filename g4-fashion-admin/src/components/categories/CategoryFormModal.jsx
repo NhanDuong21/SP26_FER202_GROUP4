@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FolderPlus, Link2, Tag, X } from "lucide-react";
-import { slugify } from "../../utils/categories/slugify";
+import { slugify } from "../../utils/slugify";
 import {
   inputClass,
   inputWithIconClass,
@@ -12,46 +12,44 @@ import {
   secondaryButtonClass,
   primaryButtonClass,
   previewBoxClass,
-} from "../../utils/categories/uiClasses";
+} from "../../utils/uiClasses";
+import {
+  getDefaultCategoryForm,
+  validateCategoryForm,
+} from "../../utils/categories/categoryHelpers";
 
-const initialFormData = {
-  name: "",
-  slug: "",
-  parentId: "",
-  productCount: 0,
-  status: "active",
-  image: "",
-};
+const getCategoryFormData = (category) => ({
+  name: category?.name || "",
+  slug: category?.slug || "",
+  parentId: category?.parentId ?? "",
+  productCount: category?.productCount || 0,
+  status: category?.status || "active",
+  image: category?.image || "",
+});
 
 export default function CategoryFormModal({
   isOpen,
   onClose,
   onSubmit,
-  categories,
+  categories = [],
   editingCategory,
 }) {
-  const [formData, setFormData] = useState(initialFormData);
-  const [formError, setFormError] = useState("");
+  const [formData, setFormData] = useState(getDefaultCategoryForm());
+  const [errors, setErrors] = useState({});
   const [isAutoSlug, setIsAutoSlug] = useState(true);
 
   useEffect(() => {
     if (!isOpen) return;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setFormData(
+      editingCategory
+        ? getCategoryFormData(editingCategory)
+        : getDefaultCategoryForm(),
+    );
 
-    const nextFormData = editingCategory
-      ? {
-          name: editingCategory.name || "",
-          slug: editingCategory.slug || "",
-          parentId: editingCategory.parentId ?? "",
-          productCount: editingCategory.productCount || 0,
-          status: editingCategory.status || "active",
-          image: editingCategory.image || "",
-        }
-      : initialFormData;
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setFormData(nextFormData);
     setIsAutoSlug(!editingCategory);
-    setFormError("");
-  }, [editingCategory, isOpen]);
+    setErrors({});
+  }, [isOpen, editingCategory]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -61,7 +59,9 @@ export default function CategoryFormModal({
     };
 
     document.addEventListener("keydown", handleEsc);
-    return () => document.removeEventListener("keydown", handleEsc);
+    return () => {
+      document.removeEventListener("keydown", handleEsc);
+    };
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
@@ -73,47 +73,36 @@ export default function CategoryFormModal({
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "name") {
-      setFormData((prev) => ({
+    setFormData((prev) => {
+      if (name === "name") {
+        return {
+          ...prev,
+          name: value,
+          slug: isAutoSlug ? slugify(value) : prev.slug,
+        };
+      }
+
+      return {
         ...prev,
-        name: value,
-        slug: isAutoSlug ? slugify(value) : prev.slug,
-      }));
-      return;
-    }
+        [name]:
+          name === "productCount"
+            ? Number(value)
+            : name === "parentId"
+              ? value === ""
+                ? ""
+                : Number(value)
+              : value,
+      };
+    });
 
     if (name === "slug") {
       setIsAutoSlug(false);
     }
 
-    setFormData((prev) => ({
+    setErrors((prev) => ({
       ...prev,
-      [name]:
-        name === "productCount"
-          ? Number(value)
-          : name === "parentId"
-            ? value === ""
-              ? ""
-              : Number(value)
-            : value,
+      [name]: "",
     }));
-  };
-
-  const handleReset = () => {
-    const resetData = editingCategory
-      ? {
-          name: editingCategory.name || "",
-          slug: editingCategory.slug || "",
-          parentId: editingCategory.parentId ?? "",
-          productCount: editingCategory.productCount || 0,
-          status: editingCategory.status || "active",
-          image: editingCategory.image || "",
-        }
-      : initialFormData;
-
-    setFormData(resetData);
-    setIsAutoSlug(!editingCategory);
-    setFormError("");
   };
 
   const handleGenerateSlug = () => {
@@ -122,36 +111,40 @@ export default function CategoryFormModal({
       slug: slugify(prev.name),
     }));
     setIsAutoSlug(true);
+
+    setErrors((prev) => ({
+      ...prev,
+      slug: "",
+    }));
   };
 
-  const validateForm = () => {
-    if (!formData.name.trim()) return "Tên danh mục không được để trống.";
-    if (!formData.slug.trim()) return "Slug không được để trống.";
-
-    const isSlugExist = categories.some(
-      (item) =>
-        item.slug.toLowerCase() === formData.slug.trim().toLowerCase() &&
-        item.id !== editingCategory?.id,
+  const handleReset = () => {
+    setFormData(
+      editingCategory
+        ? getCategoryFormData(editingCategory)
+        : getDefaultCategoryForm(),
     );
-
-    if (isSlugExist) return "Slug đã tồn tại.";
-    if (formData.productCount < 0) return "Số sản phẩm không được nhỏ hơn 0.";
-
-    return "";
+    setIsAutoSlug(!editingCategory);
+    setErrors({});
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const message = validateForm();
-    if (message) {
-      setFormError(message);
+    const validationErrors = validateCategoryForm({
+      formData,
+      categories,
+      editingCategory,
+    });
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
     }
 
     const payload = {
       ...formData,
-      parentId: formData.parentId === "" ? null : formData.parentId,
+      parentId: formData.parentId === "" ? null : Number(formData.parentId),
       updatedAt: new Date().toISOString().slice(0, 10),
     };
 
@@ -177,18 +170,16 @@ export default function CategoryFormModal({
             </div>
           </div>
 
-          <button onClick={onClose} className={modalCloseButtonClass}>
+          <button
+            type="button"
+            onClick={onClose}
+            className={modalCloseButtonClass}
+          >
             <X size={20} />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="px-6 py-5">
-          {formError && (
-            <div className="mb-5 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
-              {formError}
-            </div>
-          )}
-
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
             <div>
               <label className="mb-2 block text-sm font-medium text-slate-700">
@@ -202,6 +193,9 @@ export default function CategoryFormModal({
                 placeholder="Ví dụ: Áo nam"
                 className={inputClass}
               />
+              {errors.name && (
+                <p className="mt-1 text-sm text-red-500">{errors.name}</p>
+              )}
             </div>
 
             <div>
@@ -232,6 +226,9 @@ export default function CategoryFormModal({
                   Tạo slug
                 </button>
               </div>
+              {errors.slug && (
+                <p className="mt-1 text-sm text-red-500">{errors.slug}</p>
+              )}
             </div>
 
             <div>
@@ -266,6 +263,11 @@ export default function CategoryFormModal({
                 onChange={handleChange}
                 className={inputClass}
               />
+              {errors.productCount && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.productCount}
+                </p>
+              )}
             </div>
 
             <div>
@@ -314,7 +316,7 @@ export default function CategoryFormModal({
                 alt="Preview"
                 className="h-24 w-24 rounded-2xl border border-slate-200 object-cover"
                 onError={(e) => {
-                  e.target.style.display = "none";
+                  e.currentTarget.style.display = "none";
                 }}
               />
             </div>
