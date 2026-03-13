@@ -31,6 +31,7 @@ import {
   getRevenueByCategory,
   getCustomerStats,
   getPerformanceStats,
+  getRevenueByDay,
 } from "../../utils/statisticsUtils/statisticsHelper";
 
 const COLORS = ["#3b82f6", "#14b8a6", "#f97316", "#a855f7", "#eab308"];
@@ -74,6 +75,7 @@ export default function StatisticsPage() {
         setStatistics({
           summary,
           revenueByMonth: getRevenueByMonth(orders),
+          revenueByDay: getRevenueByDay(orders),
           trafficSources: getTrafficSources(visits),
           revenueByCategory: getRevenueByCategory(orders, categories),
           customerStats: getCustomerStats(orders, customers),
@@ -114,7 +116,7 @@ export default function StatisticsPage() {
 
   const statCards = [
     {
-      title: "Tổng doanh thu",
+      title: "Doanh thu tháng này",
       value: `${formatCurrency(statistics.summary.totalRevenue)} đ`,
       icon: DollarSign,
       iconClass: "bg-emerald-100 text-emerald-600",
@@ -124,6 +126,12 @@ export default function StatisticsPage() {
       value: statistics.summary.totalOrders,
       icon: ShoppingCart,
       iconClass: "bg-sky-100 text-sky-600",
+    },
+    {
+      title: "Đơn chờ xử lý",
+      value: statistics.summary.pendingOrders,
+      icon: ShoppingCart,
+      iconClass: "bg-orange-100 text-orange-600",
     },
     {
       title: "Lượt truy cập",
@@ -150,7 +158,7 @@ export default function StatisticsPage() {
         </p>
       </div>
 
-      <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-5">
         {statCards.map((card) => {
           const Icon = card.icon;
 
@@ -187,7 +195,16 @@ export default function StatisticsPage() {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="month" />
                 <YAxis />
-                <Tooltip formatter={(value) => `${formatCurrency(value)} đ`} />
+                <Tooltip
+                  formatter={(value) => `${formatCurrency(value)} đ`}
+                  labelFormatter={(label, payload) => {
+                    if (payload && payload.length) {
+                      const orders = payload[0].payload.orders;
+                      return `${label} • ${orders} đơn`;
+                    }
+                    return label;
+                  }}
+                />
                 <Line
                   type="monotone"
                   dataKey="revenue"
@@ -226,6 +243,37 @@ export default function StatisticsPage() {
       </div>
 
       <div className="mb-6 grid grid-cols-1 gap-6 xl:grid-cols-2">
+        <div className="rounded-3xl bg-white p-5 shadow-sm">
+          <h2 className="mb-4 text-lg font-semibold text-slate-800">
+            Doanh thu theo ngày trong tháng
+          </h2>
+
+          <div className="h-[320px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={statistics.revenueByDay}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="day" />
+                <YAxis />
+                <Tooltip
+                  formatter={(value) => `${formatCurrency(value)} đ`}
+                  labelFormatter={(label, payload) => {
+                    if (payload && payload.length) {
+                      const orders = payload[0].payload.orders;
+                      return `${label} • ${orders} đơn`;
+                    }
+                    return label;
+                  }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="revenue"
+                  stroke="#14b8a6"
+                  strokeWidth={3}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
         <div className="rounded-3xl bg-white p-5 shadow-sm">
           <h2 className="mb-4 text-lg font-semibold text-slate-800">
             Doanh thu theo danh mục

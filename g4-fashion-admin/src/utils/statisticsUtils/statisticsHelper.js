@@ -10,13 +10,22 @@ export const getRevenueByMonth = (orders) => {
     .filter((item) => item.status === "completed")
     .forEach((order) => {
       const month = getMonthLabel(order.createdAt);
-      if (!map[month]) map[month] = 0;
-      map[month] += order.totalAmount || 0;
+
+      if (!map[month]) {
+        map[month] = {
+          revenue: 0,
+          orders: 0,
+        };
+      }
+
+      map[month].revenue += order.totalAmount || 0;
+      map[month].orders += 1;
     });
 
   return Object.keys(map).map((month) => ({
     month,
-    revenue: map[month],
+    revenue: map[month].revenue,
+    orders: map[month].orders,
   }));
 };
 
@@ -89,35 +98,80 @@ export const getCustomerStats = (orders, customers) => {
 };
 
 export const getPerformanceStats = (orders, visits, reviews, favorites) => {
-  const completedOrders = orders.filter((item) => item.status === "completed");
+  const now = new Date();
 
-  const totalRevenue = completedOrders.reduce(
+  const completedOrders = orders.filter((item) => item.status === "completed");
+  const currentMonthOrders = completedOrders.filter((order) => {
+    const d = new Date(order.createdAt);
+    return (
+      d.getMonth() === now.getMonth() &&
+      d.getFullYear() === now.getFullYear()
+    );
+  });
+
+  const pendingOrders = orders.filter((item) => item.status === "pending");
+
+  const totalRevenue = currentMonthOrders.reduce(
     (sum, item) => sum + (item.totalAmount || 0),
-    0,
+    0
   );
 
   const totalVisits = visits.reduce(
     (sum, item) => sum + (item.visits || 0),
-    0,
+    0
   );
 
   return {
     totalRevenue,
-    totalOrders: orders.length,
+    totalOrders: completedOrders.length,
+    pendingOrders: pendingOrders.length,
     totalVisits,
-    conversionRate: totalVisits
-      ? ((completedOrders.length / totalVisits) * 100).toFixed(1)
-      : 0,
+    conversionRate: totalVisits ?
+      ((completedOrders.length / totalVisits) * 100).toFixed(1) : 0,
     totalLikes: favorites.length,
     totalPageviews: totalVisits,
-    averageRating: reviews.length
-      ? (
-          reviews.reduce((sum, item) => sum + (item.rating || 0), 0) /
-          reviews.length
-        ).toFixed(1)
-      : 0,
-    averageOrderValue: completedOrders.length
-      ? Math.round(totalRevenue / completedOrders.length)
-      : 0,
+    averageRating: reviews.length ?
+      (
+        reviews.reduce((sum, item) => sum + (item.rating || 0), 0) /
+        reviews.length
+      ).toFixed(1) : 0,
+    averageOrderValue: completedOrders.length ?
+      Math.round(
+        completedOrders.reduce((sum, o) => sum + o.totalAmount, 0) /
+        completedOrders.length
+      ) : 0,
   };
+};
+export const getRevenueByDay = (orders) => {
+  const now = new Date();
+  const map = {};
+
+  orders
+    .filter((item) => item.status === "completed")
+    .forEach((order) => {
+      const d = new Date(order.createdAt);
+
+      if (
+        d.getMonth() === now.getMonth() &&
+        d.getFullYear() === now.getFullYear()
+      ) {
+        const day = d.getDate();
+
+        if (!map[day]) {
+          map[day] = {
+            day: `Ngày ${day}`,
+            revenue: 0,
+            orders: 0,
+          };
+        }
+
+        map[day].revenue += order.totalAmount || 0;
+        map[day].orders += 1;
+      }
+    });
+
+  return Object.values(map).sort((a, b) => {
+    return parseInt(a.day.replace("Ngày ", "")) -
+      parseInt(b.day.replace("Ngày ", ""));
+  });
 };
