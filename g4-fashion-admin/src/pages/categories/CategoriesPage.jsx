@@ -9,6 +9,7 @@ import {
 } from "../../utils/uiClasses";
 import { getCategoryStats } from "../../utils/categories/categoryHelpers";
 import { useCategoryFilters } from "../../hooks/categories/useCategoryFilters";
+import { useCategoryModals } from "../../hooks/categories/useCategoryModals";
 import CategoryStats from "../../components/categories/CategoryStats";
 import CategoryTable from "../../components/categories/CategoryTable";
 import CategoryFormModal from "../../components/categories/CategoryFormModal";
@@ -22,14 +23,21 @@ export default function CategoriesPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const [isFormOpen, setIsFormOpen] = useState(false);
-  const [editingCategory, setEditingCategory] = useState(null);
-
-  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const [deletingCategory, setDeletingCategory] = useState(null);
-
-  const [isDetailOpen, setIsDetailOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const {
+    isFormOpen,
+    editingCategory,
+    isDeleteOpen,
+    deletingCategory,
+    isDetailOpen,
+    selectedCategory,
+    handleOpenCreate,
+    handleOpenEdit,
+    handleCloseForm,
+    handleOpenDelete,
+    handleCloseDelete,
+    handleOpenDetail,
+    handleCloseDetail,
+  } = useCategoryModals();
 
   const {
     searchTerm,
@@ -74,21 +82,6 @@ export default function CategoriesPage() {
     return parent ? parent.name : "Không xác định";
   };
 
-  const handleOpenCreate = () => {
-    setEditingCategory(null);
-    setIsFormOpen(true);
-  };
-
-  const handleOpenEdit = (category) => {
-    setEditingCategory(category);
-    setIsFormOpen(true);
-  };
-
-  const handleCloseForm = () => {
-    setEditingCategory(null);
-    setIsFormOpen(false);
-  };
-
   const handleSubmitForm = async (payload) => {
     try {
       if (editingCategory) {
@@ -107,16 +100,6 @@ export default function CategoriesPage() {
     }
   };
 
-  const handleOpenDelete = (category) => {
-    setDeletingCategory(category);
-    setIsDeleteOpen(true);
-  };
-
-  const handleCloseDelete = () => {
-    setDeletingCategory(null);
-    setIsDeleteOpen(false);
-  };
-
   const handleConfirmDelete = async () => {
     try {
       await categoryService.remove(deletingCategory.id);
@@ -127,16 +110,6 @@ export default function CategoriesPage() {
       console.error("Lỗi xóa danh mục:", err);
       toast.error("Không thể xóa danh mục");
     }
-  };
-
-  const handleOpenDetail = (category) => {
-    setSelectedCategory(category);
-    setIsDetailOpen(true);
-  };
-
-  const handleCloseDetail = () => {
-    setSelectedCategory(null);
-    setIsDetailOpen(false);
   };
 
   return (

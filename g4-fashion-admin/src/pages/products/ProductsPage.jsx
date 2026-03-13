@@ -11,6 +11,9 @@ import {
   outlineButtonClass,
 } from "../../utils/uiClasses";
 import { useProductFilters } from "../../hooks/products/useProductFilters";
+import { useProductModals } from "../../hooks/products/useProductModals";
+import { useProductForm } from "../../hooks/products/useProductForm";
+import { getProductStats } from "../../utils/products/productHelpers";
 import ProductStats from "../../components/products/ProductStats";
 import ProductTable from "../../components/products/ProductTable";
 import ProductFormModal from "../../components/products/ProductFormModal";
@@ -18,12 +21,6 @@ import ProductDetailModal from "../../components/products/ProductDetailModal";
 import ProductDeleteModal from "../../components/products/ProductDeleteModal";
 import ProductToolbar from "../../components/products/ProductToolbar";
 import Pagination from "../../components/common/Pagination";
-import {
-  generateProductCode,
-  getDefaultProductForm,
-  getProductStats,
-  validateProductForm,
-} from "../../utils/products/productHelpers";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
@@ -32,15 +29,32 @@ export default function ProductsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const [formData, setFormData] = useState(getDefaultProductForm());
-  const [formErrors, setFormErrors] = useState({});
+  const {
+    isCreateOpen,
+    isEditOpen,
+    isDetailOpen,
+    isDeleteOpen,
+    selectedProduct,
+    handleOpenCreate,
+    handleCloseCreate,
+    handleOpenEdit,
+    handleCloseEdit,
+    handleOpenDetail,
+    handleCloseDetail,
+    handleOpenDelete,
+    handleCloseDelete,
+  } = useProductModals();
 
-  const [isCreateOpen, setIsCreateOpen] = useState(false);
-  const [isEditOpen, setIsEditOpen] = useState(false);
-  const [isDetailOpen, setIsDetailOpen] = useState(false);
-  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const {
+    formData,
+    formErrors,
+    resetForm,
+    fillEditForm,
+    clearErrors,
+    handleChangeForm,
+    validateForm,
+    buildPayload,
+  } = useProductForm(products);
 
   const {
     searchTerm,
@@ -97,99 +111,31 @@ export default function ProductsPage() {
     return found ? found.name : "Không xác định";
   };
 
-  const resetForm = () => {
-    setFormData({
-      ...getDefaultProductForm(),
-      code: generateProductCode(products),
-    });
-    setFormErrors({});
-  };
-
-  const handleOpenCreate = () => {
+  const onOpenCreate = () => {
     resetForm();
-    setIsCreateOpen(true);
+    handleOpenCreate();
   };
 
-  const handleCloseCreate = () => {
-    setIsCreateOpen(false);
-    setFormErrors({});
+  const onCloseCreate = () => {
+    clearErrors();
+    handleCloseCreate();
   };
 
-  const handleOpenEdit = (product) => {
-    setSelectedProduct(product);
-    setFormData({
-      code: product.code || "",
-      name: product.name || "",
-      slug: product.slug || "",
-      categoryId: String(product.categoryId || ""),
-      brandId: String(product.brandId || ""),
-      price: product.price ?? "",
-      salePrice: product.salePrice ?? "",
-      stock: product.stock ?? "",
-      status: product.status || "selling",
-      image: product.image || "",
-      description: product.description || "",
-      createdAt: product.createdAt || new Date().toISOString().split("T")[0],
-    });
-    setFormErrors({});
-    setIsEditOpen(true);
+  const onOpenEdit = (product) => {
+    fillEditForm(product);
+    handleOpenEdit(product);
   };
 
-  const handleCloseEdit = () => {
-    setIsEditOpen(false);
-    setSelectedProduct(null);
-    setFormErrors({});
+  const onCloseEdit = () => {
+    clearErrors();
+    handleCloseEdit();
   };
-
-  const handleOpenDetail = (product) => {
-    setSelectedProduct(product);
-    setIsDetailOpen(true);
-  };
-
-  const handleCloseDetail = () => {
-    setIsDetailOpen(false);
-    setSelectedProduct(null);
-  };
-
-  const handleOpenDelete = (product) => {
-    setSelectedProduct(product);
-    setIsDeleteOpen(true);
-  };
-
-  const handleCloseDelete = () => {
-    setIsDeleteOpen(false);
-    setSelectedProduct(null);
-  };
-
-  const handleChangeForm = (e) => {
-    const { name, value } = e.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-
-    setFormErrors((prev) => ({
-      ...prev,
-      [name]: "",
-    }));
-  };
-
-  const buildPayload = () => ({
-    ...formData,
-    categoryId: Number(formData.categoryId),
-    brandId: Number(formData.brandId),
-    price: Number(formData.price),
-    salePrice: Number(formData.salePrice),
-    stock: Number(formData.stock),
-  });
 
   const handleCreateProduct = async (e) => {
     e.preventDefault();
 
-    const errors = validateProductForm(formData);
+    const errors = validateForm();
     if (Object.keys(errors).length > 0) {
-      setFormErrors(errors);
       toast.error("Vui lòng kiểm tra lại thông tin.");
       return;
     }
@@ -203,7 +149,7 @@ export default function ProductsPage() {
       });
 
       toast.success("Thêm sản phẩm thành công.");
-      handleCloseCreate();
+      onCloseCreate();
       fetchData();
     } catch (err) {
       console.error("Lỗi thêm sản phẩm:", err);
@@ -214,9 +160,8 @@ export default function ProductsPage() {
   const handleUpdateProduct = async (e) => {
     e.preventDefault();
 
-    const errors = validateProductForm(formData);
+    const errors = validateForm();
     if (Object.keys(errors).length > 0) {
-      setFormErrors(errors);
       toast.error("Vui lòng kiểm tra lại thông tin.");
       return;
     }
@@ -230,7 +175,7 @@ export default function ProductsPage() {
       });
 
       toast.success("Cập nhật sản phẩm thành công.");
-      handleCloseEdit();
+      onCloseEdit();
       fetchData();
     } catch (err) {
       console.error("Lỗi cập nhật sản phẩm:", err);
@@ -268,7 +213,7 @@ export default function ProductsPage() {
             Tải lại
           </button>
 
-          <button onClick={handleOpenCreate} className={primaryButtonClass}>
+          <button onClick={onOpenCreate} className={primaryButtonClass}>
             <Plus size={18} />
             Thêm sản phẩm
           </button>
@@ -313,7 +258,7 @@ export default function ProductsPage() {
               getCategoryName={getCategoryName}
               getBrandName={getBrandName}
               onView={handleOpenDetail}
-              onEdit={handleOpenEdit}
+              onEdit={onOpenEdit}
               onDelete={handleOpenDelete}
             />
 
@@ -333,7 +278,7 @@ export default function ProductsPage() {
         errors={formErrors}
         categories={categories}
         brands={brands}
-        onClose={handleCloseCreate}
+        onClose={onCloseCreate}
         onChange={handleChangeForm}
         onSubmit={handleCreateProduct}
       />
@@ -345,7 +290,7 @@ export default function ProductsPage() {
         errors={formErrors}
         categories={categories}
         brands={brands}
-        onClose={handleCloseEdit}
+        onClose={onCloseEdit}
         onChange={handleChangeForm}
         onSubmit={handleUpdateProduct}
       />
