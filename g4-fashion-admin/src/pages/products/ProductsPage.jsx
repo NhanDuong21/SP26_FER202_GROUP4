@@ -10,6 +10,7 @@ import {
   sectionHeaderClass,
   outlineButtonClass,
 } from "../../utils/uiClasses";
+import { useProductFilters } from "../../hooks/products/useProductFilters";
 import ProductStats from "../../components/products/ProductStats";
 import ProductTable from "../../components/products/ProductTable";
 import ProductFormModal from "../../components/products/ProductFormModal";
@@ -24,20 +25,12 @@ import {
   validateProductForm,
 } from "../../utils/products/productHelpers";
 
-const ITEMS_PER_PAGE = 5;
-
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
-  const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
-  const [categoryFilter, setCategoryFilter] = useState("all");
-  const [brandFilter, setBrandFilter] = useState("all");
-  const [currentPage, setCurrentPage] = useState(1);
 
   const [formData, setFormData] = useState(getDefaultProductForm());
   const [formErrors, setFormErrors] = useState({});
@@ -48,6 +41,21 @@ export default function ProductsPage() {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const {
+    searchTerm,
+    setSearchTerm,
+    statusFilter,
+    setStatusFilter,
+    categoryFilter,
+    setCategoryFilter,
+    brandFilter,
+    setBrandFilter,
+    currentPage,
+    setCurrentPage,
+    paginatedProducts,
+    totalPages,
+  } = useProductFilters(products);
 
   const fetchData = async () => {
     try {
@@ -88,47 +96,6 @@ export default function ProductsPage() {
     const found = brands.find((item) => String(item.id) === String(brandId));
     return found ? found.name : "Không xác định";
   };
-
-  const filteredProducts = useMemo(() => {
-    return products.filter((item) => {
-      const keyword = searchTerm.trim().toLowerCase();
-
-      const matchSearch =
-        !keyword ||
-        item.name?.toLowerCase().includes(keyword) ||
-        item.code?.toLowerCase().includes(keyword) ||
-        item.slug?.toLowerCase().includes(keyword);
-
-      const matchStatus =
-        statusFilter === "all" || item.status === statusFilter;
-
-      const matchCategory =
-        categoryFilter === "all" ||
-        String(item.categoryId) === String(categoryFilter);
-
-      const matchBrand =
-        brandFilter === "all" || String(item.brandId) === String(brandFilter);
-
-      return matchSearch && matchStatus && matchCategory && matchBrand;
-    });
-  }, [products, searchTerm, statusFilter, categoryFilter, brandFilter]);
-
-  const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE) || 1;
-
-  const paginatedProducts = useMemo(() => {
-    const start = (currentPage - 1) * ITEMS_PER_PAGE;
-    return filteredProducts.slice(start, start + ITEMS_PER_PAGE);
-  }, [filteredProducts, currentPage]);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm, statusFilter, categoryFilter, brandFilter]);
-
-  useEffect(() => {
-    if (currentPage > totalPages) {
-      setCurrentPage(totalPages);
-    }
-  }, [currentPage, totalPages]);
 
   const resetForm = () => {
     setFormData({

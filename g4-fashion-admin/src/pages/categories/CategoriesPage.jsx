@@ -8,6 +8,7 @@ import {
   primaryButtonClass,
 } from "../../utils/uiClasses";
 import { getCategoryStats } from "../../utils/categories/categoryHelpers";
+import { useCategoryFilters } from "../../hooks/categories/useCategoryFilters";
 import CategoryStats from "../../components/categories/CategoryStats";
 import CategoryTable from "../../components/categories/CategoryTable";
 import CategoryFormModal from "../../components/categories/CategoryFormModal";
@@ -16,16 +17,10 @@ import CategoryDeleteModal from "../../components/categories/CategoryDeleteModal
 import CategoryToolbar from "../../components/categories/CategoryToolbar";
 import Pagination from "../../components/common/Pagination";
 
-const ITEMS_PER_PAGE = 5;
-
 export default function CategoriesPage() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
-  const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
-  const [currentPage, setCurrentPage] = useState(1);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState(null);
@@ -35,6 +30,17 @@ export default function CategoriesPage() {
 
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const {
+    searchTerm,
+    setSearchTerm,
+    statusFilter,
+    setStatusFilter,
+    currentPage,
+    setCurrentPage,
+    paginatedCategories,
+    totalPages,
+  } = useCategoryFilters(categories);
 
   const fetchCategories = async () => {
     try {
@@ -67,39 +73,6 @@ export default function CategoriesPage() {
 
     return parent ? parent.name : "Không xác định";
   };
-
-  const filteredCategories = useMemo(() => {
-    return categories.filter((item) => {
-      const keyword = searchTerm.trim().toLowerCase();
-
-      const matchSearch =
-        !keyword ||
-        item.name?.toLowerCase().includes(keyword) ||
-        item.slug?.toLowerCase().includes(keyword);
-
-      const matchStatus =
-        statusFilter === "all" || item.status === statusFilter;
-
-      return matchSearch && matchStatus;
-    });
-  }, [categories, searchTerm, statusFilter]);
-
-  const totalPages = Math.ceil(filteredCategories.length / ITEMS_PER_PAGE) || 1;
-
-  const paginatedCategories = useMemo(() => {
-    const start = (currentPage - 1) * ITEMS_PER_PAGE;
-    return filteredCategories.slice(start, start + ITEMS_PER_PAGE);
-  }, [filteredCategories, currentPage]);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm, statusFilter]);
-
-  useEffect(() => {
-    if (currentPage > totalPages) {
-      setCurrentPage(totalPages);
-    }
-  }, [currentPage, totalPages]);
 
   const handleOpenCreate = () => {
     setEditingCategory(null);
