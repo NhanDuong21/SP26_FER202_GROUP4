@@ -1,14 +1,14 @@
 {
   "categories": [
     {
-      "id": "1",
       "name": "Áo nam",
       "slug": "ao-nam",
       "parentId": null,
       "productCount": 156,
       "status": "active",
-      "image": "https://dummyimage.com/80x80/e5e7eb/9ca3af&text=Ao",
-      "updatedAt": "2024-12-01"
+      "image": "https://png.pngtree.com/png-vector/20241203/ourlarge/pngtree-classic-folded-grey-shirt-png-image_14539541.png",
+      "updatedAt": "2026-03-13",
+      "id": "1"
     },
     {
       "name": "Áo sơ mi nam",
@@ -16,39 +16,39 @@
       "parentId": 1,
       "productCount": 78,
       "status": "active",
-      "image": "https://dummyimage.com/80x80/e5e7eb/9ca3af&text=SM",
-      "updatedAt": "2026-03-11",
+      "image": "https://png.pngtree.com/png-vector/20250613/ourlarge/pngtree-white-long-sleeve-dress-shirt-isolated-on-transparent-background-png-image_16527635.png",
+      "updatedAt": "2026-03-13",
       "id": "2"
     },
     {
-      "id": "3",
       "name": "Quần nữ",
       "slug": "quan-nu",
       "parentId": null,
       "productCount": 112,
       "status": "active",
-      "image": "https://dummyimage.com/80x80/e5e7eb/9ca3af&text=Q",
-      "updatedAt": "2024-12-05"
+      "image": "https://pos.nvncdn.com/4866c4-103846/art/99-mau-quan-au-nu-cong-so-dep-ton-dang-chuan-xu-huong_quan-au-nu-cong-so-3.webp",
+      "updatedAt": "2026-03-13",
+      "id": "3"
     },
     {
-      "id": "4",
       "name": "Váy nữ",
       "slug": "vay-nu",
       "parentId": null,
       "productCount": 95,
       "status": "active",
-      "image": "https://dummyimage.com/80x80/e5e7eb/9ca3af&text=V",
-      "updatedAt": "2024-12-08"
+      "image": "https://js0fpsb45jobj.vcdn.cloud/storage/upload/media/gumac/DE08004/4-DEN-DE08004.jpg",
+      "updatedAt": "2026-03-13",
+      "id": "4"
     },
     {
-      "id": "5",
       "name": "Phụ kiện",
       "slug": "phu-kien",
       "parentId": null,
       "productCount": 183,
       "status": "inactive",
-      "image": "https://dummyimage.com/80x80/e5e7eb/9ca3af&text=PK",
-      "updatedAt": "2024-12-10"
+      "image": "https://tamluxury.vn/wp-content/uploads/2023/08/su-kien-su-dung-trang-suc-nam.jpeg",
+      "updatedAt": "2026-03-13",
+      "id": "5"
     },
     {
       "name": "áo nữ",

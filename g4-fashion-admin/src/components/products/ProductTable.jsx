@@ -4,7 +4,7 @@ import {
   tableCellClass,
   tableHeaderCellClass,
 } from "../../utils/uiClasses";
-import { formatCurrency } from "../../utils/categories/formatCurrency";
+import { formatCurrency } from "../../utils/formatCurrency";
 import { getProductStatusInfo } from "../../utils/products/productUi";
 
 export default function ProductTable({
