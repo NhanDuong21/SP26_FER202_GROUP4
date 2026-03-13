@@ -25,7 +25,7 @@ import {
 import CustomerFormModal from "./CustomerFormModal";
 import CustomerDetailModal from "./CustomerDetailModal";
 import DeleteConfirmModal from "./DeleteConfirmModal";
-import { formatCurrency } from "../../utils/categories/formatCurrency";
+import { formatCurrency } from "../../utils/formatCurrency";
 
 export default function CustomersPage() {
   const [customers, setCustomers] = useState([]);
