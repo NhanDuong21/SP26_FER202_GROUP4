@@ -1,15 +1,13 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Plus, RefreshCcw } from "lucide-react";
 import toast from "react-hot-toast";
-import { productService } from "../../services/productService";
-import { categoryService } from "../../services/categoryService";
-import { brandService } from "../../services/brandService";
 import {
   cardClass,
   primaryButtonClass,
   sectionHeaderClass,
   outlineButtonClass,
 } from "../../utils/uiClasses";
+import { useProductsData } from "../../hooks/products/useProductsData";
 import { useProductFilters } from "../../hooks/products/useProductFilters";
 import { useProductModals } from "../../hooks/products/useProductModals";
 import { useProductForm } from "../../hooks/products/useProductForm";
@@ -23,11 +21,17 @@ import ProductToolbar from "../../components/products/ProductToolbar";
 import Pagination from "../../components/common/Pagination";
 
 export default function ProductsPage() {
-  const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [brands, setBrands] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const {
+    products,
+    categories,
+    brands,
+    loading,
+    error,
+    fetchData,
+    createProduct,
+    updateProduct,
+    deleteProduct,
+  } = useProductsData();
 
   const {
     isCreateOpen,
@@ -70,32 +74,6 @@ export default function ProductsPage() {
     paginatedProducts,
     totalPages,
   } = useProductFilters(products);
-
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      setError("");
-
-      const [productsRes, categoriesRes, brandsRes] = await Promise.all([
-        productService.getAll(),
-        categoryService.getAll(),
-        brandService.getAll(),
-      ]);
-
-      setProducts(productsRes.data || []);
-      setCategories(categoriesRes.data || []);
-      setBrands(brandsRes.data || []);
-    } catch (err) {
-      console.error("Lỗi lấy dữ liệu sản phẩm:", err);
-      setError("Không thể tải dữ liệu sản phẩm.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const stats = useMemo(() => getProductStats(products), [products]);
 
@@ -143,14 +121,14 @@ export default function ProductsPage() {
     try {
       const payload = buildPayload();
 
-      await productService.create({
+      await createProduct({
         ...payload,
         createdAt: new Date().toISOString().split("T")[0],
       });
 
       toast.success("Thêm sản phẩm thành công.");
       onCloseCreate();
-      fetchData();
+      await fetchData();
     } catch (err) {
       console.error("Lỗi thêm sản phẩm:", err);
       toast.error("Thêm sản phẩm thất bại.");
@@ -169,14 +147,14 @@ export default function ProductsPage() {
     try {
       const payload = buildPayload();
 
-      await productService.update(selectedProduct.id, {
+      await updateProduct(selectedProduct.id, {
         ...selectedProduct,
         ...payload,
       });
 
       toast.success("Cập nhật sản phẩm thành công.");
       onCloseEdit();
-      fetchData();
+      await fetchData();
     } catch (err) {
       console.error("Lỗi cập nhật sản phẩm:", err);
       toast.error("Cập nhật sản phẩm thất bại.");
@@ -185,10 +163,10 @@ export default function ProductsPage() {
 
   const handleDeleteProduct = async () => {
     try {
-      await productService.remove(selectedProduct.id);
+      await deleteProduct(selectedProduct.id);
       toast.success("Xóa sản phẩm thành công.");
       handleCloseDelete();
-      fetchData();
+      await fetchData();
     } catch (err) {
       console.error("Lỗi xóa sản phẩm:", err);
       toast.error("Xóa sản phẩm thất bại.");

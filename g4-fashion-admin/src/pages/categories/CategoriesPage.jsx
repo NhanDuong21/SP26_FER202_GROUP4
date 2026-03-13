@@ -1,13 +1,13 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import toast from "react-hot-toast";
 import { Plus } from "lucide-react";
-import { categoryService } from "../../services/categoryService";
 import {
   cardClass,
   sectionHeaderClass,
   primaryButtonClass,
 } from "../../utils/uiClasses";
 import { getCategoryStats } from "../../utils/categories/categoryHelpers";
+import { useCategoriesData } from "../../hooks/categories/useCategoriesData";
 import { useCategoryFilters } from "../../hooks/categories/useCategoryFilters";
 import { useCategoryModals } from "../../hooks/categories/useCategoryModals";
 import CategoryStats from "../../components/categories/CategoryStats";
@@ -19,9 +19,15 @@ import CategoryToolbar from "../../components/categories/CategoryToolbar";
 import Pagination from "../../components/common/Pagination";
 
 export default function CategoriesPage() {
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const {
+    categories,
+    loading,
+    error,
+    fetchCategories,
+    createCategory,
+    updateCategory,
+    deleteCategory,
+  } = useCategoriesData();
 
   const {
     isFormOpen,
@@ -50,26 +56,6 @@ export default function CategoriesPage() {
     totalPages,
   } = useCategoryFilters(categories);
 
-  const fetchCategories = async () => {
-    try {
-      setLoading(true);
-      setError("");
-
-      const res = await categoryService.getAll();
-      setCategories(res.data || []);
-    } catch (err) {
-      console.error("Lỗi lấy danh mục:", err);
-      setError("Không thể tải dữ liệu danh mục.");
-      toast.error("Tải danh mục thất bại");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchCategories();
-  }, []);
-
   const stats = useMemo(() => getCategoryStats(categories), [categories]);
 
   const getParentName = (parentId) => {
@@ -85,10 +71,10 @@ export default function CategoriesPage() {
   const handleSubmitForm = async (payload) => {
     try {
       if (editingCategory) {
-        await categoryService.update(editingCategory.id, payload);
+        await updateCategory(editingCategory.id, payload);
         toast.success("Cập nhật danh mục thành công");
       } else {
-        await categoryService.create(payload);
+        await createCategory(payload);
         toast.success("Thêm danh mục thành công");
       }
 
@@ -102,7 +88,7 @@ export default function CategoriesPage() {
 
   const handleConfirmDelete = async () => {
     try {
-      await categoryService.remove(deletingCategory.id);
+      await deleteCategory(deletingCategory.id);
       toast.success("Xóa danh mục thành công");
       await fetchCategories();
       handleCloseDelete();
