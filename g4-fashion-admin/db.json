@@ -347,6 +347,30 @@
     ],
     "createdAt": "2026-03-11T08:00:00",
     "completedAt": null
+  },
+    {
+    "id": "OD005",
+    "code": "ORD-005",
+    "customerId": "1",
+    "status": "completed",
+    "paymentStatus": "paid",
+    "trafficSource": "direct",
+    "subtotal": 1047000,
+    "discount": 50000,
+    "shippingFee": 30000,
+    "totalAmount": 1027000,
+    "items": [
+      {
+        "productId": "6",
+        "productName": "Áo polo premium nam",
+        "categoryId": "1",
+        "brandId": "4",
+        "quantity": 3,
+        "price": 549000
+      }
+    ],
+    "createdAt": "2026-03-11T09:00:00",
+    "completedAt": "2026-03-11T10:00:00"
   }
 ],
 "visits": [
