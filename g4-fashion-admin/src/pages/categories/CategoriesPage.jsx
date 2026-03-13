@@ -1,32 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
-import {
-  FolderKanban,
-  Tag,
-  Package,
-  Layers3,
-  Plus,
-  Eye,
-  Pencil,
-  Trash2,
-} from "lucide-react";
+import { Plus } from "lucide-react";
 import { categoryService } from "../../services/categoryService";
-import CategoryFormModal from "./CategoryFormModal";
-import DeleteConfirmModal from "./DeleteConfirmModal";
-import CategoryDetailModal from "./CategoryDetailModal";
 import {
-  statCardClass,
   cardClass,
   sectionHeaderClass,
   primaryButtonClass,
-  tableHeaderCellClass,
-  tableCellClass,
-  iconActionButtonClass,
 } from "../../utils/uiClasses";
-import {
-  getActionButtonColorClass,
-  getCategoryStatusBadgeClass,
-} from "../../utils/categories/categoryUi";
+import { getCategoryStats } from "../../utils/categories/categoryHelpers";
+import CategoryStats from "../../components/categories/CategoryStats";
+import CategoryTable from "../../components/categories/CategoryTable";
+import CategoryFormModal from "../../components/categories/CategoryFormModal";
+import CategoryDetailModal from "../../components/categories/CategoryDetailModal";
+import CategoryDeleteModal from "../../components/categories/CategoryDeleteModal";
 
 export default function CategoriesPage() {
   const [categories, setCategories] = useState([]);
@@ -48,7 +34,7 @@ export default function CategoriesPage() {
       setError("");
 
       const res = await categoryService.getAll();
-      setCategories(res.data);
+      setCategories(res.data || []);
     } catch (err) {
       console.error("Lỗi lấy danh mục:", err);
       setError("Không thể tải dữ liệu danh mục.");
@@ -61,6 +47,8 @@ export default function CategoriesPage() {
   useEffect(() => {
     fetchCategories();
   }, []);
+
+  const stats = useMemo(() => getCategoryStats(categories), [categories]);
 
   const getParentName = (parentId) => {
     if (!parentId) return "Danh mục gốc";
@@ -137,46 +125,9 @@ export default function CategoriesPage() {
     setIsDetailOpen(false);
   };
 
-  const totalCategories = categories.length;
-  const activeCategories = categories.filter(
-    (item) => item.status === "active",
-  ).length;
-  const totalProducts = categories.reduce(
-    (sum, item) => sum + (item.productCount || 0),
-    0,
-  );
-  const rootCategories = categories.filter((item) => !item.parentId).length;
-
-  const statCards = [
-    {
-      title: "Tổng danh mục",
-      value: totalCategories,
-      icon: FolderKanban,
-      iconClass: "bg-sky-100 text-sky-600",
-    },
-    {
-      title: "Đang hoạt động",
-      value: activeCategories,
-      icon: Tag,
-      iconClass: "bg-emerald-100 text-emerald-600",
-    },
-    {
-      title: "Tổng sản phẩm",
-      value: totalProducts,
-      icon: Package,
-      iconClass: "bg-violet-100 text-violet-600",
-    },
-    {
-      title: "Danh mục gốc",
-      value: rootCategories,
-      icon: Layers3,
-      iconClass: "bg-amber-100 text-amber-600",
-    },
-  ];
-
   return (
-    <div className="p-6">
-      <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+    <div className="space-y-6 p-6">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-slate-800">
             Quản lý Danh mục
@@ -192,30 +143,7 @@ export default function CategoriesPage() {
         </button>
       </div>
 
-      <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {statCards.map((card) => {
-          const Icon = card.icon;
-
-          return (
-            <div key={card.title} className={statCardClass}>
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="text-sm text-slate-500">{card.title}</p>
-                  <h3 className="mt-3 text-3xl font-bold text-slate-800">
-                    {card.value}
-                  </h3>
-                </div>
-
-                <div
-                  className={`flex h-12 w-12 items-center justify-center rounded-2xl ${card.iconClass}`}
-                >
-                  <Icon size={22} />
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      <CategoryStats stats={stats} />
 
       <div className={cardClass}>
         <div className={sectionHeaderClass}>
@@ -234,124 +162,13 @@ export default function CategoriesPage() {
         ) : error ? (
           <div className="px-6 py-10 text-red-500">{error}</div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[900px] text-sm">
-              <thead className="bg-slate-50">
-                <tr>
-                  <th className={tableHeaderCellClass}>Hình ảnh</th>
-                  <th className={tableHeaderCellClass}>Tên danh mục</th>
-                  <th className={tableHeaderCellClass}>Danh mục cha</th>
-                  <th className={tableHeaderCellClass}>Số sản phẩm</th>
-                  <th className={tableHeaderCellClass}>Trạng thái</th>
-                  <th className={tableHeaderCellClass}>Ngày cập nhật</th>
-                  <th className={`${tableHeaderCellClass} text-center`}>
-                    Thao tác
-                  </th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {categories.map((category) => (
-                  <tr
-                    key={category.id}
-                    className="border-t border-slate-100 transition hover:bg-slate-50/80"
-                  >
-                    <td className={tableCellClass}>
-                      <img
-                        src={category.image}
-                        alt={category.name}
-                        className="h-14 w-14 rounded-2xl border border-slate-200 object-cover"
-                      />
-                    </td>
-
-                    <td className={tableCellClass}>
-                      <div className="font-semibold text-slate-800">
-                        {category.name}
-                      </div>
-                      <div className="mt-1 text-xs text-slate-500">
-                        /{category.slug}
-                      </div>
-                    </td>
-
-                    <td className={`${tableCellClass} text-slate-600`}>
-                      {category.parentId ? (
-                        <span className="inline-flex rounded-full bg-sky-50 px-3 py-1 text-xs font-medium text-sky-700">
-                          {getParentName(category.parentId)}
-                        </span>
-                      ) : (
-                        <span className="text-slate-500">Danh mục gốc</span>
-                      )}
-                    </td>
-
-                    <td className={tableCellClass}>
-                      <span className="font-semibold text-blue-600">
-                        {category.productCount}
-                      </span>
-                    </td>
-
-                    <td className={tableCellClass}>
-                      <span
-                        className={getCategoryStatusBadgeClass(category.status)}
-                      >
-                        {category.status === "active"
-                          ? "Hoạt động"
-                          : "Ngưng hoạt động"}
-                      </span>
-                    </td>
-
-                    <td className={`${tableCellClass} text-slate-600`}>
-                      {category.updatedAt}
-                    </td>
-
-                    <td className={tableCellClass}>
-                      <div className="flex items-center justify-center gap-2">
-                        <button
-                          onClick={() => handleOpenDetail(category)}
-                          className={`${iconActionButtonClass} ${getActionButtonColorClass(
-                            "view",
-                          )}`}
-                          title="Xem chi tiết"
-                        >
-                          <Eye size={18} />
-                        </button>
-
-                        <button
-                          onClick={() => handleOpenEdit(category)}
-                          className={`${iconActionButtonClass} ${getActionButtonColorClass(
-                            "edit",
-                          )}`}
-                          title="Chỉnh sửa"
-                        >
-                          <Pencil size={18} />
-                        </button>
-
-                        <button
-                          onClick={() => handleOpenDelete(category)}
-                          className={`${iconActionButtonClass} ${getActionButtonColorClass(
-                            "delete",
-                          )}`}
-                          title="Xóa"
-                        >
-                          <Trash2 size={18} />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-
-                {categories.length === 0 && (
-                  <tr>
-                    <td
-                      colSpan="7"
-                      className="px-6 py-12 text-center text-slate-500"
-                    >
-                      Chưa có danh mục nào.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+          <CategoryTable
+            categories={categories}
+            getParentName={getParentName}
+            onView={handleOpenDetail}
+            onEdit={handleOpenEdit}
+            onDelete={handleOpenDelete}
+          />
         )}
       </div>
 
@@ -363,7 +180,7 @@ export default function CategoriesPage() {
         editingCategory={editingCategory}
       />
 
-      <DeleteConfirmModal
+      <CategoryDeleteModal
         isOpen={isDeleteOpen}
         onClose={handleCloseDelete}
         onConfirm={handleConfirmDelete}

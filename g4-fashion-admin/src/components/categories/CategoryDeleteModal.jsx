@@ -7,7 +7,7 @@ import {
   secondaryButtonClass,
 } from "../../utils/uiClasses";
 
-export default function DeleteConfirmModal({
+export default function CategoryDeleteModal({
   isOpen,
   onClose,
   onConfirm,
