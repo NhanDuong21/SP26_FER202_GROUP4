@@ -7,7 +7,7 @@ import {
   modalCloseButtonClass,
   infoItemClass,
   secondaryButtonClass,
-} from "../../utils/categories/uiClasses";
+} from "../../utils/uiClasses";
 import { getCategoryStatusBadgeClass } from "../../utils/categories/categoryUi";
 
 export default function CategoryDetailModal({

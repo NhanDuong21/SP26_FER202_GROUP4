@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FolderPlus, Link2, Tag, X } from "lucide-react";
-import { slugify } from "../../utils/categories/slugify";
+import { slugify } from "../../utils/slugify";
 import {
   inputClass,
   inputWithIconClass,
@@ -12,7 +12,7 @@ import {
   secondaryButtonClass,
   primaryButtonClass,
   previewBoxClass,
-} from "../../utils/categories/uiClasses";
+} from "../../utils/uiClasses";
 
 const initialFormData = {
   name: "",

@@ -22,7 +22,7 @@ import {
   tableHeaderCellClass,
   tableCellClass,
   iconActionButtonClass,
-} from "../../utils/categories/uiClasses";
+} from "../../utils/uiClasses";
 import {
   getActionButtonColorClass,
   getCategoryStatusBadgeClass,
