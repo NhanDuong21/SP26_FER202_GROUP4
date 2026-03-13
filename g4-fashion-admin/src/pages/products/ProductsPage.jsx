@@ -1,8 +1,26 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { Plus, RefreshCcw } from "lucide-react";
+import toast from "react-hot-toast";
 import { productService } from "../../services/productService";
 import { categoryService } from "../../services/categoryService";
 import { brandService } from "../../services/brandService";
-import { formatCurrency } from "../../utils/categories/formatCurrency";
+import {
+  cardClass,
+  primaryButtonClass,
+  sectionHeaderClass,
+  outlineButtonClass,
+} from "../../utils/uiClasses";
+import ProductStats from "../../components/products/ProductStats";
+import ProductTable from "../../components/products/ProductTable";
+import ProductFormModal from "../../components/products/ProductFormModal";
+import ProductDetailModal from "../../components/products/ProductDetailModal";
+import ProductDeleteModal from "../../components/products/ProductDeleteModal";
+import {
+  generateProductCode,
+  getDefaultProductForm,
+  getProductStats,
+  validateProductForm,
+} from "../../utils/products/productHelpers";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
@@ -10,6 +28,16 @@ export default function ProductsPage() {
   const [brands, setBrands] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const [formData, setFormData] = useState(getDefaultProductForm());
+  const [formErrors, setFormErrors] = useState({});
+
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const fetchData = async () => {
     try {
@@ -22,9 +50,9 @@ export default function ProductsPage() {
         brandService.getAll(),
       ]);
 
-      setProducts(productsRes.data);
-      setCategories(categoriesRes.data);
-      setBrands(brandsRes.data);
+      setProducts(productsRes.data || []);
+      setCategories(categoriesRes.data || []);
+      setBrands(brandsRes.data || []);
     } catch (err) {
       console.error("Lỗi lấy dữ liệu sản phẩm:", err);
       setError("Không thể tải dữ liệu sản phẩm.");
@@ -37,130 +65,266 @@ export default function ProductsPage() {
     fetchData();
   }, []);
 
+  const stats = useMemo(() => getProductStats(products), [products]);
+
   const getCategoryName = (categoryId) => {
-    const found = categories.find((item) => item.id === categoryId);
+    const found = categories.find(
+      (item) => String(item.id) === String(categoryId),
+    );
     return found ? found.name : "Không xác định";
   };
 
   const getBrandName = (brandId) => {
-    const found = brands.find((item) => item.id === brandId);
+    const found = brands.find((item) => String(item.id) === String(brandId));
     return found ? found.name : "Không xác định";
   };
 
-  const getStatusInfo = (status) => {
-    switch (status) {
-      case "selling":
-        return {
-          label: "Đang bán",
-          className: "bg-green-100 text-green-700",
-        };
-      case "paused":
-        return {
-          label: "Tạm dừng",
-          className: "bg-yellow-100 text-yellow-700",
-        };
-      case "out_of_stock":
-        return {
-          label: "Hết hàng",
-          className: "bg-red-100 text-red-700",
-        };
-      default:
-        return {
-          label: "Không xác định",
-          className: "bg-slate-100 text-slate-700",
-        };
+  const resetForm = () => {
+    setFormData({
+      ...getDefaultProductForm(),
+      code: generateProductCode(products),
+    });
+    setFormErrors({});
+  };
+
+  const handleOpenCreate = () => {
+    resetForm();
+    setIsCreateOpen(true);
+  };
+
+  const handleCloseCreate = () => {
+    setIsCreateOpen(false);
+    setFormErrors({});
+  };
+
+  const handleOpenEdit = (product) => {
+    setSelectedProduct(product);
+    setFormData({
+      code: product.code || "",
+      name: product.name || "",
+      slug: product.slug || "",
+      categoryId: String(product.categoryId || ""),
+      brandId: String(product.brandId || ""),
+      price: product.price ?? "",
+      salePrice: product.salePrice ?? "",
+      stock: product.stock ?? "",
+      status: product.status || "selling",
+      image: product.image || "",
+      description: product.description || "",
+      createdAt: product.createdAt || new Date().toISOString().split("T")[0],
+    });
+    setFormErrors({});
+    setIsEditOpen(true);
+  };
+
+  const handleCloseEdit = () => {
+    setIsEditOpen(false);
+    setSelectedProduct(null);
+    setFormErrors({});
+  };
+
+  const handleOpenDetail = (product) => {
+    setSelectedProduct(product);
+    setIsDetailOpen(true);
+  };
+
+  const handleCloseDetail = () => {
+    setIsDetailOpen(false);
+    setSelectedProduct(null);
+  };
+
+  const handleOpenDelete = (product) => {
+    setSelectedProduct(product);
+    setIsDeleteOpen(true);
+  };
+
+  const handleCloseDelete = () => {
+    setIsDeleteOpen(false);
+    setSelectedProduct(null);
+  };
+
+  const handleChangeForm = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    setFormErrors((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
+  };
+
+  const buildPayload = () => ({
+    ...formData,
+    categoryId: Number(formData.categoryId),
+    brandId: Number(formData.brandId),
+    price: Number(formData.price),
+    salePrice: Number(formData.salePrice),
+    stock: Number(formData.stock),
+  });
+
+  const handleCreateProduct = async (e) => {
+    e.preventDefault();
+
+    const errors = validateProductForm(formData);
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+      toast.error("Vui lòng kiểm tra lại thông tin.");
+      return;
+    }
+
+    try {
+      const payload = buildPayload();
+
+      await productService.create({
+        ...payload,
+        createdAt: new Date().toISOString().split("T")[0],
+      });
+
+      toast.success("Thêm sản phẩm thành công.");
+      handleCloseCreate();
+      fetchData();
+    } catch (err) {
+      console.error("Lỗi thêm sản phẩm:", err);
+      toast.error("Thêm sản phẩm thất bại.");
+    }
+  };
+
+  const handleUpdateProduct = async (e) => {
+    e.preventDefault();
+
+    const errors = validateProductForm(formData);
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+      toast.error("Vui lòng kiểm tra lại thông tin.");
+      return;
+    }
+
+    try {
+      const payload = buildPayload();
+
+      await productService.update(selectedProduct.id, {
+        ...selectedProduct,
+        ...payload,
+      });
+
+      toast.success("Cập nhật sản phẩm thành công.");
+      handleCloseEdit();
+      fetchData();
+    } catch (err) {
+      console.error("Lỗi cập nhật sản phẩm:", err);
+      toast.error("Cập nhật sản phẩm thất bại.");
+    }
+  };
+
+  const handleDeleteProduct = async () => {
+    try {
+      await productService.remove(selectedProduct.id);
+      toast.success("Xóa sản phẩm thành công.");
+      handleCloseDelete();
+      fetchData();
+    } catch (err) {
+      console.error("Lỗi xóa sản phẩm:", err);
+      toast.error("Xóa sản phẩm thất bại.");
     }
   };
 
   return (
-    <div className="p-6">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-slate-800">Quản lý sản phẩm</h1>
-        <p className="text-slate-500 mt-2">
-          Danh sách tất cả sản phẩm trong hệ thống
-        </p>
+    <div className="space-y-6 p-6">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-slate-800">
+            Quản lý sản phẩm
+          </h1>
+          <p className="mt-2 text-slate-500">
+            Theo dõi danh sách sản phẩm của shop G4 FASHION
+          </p>
+        </div>
+
+        <div className="flex flex-wrap gap-3">
+          <button onClick={fetchData} className={outlineButtonClass}>
+            <RefreshCcw size={18} />
+            Tải lại
+          </button>
+
+          <button onClick={handleOpenCreate} className={primaryButtonClass}>
+            <Plus size={18} />
+            Thêm sản phẩm
+          </button>
+        </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+      <ProductStats stats={stats} />
+
+      <div className={cardClass}>
+        <div className={sectionHeaderClass}>
+          <div>
+            <h2 className="text-xl font-bold text-slate-800">
+              Danh sách sản phẩm
+            </h2>
+            <p className="mt-1 text-sm text-slate-500">
+              Hiển thị toàn bộ sản phẩm hiện có trong hệ thống
+            </p>
+          </div>
+        </div>
+
         {loading ? (
           <div className="p-6 text-slate-500">Đang tải dữ liệu...</div>
         ) : error ? (
           <div className="p-6 text-red-500">{error}</div>
         ) : (
-          <table className="w-full text-sm">
-            <thead className="bg-slate-50 text-slate-700">
-              <tr>
-                <th className="px-4 py-3 text-left">Hình</th>
-                <th className="px-4 py-3 text-left">Mã SP</th>
-                <th className="px-4 py-3 text-left">Tên sản phẩm</th>
-                <th className="px-4 py-3 text-left">Danh mục</th>
-                <th className="px-4 py-3 text-left">Thương hiệu</th>
-                <th className="px-4 py-3 text-left">Giá</th>
-                <th className="px-4 py-3 text-left">Tồn kho</th>
-                <th className="px-4 py-3 text-left">Trạng thái</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {products.map((product) => {
-                const statusInfo = getStatusInfo(product.status);
-
-                return (
-                  <tr key={product.id} className="border-t border-slate-100">
-                    <td className="px-4 py-3">
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="w-14 h-14 rounded-lg object-cover border border-slate-200"
-                      />
-                    </td>
-
-                    <td className="px-4 py-3 text-slate-600">{product.code}</td>
-
-                    <td className="px-4 py-3">
-                      <div className="font-medium text-slate-800">
-                        {product.name}
-                      </div>
-                      <div className="text-xs text-slate-500 mt-1">
-                        {product.slug}
-                      </div>
-                    </td>
-
-                    <td className="px-4 py-3 text-slate-600">
-                      {getCategoryName(product.categoryId)}
-                    </td>
-
-                    <td className="px-4 py-3 text-slate-600">
-                      {getBrandName(product.brandId)}
-                    </td>
-
-                    <td className="px-4 py-3 text-slate-600">
-                      <div>{formatCurrency(product.salePrice)}</div>
-                      {product.salePrice < product.price && (
-                        <div className="text-xs text-slate-400 line-through">
-                          {formatCurrency(product.price)}
-                        </div>
-                      )}
-                    </td>
-
-                    <td className="px-4 py-3 text-slate-600">
-                      {product.stock}
-                    </td>
-
-                    <td className="px-4 py-3">
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-medium ${statusInfo.className}`}
-                      >
-                        {statusInfo.label}
-                      </span>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          <ProductTable
+            products={products}
+            getCategoryName={getCategoryName}
+            getBrandName={getBrandName}
+            onView={handleOpenDetail}
+            onEdit={handleOpenEdit}
+            onDelete={handleOpenDelete}
+          />
         )}
       </div>
+
+      <ProductFormModal
+        open={isCreateOpen}
+        mode="create"
+        formData={formData}
+        errors={formErrors}
+        categories={categories}
+        brands={brands}
+        onClose={handleCloseCreate}
+        onChange={handleChangeForm}
+        onSubmit={handleCreateProduct}
+      />
+
+      <ProductFormModal
+        open={isEditOpen}
+        mode="edit"
+        formData={formData}
+        errors={formErrors}
+        categories={categories}
+        brands={brands}
+        onClose={handleCloseEdit}
+        onChange={handleChangeForm}
+        onSubmit={handleUpdateProduct}
+      />
+
+      <ProductDetailModal
+        open={isDetailOpen}
+        product={selectedProduct}
+        getCategoryName={getCategoryName}
+        getBrandName={getBrandName}
+        onClose={handleCloseDetail}
+      />
+
+      <ProductDeleteModal
+        open={isDeleteOpen}
+        product={selectedProduct}
+        onClose={handleCloseDelete}
+        onConfirm={handleDeleteProduct}
+      />
     </div>
   );
 }
