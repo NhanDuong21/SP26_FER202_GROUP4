@@ -151,7 +151,7 @@ export default function CategoryFormModal({
 
     const payload = {
       ...formData,
-      parentId: formData.parentId === "" ? null : formData.parentId,
+      parentId: formData.parentId === "" ? null : Number(formData.parentId),
       updatedAt: new Date().toISOString().slice(0, 10),
     };
 

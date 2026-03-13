@@ -64,7 +64,11 @@ export default function CategoriesPage() {
 
   const getParentName = (parentId) => {
     if (!parentId) return "Danh mục gốc";
-    const parent = categories.find((item) => item.id === parentId);
+
+    const parent = categories.find(
+      (item) => Number(item.id) === Number(parentId),
+    );
+
     return parent ? parent.name : "Không xác định";
   };
 
