@@ -5,11 +5,18 @@ import { useEffect, useState } from "react";
 
 function Sidebar({ isCollapsed, isMobileOpen, onCloseMobile }) {
   const [user, setUser] = useState(null);
+  const [settings, setSettings] = useState(null);
 
   useEffect(() => {
+    // lấy user
     fetch("http://localhost:3000/users/1")
       .then((res) => res.json())
       .then((data) => setUser(data));
+
+    // lấy settings
+    fetch("http://localhost:3000/settings/1")
+      .then((res) => res.json())
+      .then((data) => setSettings(data));
   }, []);
   return (
 
@@ -45,7 +52,7 @@ function Sidebar({ isCollapsed, isMobileOpen, onCloseMobile }) {
                 {!isCollapsed && (
                   <div>
                     <h1 className="text-[20px] font-extrabold uppercase leading-none tracking-wide">
-                      G4 Fashion
+                      {settings?.siteName}
                     </h1>
                     <p className="mt-1 text-sm font-medium uppercase tracking-wide text-slate-300">
                       Trang quản trị

@@ -1,4 +1,13 @@
 {
+  "settings": [
+    {
+      "siteName": "G4 Fashion",
+      "siteDescription": "Hệ thống quản trị cửa hàng thời trang",
+      "timezone": "Asia/Ho_Chi_Minh",
+      "language": "en",
+      "id": "1"
+    }
+  ],
   "users": [
     {
       "id": "1",
