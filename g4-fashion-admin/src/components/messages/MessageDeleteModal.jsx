@@ -1,19 +1,67 @@
-import { Dialog } from "@headlessui/react";
+    import { X, TriangleAlert } from "lucide-react";
+    import {
+    modalOverlayClass,
+    modalContainerClass,
+    modalHeaderClass,
+    modalCloseButtonClass,
+    } from "../../utils/uiClasses";
 
-export default function MessageDeleteModal({ open, onClose, message, onConfirm }) {
-    if (!message) return null;
+    export default function MessageDeleteModal({ open, message, onClose, onDelete }) {
+    if (!open || !message) return null;
 
     return (
-        <Dialog open={open} onClose={onClose} className="fixed inset-0 z-50 flex items-center justify-center">
-            <Dialog.Overlay className="fixed inset-0 bg-black/50" />
-            <div className="relative rounded bg-white p-6 w-80">
-                <Dialog.Title className="text-lg font-bold mb-4">Xóa tin nhắn</Dialog.Title>
-                <p>Bạn có chắc muốn xóa tin nhắn từ <b>{message.name}</b> không?</p>
-                <div className="mt-4 flex justify-end gap-2">
-                    <button className="rounded border px-4 py-2" onClick={onClose}>Hủy</button>
-                    <button className="rounded bg-red-500 px-4 py-2 text-white" onClick={onConfirm}>Xóa</button>
+        <div className={modalOverlayClass} onClick={onClose}>
+        <div
+            className={`${modalContainerClass} max-w-md`}
+            onClick={(e) => e.stopPropagation()}
+        >
+            {/* Header */}
+            <div className={modalHeaderClass}>
+            <button onClick={onClose} className={modalCloseButtonClass}>
+                <X size={20} />
+            </button>
+            </div>
+
+            <div className="p-6 text-center">
+
+            {/* Icon */}
+            <div className="flex justify-center mb-4">
+                <div className="bg-red-100 p-4 rounded-xl">
+                <TriangleAlert className="text-red-600" size={28} />
                 </div>
             </div>
-        </Dialog>
+
+            {/* Title */}
+            <h2 className="text-xl font-bold text-slate-800 mb-2">
+                Xác nhận xóa
+            </h2>
+
+            {/* Content */}
+            <p className="text-slate-600 text-sm mb-6">
+                Bạn có chắc muốn xóa tin nhắn từ{" "}
+                <span className="font-semibold">{message.name}</span>? 
+                Hành động này không thể hoàn tác.
+            </p>
+
+            {/* Buttons */}
+            <div className="flex justify-center gap-4">
+                <button
+                onClick={onClose}
+                className="px-5 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 text-sm"
+                >
+                Hủy
+                </button>
+
+                <button
+                onClick={() => onDelete(message.id)}
+                className="px-5 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white text-sm font-medium"
+                >
+                Xóa tin nhắn
+                </button>
+            </div>
+
+            </div>
+        </div>
+        </div>
     );
-}
+    }
