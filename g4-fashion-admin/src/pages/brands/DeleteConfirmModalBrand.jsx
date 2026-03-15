@@ -5,7 +5,7 @@ import {
   modalContainerClass,
   modalCloseButtonClass,
   secondaryButtonClass,
-} from "../../utils/categories/uiClasses";
+} from "../../utils/uiClasses";
 
 export default function DeleteConfirmModalBrand({
   isOpen,

@@ -7,7 +7,7 @@ import {
   modalCloseButtonClass,
   infoItemClass,
   secondaryButtonClass,
-} from "../../utils/categories/uiClasses";
+} from "../../utils/uiClasses";
 
 export default function BrandDetailModal({
   isOpen,
