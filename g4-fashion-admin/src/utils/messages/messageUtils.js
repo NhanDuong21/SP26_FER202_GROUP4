@@ -7,5 +7,5 @@ export const countReplied = (messages) => {
 };
 
 export const countUrgent = (messages) => {
-    return messages.filter(m => m.priority === "Cao").length;
+    return messages.filter(m => m.priority === "Khẩn cấp").length;
 };
