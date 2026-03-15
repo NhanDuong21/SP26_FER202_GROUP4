@@ -221,74 +221,28 @@
   ],
   "customers": [
     {
-      "name": "Nguyễn Văn b",
-      "email": "nguyenvana@email.com",
-      "phone": "0123456789",
-      "level": "Gold",
-      "status": "active",
-      "updatedAt": "2026-03-12",
-      "id": "CUST-001"
+      "id": "1",
+      "name": "Nguyễn Văn An",
+      "email": "an.nguyen@example.com",
+      "phone": "0901000001",
+      "createdAt": "2026-01-10T09:15:00",
+      "status": "active"
     },
     {
-      "id": "CUST-002",
-      "code": "CUST-002",
-      "name": "Trần Thị B",
-      "email": "tranthib@email.com",
-      "phone": "0987654321",
-      "level": "Gold",
-      "orderCount": 8,
-      "totalSpent": 6800000,
-      "lastOrderDate": "2024-12-08",
-      "status": "active",
-      "updatedAt": "2024-12-08"
+      "id": "2",
+      "name": "Trần Thị Bình",
+      "email": "binh.tran@example.com",
+      "phone": "0901000002",
+      "createdAt": "2026-02-14T14:30:00",
+      "status": "active"
     },
     {
-      "id": "CUST-003",
-      "code": "CUST-003",
-      "name": "Lê Văn C",
-      "email": "levanc@email.com",
-      "phone": "0169852147",
-      "level": "Silver",
-      "orderCount": 3,
-      "totalSpent": 1950000,
-      "lastOrderDate": "2024-12-09",
-      "status": "active",
-      "updatedAt": "2024-12-09"
-    },
-    {
-      "id": "CUST-004",
-      "code": "CUST-004",
-      "name": "Phạm Thị D",
-      "email": "phamthid@email.com",
-      "phone": "0741852963",
-      "level": "VIP",
-      "orderCount": 22,
-      "totalSpent": 18750000,
-      "lastOrderDate": "2024-12-07",
-      "status": "active",
-      "updatedAt": "2024-12-07"
-    },
-    {
-      "id": "CUST-005",
-      "code": "CUST-005",
-      "name": "Hoàng Văn E",
-      "email": "hoangvane@email.com",
-      "phone": "0456789123",
-      "level": "Bronze",
-      "orderCount": 1,
-      "totalSpent": 320000,
-      "lastOrderDate": "2024-09-15",
-      "status": "inactive",
-      "updatedAt": "2024-09-15"
-    },
-    {
-      "id": "e0be",
-      "name": "Long",
-      "email": "hoanglonglongxuyen9999@gmail.com",
-      "phone": "0338846981",
-      "level": "VIP",
-      "status": "active",
-      "updatedAt": "2026-03-12"
+      "id": "3",
+      "name": "Lê Minh Châu",
+      "email": "chau.le@example.com",
+      "phone": "0901000003",
+      "createdAt": "2026-03-05T11:20:00",
+      "status": "active"
     }
   ],
   "products": [
@@ -381,32 +335,6 @@
       "image": "https://product.hstatic.net/200000690725/product/2_f96661887cd54a95976fd9ad14489acc_master.png",
       "description": "Áo polo basic nam, phù hợp mặc đi làm và đi chơi.",
       "createdAt": "2024-12-06"
-    }
-  ],
-  "customers": [
-    {
-      "id": "1",
-      "name": "Nguyễn Văn An",
-      "email": "an.nguyen@example.com",
-      "phone": "0901000001",
-      "createdAt": "2026-01-10T09:15:00",
-      "status": "active"
-    },
-    {
-      "id": "2",
-      "name": "Trần Thị Bình",
-      "email": "binh.tran@example.com",
-      "phone": "0901000002",
-      "createdAt": "2026-02-14T14:30:00",
-      "status": "active"
-    },
-    {
-      "id": "3",
-      "name": "Lê Minh Châu",
-      "email": "chau.le@example.com",
-      "phone": "0901000003",
-      "createdAt": "2026-03-05T11:20:00",
-      "status": "active"
     }
   ],
   "orders": [
@@ -878,84 +806,72 @@
     }
   ],
   "messages": [
-  {
-    "id": "MSG-001",
-    "name": "Nguyễn Văn An",
-    "email": "an.nguyen@example.com",
-    "phone": "0901000001",
-    "title": "Hỏi về áo sơ mi Premium",
-    "content": "Cho mình hỏi áo sơ mi nam trắng Premium còn size L không? Mình cao 1m75, nặng 70kg.",
-    "category": "Sản phẩm",
-    "priority": "Trung bình",
-    "status": "Chưa đọc",
-    "time": "2026-03-10 09:15"
-  },
-  {
-    "id": "MSG-002",
-    "name": "Trần Thị Bình",
-    "email": "binh.tran@example.com",
-    "phone": "0901000002",
-    "title": "Hỏi về chính sách đổi trả",
-    "content": "Nếu sản phẩm không vừa size thì có thể đổi trong bao lâu?",
-    "category": "Hỗ trợ",
-    "priority": "Thấp",
-    "status": "Đã trả lời",
-    "time": "2026-03-09 14:20",
-    "reply": "Bạn có thể đổi sản phẩm trong vòng 7 ngày kể từ ngày nhận hàng. Vui lòng giữ nguyên nhãn mác và hóa đơn.",
-    "replyTime": "2026-03-09 15:00"
-  },
-  {
-    "id": "MSG-003",
-    "name": "Lê Minh Châu",
-    "email": "chau.le@example.com",
-    "phone": "0901000003",
-    "title": "Vấn đề thanh toán đơn hàng",
-    "content": "Mình thanh toán nhưng hệ thống báo chưa thanh toán, nhờ shop kiểm tra.",
-    "category": "Đơn hàng",
-    "priority": "Cao",
-    "status": "Chưa đọc",
-    "time": "2026-03-11 08:05"
-  },
-  {
-    "id": "MSG-004",
-    "name": "Nguyễn Văn An",
-    "email": "an.nguyen@example.com",
-    "phone": "0901000001",
-    "title": "Hỏi về áo polo basic",
-    "content": "Áo polo basic nam có những màu nào?",
-    "category": "Sản phẩm",
-    "priority": "Thấp",
-    "status": "Đã trả lời",
-    "time": "2026-03-08 16:30",
-    "reply": "Áo polo basic hiện có các màu: trắng, đen, xanh navy và xám. Bạn có thể đặt màu yêu thích trên website.",
-    "replyTime": "2026-03-08 17:00"
-  },
-  {
-    "id": "MSG-005",
-    "name": "Trần Thị Bình",
-    "email": "binh.tran@example.com",
-    "phone": "0901000002",
-    "title": "Chậm giao hàng",
-    "content": "Đơn ORD-015 của mình vẫn chưa nhận được hàng.",
-    "category": "Vận chuyển",
-    "priority": "Cao",
-    "status": "Chưa đọc",
-    "time": "2026-03-12 10:45"
-  },
-  {
-    "id": "MSG-006",
-    "name": "Lê Minh Châu",
-    "email": "chau.le@example.com",
-    "phone": "0901000003",
-    "title": "Hỏi về váy dạ hội",
-    "content": "Váy dạ hội sang trọng có size M không?",
-    "category": "Sản phẩm",
-    "priority": "Trung bình",
-    "status": "Đã trả lời",
-    "time": "2026-03-07 13:10",
-    "reply": "Size M hiện có sẵn cho mẫu váy dạ hội sang trọng. Bạn có thể đặt hàng trực tiếp trên website.",
-    "replyTime": "2026-03-07 13:45"
-  }
-],
+    {
+      "id": "MSG-002",
+      "name": "Trần Thị Bình",
+      "email": "binh.tran@example.com",
+      "phone": "0901000002",
+      "title": "Hỏi về chính sách đổi trả",
+      "content": "Nếu sản phẩm không vừa size thì có thể đổi trong bao lâu?",
+      "category": "Hỗ trợ",
+      "priority": "Thấp",
+      "status": "Đã trả lời",
+      "time": "2026-03-09 14:20",
+      "reply": "Bạn có thể đổi sản phẩm trong vòng 7 ngày kể từ ngày nhận hàng. Vui lòng giữ nguyên nhãn mác và hóa đơn.",
+      "replyTime": "2026-03-09 15:00"
+    },
+    {
+      "id": "MSG-003",
+      "name": "Lê Minh Châu",
+      "email": "chau.le@example.com",
+      "phone": "0901000003",
+      "title": "Vấn đề thanh toán đơn hàng",
+      "content": "Mình thanh toán nhưng hệ thống báo chưa thanh toán, nhờ shop kiểm tra.",
+      "category": "Đơn hàng",
+      "priority": "Cao",
+      "status": "Chưa trả lời",
+      "time": "2026-03-11 08:05"
+    },
+    {
+      "id": "MSG-004",
+      "name": "Nguyễn Văn An",
+      "email": "an.nguyen@example.com",
+      "phone": "0901000001",
+      "title": "Hỏi về áo polo basic",
+      "content": "Áo polo basic nam có những màu nào?",
+      "category": "Sản phẩm",
+      "priority": "Thấp",
+      "status": "Đã trả lời",
+      "time": "2026-03-08 16:30",
+      "reply": "Áo polo basic hiện có các màu: trắng, đen, xanh navy và xám. Bạn có thể đặt màu yêu thích trên website.",
+      "replyTime": "2026-03-08 17:00"
+    },
+    {
+      "id": "MSG-005",
+      "name": "Trần Thị Bình",
+      "email": "binh.tran@example.com",
+      "phone": "0901000002",
+      "title": "Chậm giao hàng",
+      "content": "Đơn ORD-015 của mình vẫn chưa nhận được hàng.",
+      "category": "Vận chuyển",
+      "priority": "Cao",
+      "status": "Chưa trả lời",
+      "time": "2026-03-12 10:45"
+    },
+    {
+      "id": "MSG-006",
+      "name": "Lê Minh Châu",
+      "email": "chau.le@example.com",
+      "phone": "0901000003",
+      "title": "Hỏi về váy dạ hội",
+      "content": "Váy dạ hội sang trọng có size M không?",
+      "category": "Sản phẩm",
+      "priority": "Trung bình",
+      "status": "Đã trả lời",
+      "time": "2026-03-07 13:10",
+      "reply": "Size M hiện có sẵn cho mẫu váy dạ hội sang trọng. Bạn có thể đặt hàng trực tiếp trên website.",
+      "replyTime": "2026-03-07 13:45"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }
