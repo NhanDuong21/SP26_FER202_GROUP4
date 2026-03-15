@@ -1,67 +1,73 @@
-    import { X, TriangleAlert } from "lucide-react";
-    import {
-    modalOverlayClass,
-    modalContainerClass,
-    modalHeaderClass,
-    modalCloseButtonClass,
-    } from "../../utils/uiClasses";
+import { useEffect } from "react";
+import { AlertTriangle, X } from "lucide-react";
+import {
+  modalOverlayClass,
+  modalContainerClass,
+  modalCloseButtonClass,
+  secondaryButtonClass,
+} from "../../utils/uiClasses";
 
-    export default function MessageDeleteModal({ open, message, onClose, onDelete }) {
-    if (!open || !message) return null;
+export default function MessageDeleteModal({
+  isOpen,
+  onClose,
+  onConfirm,
+  message,
+}) {
+  useEffect(() => {
+    if (!isOpen) return;
 
-    return (
-        <div className={modalOverlayClass} onClick={onClose}>
-        <div
-            className={`${modalContainerClass} max-w-md`}
-            onClick={(e) => e.stopPropagation()}
-        >
-            {/* Header */}
-            <div className={modalHeaderClass}>
-            <button onClick={onClose} className={modalCloseButtonClass}>
-                <X size={20} />
-            </button>
-            </div>
+    const handleEsc = (e) => {
+      if (e.key === "Escape") onClose();
+    };
 
-            <div className="p-6 text-center">
+    document.addEventListener("keydown", handleEsc);
+    return () => document.removeEventListener("keydown", handleEsc);
+  }, [isOpen, onClose]);
 
-            {/* Icon */}
-            <div className="flex justify-center mb-4">
-                <div className="bg-red-100 p-4 rounded-xl">
-                <TriangleAlert className="text-red-600" size={28} />
-                </div>
-            </div>
+  if (!isOpen || !message) return null;
 
-            {/* Title */}
-            <h2 className="text-xl font-bold text-slate-800 mb-2">
-                Xác nhận xóa
-            </h2>
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) onClose();
+  };
 
-            {/* Content */}
-            <p className="text-slate-600 text-sm mb-6">
-                Bạn có chắc muốn xóa tin nhắn từ{" "}
-                <span className="font-semibold">{message.name}</span>? 
-                Hành động này không thể hoàn tác.
-            </p>
+  return (
+    <div onClick={handleOverlayClick} className={modalOverlayClass}>
+      <div className={`${modalContainerClass} max-w-md p-6`}>
+        <div className="flex items-start justify-between">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-red-100 text-red-600">
+            <AlertTriangle size={26} />
+          </div>
 
-            {/* Buttons */}
-            <div className="flex justify-center gap-4">
-                <button
-                onClick={onClose}
-                className="px-5 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 text-sm"
-                >
-                Hủy
-                </button>
-
-                <button
-                onClick={() => onDelete(message.id)}
-                className="px-5 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white text-sm font-medium"
-                >
-                Xóa tin nhắn
-                </button>
-            </div>
-
-            </div>
+          <button onClick={onClose} className={modalCloseButtonClass}>
+            <X size={20} />
+          </button>
         </div>
+
+        <h3 className="mt-4 text-xl font-bold text-slate-800">
+          Xác nhận xóa
+        </h3>
+
+        <p className="mt-3 text-sm leading-6 text-slate-600">
+          Bạn có chắc muốn xóa tin nhắn từ{" "}
+          <span className="font-semibold text-slate-800">
+            {message.name}
+          </span>
+          ? Hành động này không thể hoàn tác.
+        </p>
+
+        <div className="mt-6 flex justify-end gap-3">
+          <button onClick={onClose} className={secondaryButtonClass}>
+            Hủy
+          </button>
+
+          <button
+            onClick={() => onConfirm(message.id)}
+            className="rounded-2xl bg-red-600 px-4 py-2.5 font-medium text-white transition hover:bg-red-700"
+          >
+            Xóa tin nhắn
+          </button>
         </div>
-    );
-    }
+      </div>
+    </div>
+  );
+}
