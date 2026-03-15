@@ -3,24 +3,64 @@ import { RefreshCw } from "lucide-react";
 
 import MessageStats from "../../components/messages/MessageStats";
 import MessageTable from "../../components/messages/MessageTable";
-import { getMessages } from "../../services/messageService";
+import { messageService } from "../../services/messageService";
+import toast from "react-hot-toast";
 
 export default function MessagesPage() {
 
   const [messages, setMessages] = useState([]);
 
   const loadMessages = async () => {
-    const data = await getMessages();
-    setMessages(data);
+    try {
+      const res = await messageService.getAll();
+      setMessages(res.data);
+    } catch (error) {
+      console.error("Load messages failed:", error);
+    }
   };
 
   useEffect(() => {
     loadMessages();
   }, []);
 
+  const handleDeleteMessage = async (id) => {
+    try {
+      await messageService.remove(id);
+
+      toast.success("Xóa tin nhắn thành công");
+
+      await loadMessages();
+    } catch (error) {
+      console.error("Delete failed:", error);
+      toast.error("Xóa tin nhắn thất bại");
+    }
+  };
+
+  const handleReplyMessage = async (message, replyText) => {
+    try {
+
+      const updatedMessage = {
+        ...message,
+        reply: replyText,
+        status: "Đã trả lời",
+        replyTime: new Date().toISOString()
+      };
+
+      await messageService.reply(message.id, updatedMessage);
+
+      toast.success("Gửi phản hồi thành công");
+
+      await loadMessages();
+
+    } catch (error) {
+      console.error(error);
+      toast.error("Gửi phản hồi thất bại");
+    }
+  };
+
   const stats = {
     total: messages.length,
-    unread: messages.filter(m => m.status === "Chưa đọc").length,
+    unread: messages.filter(m => m.status === "Chưa trả lời").length,
     replied: messages.filter(m => m.status === "Đã trả lời").length,
     urgent: messages.filter(m => m.priority === "Cao").length
   };
@@ -43,7 +83,7 @@ export default function MessagesPage() {
         </div>
 
         <button
-          onClick={loadMessages}
+          onClick={() => window.location.reload()}
           className="flex items-center gap-2 rounded-lg border px-4 py-2 hover:bg-slate-50"
         >
           <RefreshCw size={16} />
@@ -58,7 +98,12 @@ export default function MessagesPage() {
 
       {/* Table */}
 
-      <MessageTable messages={messages} />
+      <MessageTable
+        messages={messages}
+        onDelete={handleDeleteMessage}
+        onReply={handleReplyMessage}
+      />
+
 
     </div>
   );
