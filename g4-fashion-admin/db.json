@@ -11,15 +11,15 @@
   "users": [
     {
       "id": "1",
-      "name": "Nguyen Van b",
-      "email": "admin@g4fashion.com",
+      "name": "Nguyễn Văn b",
+      "email": "Bnguyen@admin.com",
       "sex": "Male",
       "date": "01/01/2000",
       "password": "123456",
       "role": "admin",
       "avatar": "https://dummyimage.com/100x100/e5e7eb/9ca3af&text=AD",
       "status": "active",
-      "phone": "0123456777",
+      "phone": "0123456789",
       "address": "123 Tran Hung Dao, Ca Mau City, Viet Nam",
       "createdAt": "2024-12-01"
     }
@@ -221,74 +221,28 @@
   ],
   "customers": [
     {
-      "name": "Nguyễn Văn b",
-      "email": "nguyenvana@email.com",
-      "phone": "0123456789",
-      "level": "Gold",
-      "status": "active",
-      "updatedAt": "2026-03-12",
-      "id": "CUST-001"
+      "id": "1",
+      "name": "Nguyễn Văn An",
+      "email": "an.nguyen@example.com",
+      "phone": "0901000001",
+      "createdAt": "2026-01-10T09:15:00",
+      "status": "active"
     },
     {
-      "id": "CUST-002",
-      "code": "CUST-002",
-      "name": "Trần Thị B",
-      "email": "tranthib@email.com",
-      "phone": "0987654321",
-      "level": "Gold",
-      "orderCount": 8,
-      "totalSpent": 6800000,
-      "lastOrderDate": "2024-12-08",
-      "status": "active",
-      "updatedAt": "2024-12-08"
+      "id": "2",
+      "name": "Trần Thị Bình",
+      "email": "binh.tran@example.com",
+      "phone": "0901000002",
+      "createdAt": "2026-02-14T14:30:00",
+      "status": "active"
     },
     {
-      "id": "CUST-003",
-      "code": "CUST-003",
-      "name": "Lê Văn C",
-      "email": "levanc@email.com",
-      "phone": "0169852147",
-      "level": "Silver",
-      "orderCount": 3,
-      "totalSpent": 1950000,
-      "lastOrderDate": "2024-12-09",
-      "status": "active",
-      "updatedAt": "2024-12-09"
-    },
-    {
-      "id": "CUST-004",
-      "code": "CUST-004",
-      "name": "Phạm Thị D",
-      "email": "phamthid@email.com",
-      "phone": "0741852963",
-      "level": "VIP",
-      "orderCount": 22,
-      "totalSpent": 18750000,
-      "lastOrderDate": "2024-12-07",
-      "status": "active",
-      "updatedAt": "2024-12-07"
-    },
-    {
-      "id": "CUST-005",
-      "code": "CUST-005",
-      "name": "Hoàng Văn E",
-      "email": "hoangvane@email.com",
-      "phone": "0456789123",
-      "level": "Bronze",
-      "orderCount": 1,
-      "totalSpent": 320000,
-      "lastOrderDate": "2024-09-15",
-      "status": "inactive",
-      "updatedAt": "2024-09-15"
-    },
-    {
-      "id": "e0be",
-      "name": "Long",
-      "email": "hoanglonglongxuyen9999@gmail.com",
-      "phone": "0338846981",
-      "level": "VIP",
-      "status": "active",
-      "updatedAt": "2026-03-12"
+      "id": "3",
+      "name": "Lê Minh Châu",
+      "email": "chau.le@example.com",
+      "phone": "0901000003",
+      "createdAt": "2026-03-05T11:20:00",
+      "status": "active"
     }
   ],
   "products": [
@@ -383,429 +337,427 @@
       "createdAt": "2024-12-06"
     }
   ],
-  "customers": [
+  "orders": [
     {
-      "id": "1",
-      "name": "Nguyễn Văn An",
-      "email": "an.nguyen@example.com",
-      "phone": "0901000001",
-      "createdAt": "2026-01-10T09:15:00",
-      "status": "active"
+      "id": "OD001",
+      "code": "ORD-001",
+      "customerId": "1",
+      "customerName": "Nguyễn Văn An",
+      "customerPhone": "0901000001",
+      "status": "completed",
+      "paymentStatus": "paid",
+      "trafficSource": "google",
+      "subtotal": 398000,
+      "discount": 20000,
+      "shippingFee": 30000,
+      "totalAmount": 408000,
+      "items": [
+        {
+          "productId": "1",
+          "productName": "Áo sơ mi nam trắng Premium",
+          "categoryId": "2",
+          "brandId": "4",
+          "quantity": 2,
+          "price": 199000
+        }
+      ],
+      "createdAt": "2026-01-12T10:15:00",
+      "completedAt": "2026-01-12T12:00:00"
     },
     {
-      "id": "2",
-      "name": "Trần Thị Bình",
-      "email": "binh.tran@example.com",
-      "phone": "0901000002",
-      "createdAt": "2026-02-14T14:30:00",
-      "status": "active"
+      "id": "OD002",
+      "code": "ORD-002",
+      "customerId": "2",
+      "customerName": "Trần Thị Bình",
+      "customerPhone": "0901000002",
+      "status": "completed",
+      "paymentStatus": "paid",
+      "trafficSource": "facebook",
+      "subtotal": 450000,
+      "discount": 0,
+      "shippingFee": 30000,
+      "totalAmount": 480000,
+      "items": [
+        {
+          "productId": "2",
+          "productName": "Quần jeans nữ skinny",
+          "categoryId": "3",
+          "brandId": "3",
+          "quantity": 1,
+          "price": 450000
+        }
+      ],
+      "createdAt": "2026-02-02T15:20:00",
+      "completedAt": "2026-02-02T16:00:00"
     },
     {
-      "id": "3",
-      "name": "Lê Minh Châu",
-      "email": "chau.le@example.com",
-      "phone": "0901000003",
-      "createdAt": "2026-03-05T11:20:00",
-      "status": "active"
+      "id": "OD003",
+      "code": "ORD-003",
+      "customerId": "1",
+      "customerName": "Nguyễn Văn An",
+      "customerPhone": "0901000001",
+      "status": "completed",
+      "paymentStatus": "paid",
+      "trafficSource": "direct",
+      "subtotal": 747000,
+      "discount": 50000,
+      "shippingFee": 30000,
+      "totalAmount": 727000,
+      "items": [
+        {
+          "productId": "6",
+          "productName": "Áo polo basic nam",
+          "categoryId": "1",
+          "brandId": "4",
+          "quantity": 3,
+          "price": 249000
+        }
+      ],
+      "createdAt": "2026-03-10T09:00:00",
+      "completedAt": "2026-03-10T10:00:00"
+    },
+    {
+      "id": "OD004",
+      "code": "ORD-004",
+      "customerId": "3",
+      "customerName": "Lê Minh Châu",
+      "customerPhone": "0901000003",
+      "status": "pending",
+      "paymentStatus": "unpaid",
+      "trafficSource": "google",
+      "subtotal": 999000,
+      "discount": 100000,
+      "shippingFee": 0,
+      "totalAmount": 899000,
+      "items": [
+        {
+          "productId": "3",
+          "productName": "Váy dạ hội sang trọng",
+          "categoryId": "4",
+          "brandId": "2",
+          "quantity": 1,
+          "price": 999000
+        }
+      ],
+      "createdAt": "2026-03-11T08:00:00",
+      "completedAt": null
+    },
+    {
+      "id": "OD005",
+      "code": "ORD-005",
+      "customerId": "1",
+      "customerName": "Nguyễn Văn An",
+      "customerPhone": "0901000001",
+      "status": "completed",
+      "paymentStatus": "paid",
+      "trafficSource": "direct",
+      "subtotal": 498000,
+      "discount": 20000,
+      "shippingFee": 30000,
+      "totalAmount": 508000,
+      "items": [
+        {
+          "productId": "6",
+          "productName": "Áo polo basic nam",
+          "categoryId": "1",
+          "brandId": "4",
+          "quantity": 2,
+          "price": 249000
+        }
+      ],
+      "createdAt": "2026-03-11T09:00:00",
+      "completedAt": "2026-03-11T10:00:00"
+    },
+    {
+      "id": "OD006",
+      "code": "ORD-006",
+      "customerId": "2",
+      "customerName": "Trần Thị Bình",
+      "customerPhone": "0901000002",
+      "status": "completed",
+      "paymentStatus": "paid",
+      "trafficSource": "facebook",
+      "subtotal": 360000,
+      "discount": 10000,
+      "shippingFee": 30000,
+      "totalAmount": 380000,
+      "items": [
+        {
+          "productId": "5",
+          "productName": "Chân váy mini",
+          "categoryId": "4",
+          "brandId": "5",
+          "quantity": 2,
+          "price": 180000
+        }
+      ],
+      "createdAt": "2026-02-05T10:30:00",
+      "completedAt": "2026-02-05T11:15:00"
+    },
+    {
+      "id": "OD007",
+      "code": "ORD-007",
+      "customerId": "3",
+      "customerName": "Lê Minh Châu",
+      "customerPhone": "0901000003",
+      "status": "completed",
+      "paymentStatus": "paid",
+      "trafficSource": "google",
+      "subtotal": 1194000,
+      "discount": 50000,
+      "shippingFee": 0,
+      "totalAmount": 1144000,
+      "items": [
+        {
+          "productId": "1",
+          "productName": "Áo sơ mi nam trắng Premium",
+          "categoryId": "2",
+          "brandId": "4",
+          "quantity": 6,
+          "price": 199000
+        }
+      ],
+      "createdAt": "2026-02-08T14:10:00",
+      "completedAt": "2026-02-08T16:00:00"
+    },
+    {
+      "id": "OD008",
+      "code": "ORD-008",
+      "customerId": "1",
+      "customerName": "Nguyễn Văn An",
+      "customerPhone": "0901000001",
+      "status": "completed",
+      "paymentStatus": "paid",
+      "trafficSource": "direct",
+      "subtotal": 650000,
+      "discount": 0,
+      "shippingFee": 30000,
+      "totalAmount": 680000,
+      "items": [
+        {
+          "productId": "4",
+          "productName": "Áo khoác nam mùa đông",
+          "categoryId": "1",
+          "brandId": "1",
+          "quantity": 1,
+          "price": 650000
+        }
+      ],
+      "createdAt": "2026-02-10T19:20:00",
+      "completedAt": "2026-02-10T20:00:00"
+    },
+    {
+      "id": "OD009",
+      "code": "ORD-009",
+      "customerId": "2",
+      "customerName": "Trần Thị Bình",
+      "customerPhone": "0901000002",
+      "status": "completed",
+      "paymentStatus": "paid",
+      "trafficSource": "google",
+      "subtotal": 1998000,
+      "discount": 100000,
+      "shippingFee": 0,
+      "totalAmount": 1898000,
+      "items": [
+        {
+          "productId": "3",
+          "productName": "Váy dạ hội sang trọng",
+          "categoryId": "4",
+          "brandId": "2",
+          "quantity": 2,
+          "price": 999000
+        }
+      ],
+      "createdAt": "2026-02-14T09:45:00",
+      "completedAt": "2026-02-14T10:30:00"
+    },
+    {
+      "id": "OD010",
+      "code": "ORD-010",
+      "customerId": "3",
+      "customerName": "Lê Minh Châu",
+      "customerPhone": "0901000003",
+      "status": "completed",
+      "paymentStatus": "paid",
+      "trafficSource": "facebook",
+      "subtotal": 747000,
+      "discount": 20000,
+      "shippingFee": 30000,
+      "totalAmount": 757000,
+      "items": [
+        {
+          "productId": "6",
+          "productName": "Áo polo basic nam",
+          "categoryId": "1",
+          "brandId": "4",
+          "quantity": 3,
+          "price": 249000
+        }
+      ],
+      "createdAt": "2026-02-18T13:20:00",
+      "completedAt": "2026-02-18T14:00:00"
+    },
+    {
+      "id": "OD011",
+      "code": "ORD-011",
+      "customerId": "1",
+      "customerName": "Nguyễn Văn An",
+      "customerPhone": "0901000001",
+      "status": "completed",
+      "paymentStatus": "paid",
+      "trafficSource": "direct",
+      "subtotal": 900000,
+      "discount": 50000,
+      "shippingFee": 30000,
+      "totalAmount": 880000,
+      "items": [
+        {
+          "productId": "2",
+          "productName": "Quần jeans nữ skinny",
+          "categoryId": "3",
+          "brandId": "3",
+          "quantity": 2,
+          "price": 450000
+        }
+      ],
+      "createdAt": "2026-02-22T16:40:00",
+      "completedAt": "2026-02-22T17:20:00"
+    },
+    {
+      "id": "OD012",
+      "code": "ORD-012",
+      "customerId": "2",
+      "customerName": "Trần Thị Bình",
+      "customerPhone": "0901000002",
+      "status": "completed",
+      "paymentStatus": "paid",
+      "trafficSource": "google",
+      "subtotal": 398000,
+      "discount": 0,
+      "shippingFee": 30000,
+      "totalAmount": 428000,
+      "items": [
+        {
+          "productId": "1",
+          "productName": "Áo sơ mi nam trắng Premium",
+          "categoryId": "2",
+          "brandId": "4",
+          "quantity": 2,
+          "price": 199000
+        }
+      ],
+      "createdAt": "2026-03-01T08:30:00",
+      "completedAt": "2026-03-01T09:10:00"
+    },
+    {
+      "id": "OD013",
+      "code": "ORD-013",
+      "customerId": "3",
+      "customerName": "Lê Minh Châu",
+      "customerPhone": "0901000003",
+      "status": "completed",
+      "paymentStatus": "paid",
+      "trafficSource": "google",
+      "subtotal": 999000,
+      "discount": 50000,
+      "shippingFee": 0,
+      "totalAmount": 949000,
+      "items": [
+        {
+          "productId": "3",
+          "productName": "Váy dạ hội sang trọng",
+          "categoryId": "4",
+          "brandId": "2",
+          "quantity": 1,
+          "price": 999000
+        }
+      ],
+      "createdAt": "2026-03-03T11:00:00",
+      "completedAt": "2026-03-03T11:45:00"
+    },
+    {
+      "id": "OD014",
+      "code": "ORD-014",
+      "customerId": "1",
+      "customerName": "Nguyễn Văn An",
+      "customerPhone": "0901000001",
+      "status": "completed",
+      "paymentStatus": "paid",
+      "trafficSource": "facebook",
+      "subtotal": 498000,
+      "discount": 0,
+      "shippingFee": 30000,
+      "totalAmount": 528000,
+      "items": [
+        {
+          "productId": "6",
+          "productName": "Áo polo basic nam",
+          "categoryId": "1",
+          "brandId": "4",
+          "quantity": 2,
+          "price": 249000
+        }
+      ],
+      "createdAt": "2026-03-05T15:20:00",
+      "completedAt": "2026-03-05T16:00:00"
+    },
+    {
+      "id": "OD015",
+      "code": "ORD-015",
+      "customerId": "2",
+      "customerName": "Trần Thị Bình",
+      "customerPhone": "0901000002",
+      "status": "completed",
+      "paymentStatus": "paid",
+      "trafficSource": "direct",
+      "subtotal": 900000,
+      "discount": 30000,
+      "shippingFee": 30000,
+      "totalAmount": 900000,
+      "items": [
+        {
+          "productId": "2",
+          "productName": "Quần jeans nữ skinny",
+          "categoryId": "3",
+          "brandId": "3",
+          "quantity": 2,
+          "price": 450000
+        }
+      ],
+      "createdAt": "2026-03-08T10:10:00",
+      "completedAt": "2026-03-08T10:55:00"
     }
   ],
-"orders": [
-  {
-    "id": "OD001",
-    "code": "ORD-001",
-    "customerId": "1",
-    "customerName": "Nguyễn Văn An",
-    "customerPhone": "0901000001",
-    "status": "completed",
-    "paymentStatus": "paid",
-    "trafficSource": "google",
-    "subtotal": 398000,
-    "discount": 20000,
-    "shippingFee": 30000,
-    "totalAmount": 408000,
-    "items": [
-      {
-        "productId": "1",
-        "productName": "Áo sơ mi nam trắng Premium",
-        "categoryId": "2",
-        "brandId": "4",
-        "quantity": 2,
-        "price": 199000
-      }
-    ],
-    "createdAt": "2026-01-12T10:15:00",
-    "completedAt": "2026-01-12T12:00:00"
-  },
-  {
-    "id": "OD002",
-    "code": "ORD-002",
-    "customerId": "2",
-    "customerName": "Trần Thị Bình",
-    "customerPhone": "0901000002",
-    "status": "completed",
-    "paymentStatus": "paid",
-    "trafficSource": "facebook",
-    "subtotal": 450000,
-    "discount": 0,
-    "shippingFee": 30000,
-    "totalAmount": 480000,
-    "items": [
-      {
-        "productId": "2",
-        "productName": "Quần jeans nữ skinny",
-        "categoryId": "3",
-        "brandId": "3",
-        "quantity": 1,
-        "price": 450000
-      }
-    ],
-    "createdAt": "2026-02-02T15:20:00",
-    "completedAt": "2026-02-02T16:00:00"
-  },
-  {
-    "id": "OD003",
-    "code": "ORD-003",
-    "customerId": "1",
-    "customerName": "Nguyễn Văn An",
-    "customerPhone": "0901000001",
-    "status": "completed",
-    "paymentStatus": "paid",
-    "trafficSource": "direct",
-    "subtotal": 747000,
-    "discount": 50000,
-    "shippingFee": 30000,
-    "totalAmount": 727000,
-    "items": [
-      {
-        "productId": "6",
-        "productName": "Áo polo basic nam",
-        "categoryId": "1",
-        "brandId": "4",
-        "quantity": 3,
-        "price": 249000
-      }
-    ],
-    "createdAt": "2026-03-10T09:00:00",
-    "completedAt": "2026-03-10T10:00:00"
-  },
-  {
-    "id": "OD004",
-    "code": "ORD-004",
-    "customerId": "3",
-    "customerName": "Lê Minh Châu",
-    "customerPhone": "0901000003",
-    "status": "pending",
-    "paymentStatus": "unpaid",
-    "trafficSource": "google",
-    "subtotal": 999000,
-    "discount": 100000,
-    "shippingFee": 0,
-    "totalAmount": 899000,
-    "items": [
-      {
-        "productId": "3",
-        "productName": "Váy dạ hội sang trọng",
-        "categoryId": "4",
-        "brandId": "2",
-        "quantity": 1,
-        "price": 999000
-      }
-    ],
-    "createdAt": "2026-03-11T08:00:00",
-    "completedAt": null
-  },
-  {
-    "id": "OD005",
-    "code": "ORD-005",
-    "customerId": "1",
-    "customerName": "Nguyễn Văn An",
-    "customerPhone": "0901000001",
-    "status": "completed",
-    "paymentStatus": "paid",
-    "trafficSource": "direct",
-    "subtotal": 498000,
-    "discount": 20000,
-    "shippingFee": 30000,
-    "totalAmount": 508000,
-    "items": [
-      {
-        "productId": "6",
-        "productName": "Áo polo basic nam",
-        "categoryId": "1",
-        "brandId": "4",
-        "quantity": 2,
-        "price": 249000
-      }
-    ],
-    "createdAt": "2026-03-11T09:00:00",
-    "completedAt": "2026-03-11T10:00:00"
-  },
-  {
-    "id": "OD006",
-    "code": "ORD-006",
-    "customerId": "2",
-    "customerName": "Trần Thị Bình",
-    "customerPhone": "0901000002",
-    "status": "completed",
-    "paymentStatus": "paid",
-    "trafficSource": "facebook",
-    "subtotal": 360000,
-    "discount": 10000,
-    "shippingFee": 30000,
-    "totalAmount": 380000,
-    "items": [
-      {
-        "productId": "5",
-        "productName": "Chân váy mini",
-        "categoryId": "4",
-        "brandId": "5",
-        "quantity": 2,
-        "price": 180000
-      }
-    ],
-    "createdAt": "2026-02-05T10:30:00",
-    "completedAt": "2026-02-05T11:15:00"
-  },
-  {
-    "id": "OD007",
-    "code": "ORD-007",
-    "customerId": "3",
-    "customerName": "Lê Minh Châu",
-    "customerPhone": "0901000003",
-    "status": "completed",
-    "paymentStatus": "paid",
-    "trafficSource": "google",
-    "subtotal": 1194000,
-    "discount": 50000,
-    "shippingFee": 0,
-    "totalAmount": 1144000,
-    "items": [
-      {
-        "productId": "1",
-        "productName": "Áo sơ mi nam trắng Premium",
-        "categoryId": "2",
-        "brandId": "4",
-        "quantity": 6,
-        "price": 199000
-      }
-    ],
-    "createdAt": "2026-02-08T14:10:00",
-    "completedAt": "2026-02-08T16:00:00"
-  },
-  {
-    "id": "OD008",
-    "code": "ORD-008",
-    "customerId": "1",
-    "customerName": "Nguyễn Văn An",
-    "customerPhone": "0901000001",
-    "status": "completed",
-    "paymentStatus": "paid",
-    "trafficSource": "direct",
-    "subtotal": 650000,
-    "discount": 0,
-    "shippingFee": 30000,
-    "totalAmount": 680000,
-    "items": [
-      {
-        "productId": "4",
-        "productName": "Áo khoác nam mùa đông",
-        "categoryId": "1",
-        "brandId": "1",
-        "quantity": 1,
-        "price": 650000
-      }
-    ],
-    "createdAt": "2026-02-10T19:20:00",
-    "completedAt": "2026-02-10T20:00:00"
-  },
-  {
-    "id": "OD009",
-    "code": "ORD-009",
-    "customerId": "2",
-    "customerName": "Trần Thị Bình",
-    "customerPhone": "0901000002",
-    "status": "completed",
-    "paymentStatus": "paid",
-    "trafficSource": "google",
-    "subtotal": 1998000,
-    "discount": 100000,
-    "shippingFee": 0,
-    "totalAmount": 1898000,
-    "items": [
-      {
-        "productId": "3",
-        "productName": "Váy dạ hội sang trọng",
-        "categoryId": "4",
-        "brandId": "2",
-        "quantity": 2,
-        "price": 999000
-      }
-    ],
-    "createdAt": "2026-02-14T09:45:00",
-    "completedAt": "2026-02-14T10:30:00"
-  },
-  {
-    "id": "OD010",
-    "code": "ORD-010",
-    "customerId": "3",
-    "customerName": "Lê Minh Châu",
-    "customerPhone": "0901000003",
-    "status": "completed",
-    "paymentStatus": "paid",
-    "trafficSource": "facebook",
-    "subtotal": 747000,
-    "discount": 20000,
-    "shippingFee": 30000,
-    "totalAmount": 757000,
-    "items": [
-      {
-        "productId": "6",
-        "productName": "Áo polo basic nam",
-        "categoryId": "1",
-        "brandId": "4",
-        "quantity": 3,
-        "price": 249000
-      }
-    ],
-    "createdAt": "2026-02-18T13:20:00",
-    "completedAt": "2026-02-18T14:00:00"
-  },
-  {
-    "id": "OD011",
-    "code": "ORD-011",
-    "customerId": "1",
-    "customerName": "Nguyễn Văn An",
-    "customerPhone": "0901000001",
-    "status": "completed",
-    "paymentStatus": "paid",
-    "trafficSource": "direct",
-    "subtotal": 900000,
-    "discount": 50000,
-    "shippingFee": 30000,
-    "totalAmount": 880000,
-    "items": [
-      {
-        "productId": "2",
-        "productName": "Quần jeans nữ skinny",
-        "categoryId": "3",
-        "brandId": "3",
-        "quantity": 2,
-        "price": 450000
-      }
-    ],
-    "createdAt": "2026-02-22T16:40:00",
-    "completedAt": "2026-02-22T17:20:00"
-  },
-  {
-    "id": "OD012",
-    "code": "ORD-012",
-    "customerId": "2",
-    "customerName": "Trần Thị Bình",
-    "customerPhone": "0901000002",
-    "status": "completed",
-    "paymentStatus": "paid",
-    "trafficSource": "google",
-    "subtotal": 398000,
-    "discount": 0,
-    "shippingFee": 30000,
-    "totalAmount": 428000,
-    "items": [
-      {
-        "productId": "1",
-        "productName": "Áo sơ mi nam trắng Premium",
-        "categoryId": "2",
-        "brandId": "4",
-        "quantity": 2,
-        "price": 199000
-      }
-    ],
-    "createdAt": "2026-03-01T08:30:00",
-    "completedAt": "2026-03-01T09:10:00"
-  },
-  {
-    "id": "OD013",
-    "code": "ORD-013",
-    "customerId": "3",
-    "customerName": "Lê Minh Châu",
-    "customerPhone": "0901000003",
-    "status": "completed",
-    "paymentStatus": "paid",
-    "trafficSource": "google",
-    "subtotal": 999000,
-    "discount": 50000,
-    "shippingFee": 0,
-    "totalAmount": 949000,
-    "items": [
-      {
-        "productId": "3",
-        "productName": "Váy dạ hội sang trọng",
-        "categoryId": "4",
-        "brandId": "2",
-        "quantity": 1,
-        "price": 999000
-      }
-    ],
-    "createdAt": "2026-03-03T11:00:00",
-    "completedAt": "2026-03-03T11:45:00"
-  },
-  {
-    "id": "OD014",
-    "code": "ORD-014",
-    "customerId": "1",
-    "customerName": "Nguyễn Văn An",
-    "customerPhone": "0901000001",
-    "status": "completed",
-    "paymentStatus": "paid",
-    "trafficSource": "facebook",
-    "subtotal": 498000,
-    "discount": 0,
-    "shippingFee": 30000,
-    "totalAmount": 528000,
-    "items": [
-      {
-        "productId": "6",
-        "productName": "Áo polo basic nam",
-        "categoryId": "1",
-        "brandId": "4",
-        "quantity": 2,
-        "price": 249000
-      }
-    ],
-    "createdAt": "2026-03-05T15:20:00",
-    "completedAt": "2026-03-05T16:00:00"
-  },
-  {
-    "id": "OD015",
-    "code": "ORD-015",
-    "customerId": "2",
-    "customerName": "Trần Thị Bình",
-    "customerPhone": "0901000002",
-    "status": "completed",
-    "paymentStatus": "paid",
-    "trafficSource": "direct",
-    "subtotal": 900000,
-    "discount": 30000,
-    "shippingFee": 30000,
-    "totalAmount": 900000,
-    "items": [
-      {
-        "productId": "2",
-        "productName": "Quần jeans nữ skinny",
-        "categoryId": "3",
-        "brandId": "3",
-        "quantity": 2,
-        "price": 450000
-      }
-    ],
-    "createdAt": "2026-03-08T10:10:00",
-    "completedAt": "2026-03-08T10:55:00"
-  }
-],
   "visits": [
-    { "id": "V001", "date": "2026-01-12", "source": "google", "visits": 120, "pageviews": 320 },
-    { "id": "V002", "date": "2026-02-20", "source": "facebook", "visits": 95, "pageviews": 260 },
-    { "id": "V003", "date": "2026-03-10", "source": "direct", "visits": 80, "pageviews": 210 },
-    { "id": "V004", "date": "2026-03-11", "source": "google", "visits": 140, "pageviews": 390 }
+    {
+      "id": "V001",
+      "date": "2026-01-12",
+      "source": "google",
+      "visits": 120,
+      "pageviews": 320
+    },
+    {
+      "id": "V002",
+      "date": "2026-02-20",
+      "source": "facebook",
+      "visits": 95,
+      "pageviews": 260
+    },
+    {
+      "id": "V003",
+      "date": "2026-03-10",
+      "source": "direct",
+      "visits": 80,
+      "pageviews": 210
+    },
+    {
+      "id": "V004",
+      "date": "2026-03-11",
+      "source": "google",
+      "visits": 140,
+      "pageviews": 390
+    }
   ],
   "reviews": [
     {
@@ -834,9 +786,24 @@
     }
   ],
   "favorites": [
-    { "id": "F001", "customerId": "1", "productId": "1", "createdAt": "2026-01-12T09:00:00" },
-    { "id": "F002", "customerId": "2", "productId": "2", "createdAt": "2026-02-20T14:00:00" },
-    { "id": "F003", "customerId": "1", "productId": "6", "createdAt": "2026-03-10T08:30:00" }
+    {
+      "id": "F001",
+      "customerId": "1",
+      "productId": "1",
+      "createdAt": "2026-01-12T09:00:00"
+    },
+    {
+      "id": "F002",
+      "customerId": "2",
+      "productId": "2",
+      "createdAt": "2026-02-20T14:00:00"
+    },
+    {
+      "id": "F003",
+      "customerId": "1",
+      "productId": "6",
+      "createdAt": "2026-03-10T08:30:00"
+    }
   ],
   "$schema": "./node_modules/json-server/schema.json"
 }
