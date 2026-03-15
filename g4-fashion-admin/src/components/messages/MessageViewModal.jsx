@@ -1,4 +1,4 @@
-import { X, Check } from "lucide-react";
+import { X, Check, Clock } from "lucide-react";
 import {
   modalOverlayClass,
   modalContainerClass,
@@ -30,7 +30,9 @@ export default function MessageViewModal({ open, message, onClose, onReply }) {
       >
         {/* Header */}
         <div className={modalHeaderClass}>
-          <h2 className="text-xl font-bold text-slate-800">Chi tiết tin nhắn</h2>
+          <h2 className="text-xl font-bold text-slate-800">
+            Chi tiết tin nhắn
+          </h2>
           <button onClick={onClose} className={modalCloseButtonClass}>
             <X size={20} />
           </button>
@@ -74,11 +76,21 @@ export default function MessageViewModal({ open, message, onClose, onReply }) {
 
               <div>
                 <strong>Trạng thái:</strong>{" "}
-                <span className="bg-green-100 text-green-700 px-2 py-1 rounded text-xs inline-flex items-center gap-1">
-                  <Check size={14} /> {message.status}
-                </span>
+
+                {message.status.toLowerCase() === "đã trả lời" && (
+                  <span className="whitespace-nowrap rounded px-2 py-1 text-xs bg-green-100 text-green-700 inline-flex items-center gap-1">
+                    <Check size={14} /> {message.status}
+                  </span>
+                )}
+
+                {message.status.toLowerCase() === "chưa trả lời" && (
+                  <span className="whitespace-nowrap rounded px-2 py-1 text-xs bg-red-100 text-red-700 inline-flex items-center gap-1">
+                    <Clock size={14} /> {message.status}
+                  </span>
+                )}
               </div>
             </div>
+
           </div>
 
           {/* Tiêu đề */}
@@ -86,7 +98,9 @@ export default function MessageViewModal({ open, message, onClose, onReply }) {
             <h3 className="font-semibold text-lg text-slate-800">
               {message.title}
             </h3>
-            <p className="text-sm text-slate-500 mt-1">{message.time}</p>
+            <p className="text-sm text-slate-500 mt-1">
+              {message.time}
+            </p>
           </div>
 
           {/* Nội dung tin nhắn */}
@@ -119,13 +133,7 @@ export default function MessageViewModal({ open, message, onClose, onReply }) {
             >
               Đóng
             </button>
-
-            <button
-              onClick={() => onReply(message)}
-              className="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm"
-            >
-              Trả lời
-            </button>
+            
           </div>
 
         </div>
