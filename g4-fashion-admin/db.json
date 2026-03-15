@@ -98,7 +98,6 @@
   ],
   "brands": [
     {
-      "id": "1",
       "name": "Louis Vuitton",
       "slug": "louis-vuitton",
       "country": "Pháp",
@@ -106,11 +105,10 @@
       "featured": true,
       "status": "active",
       "website": "https://louisvuitton.com",
-      "logo": "https://dummyimage.com/80x80/e5e7eb/9ca3af&text=LV",
-      "updatedAt": "2024-12-01"
+      "logo": "https://iocrealty.com/wp-content/uploads/2025/05/logo-lv.jpg",
+      "id": "1"
     },
     {
-      "id": "2",
       "name": "Gucci",
       "slug": "gucci",
       "country": "Ý",
@@ -118,8 +116,8 @@
       "featured": true,
       "status": "active",
       "website": "https://gucci.com",
-      "logo": "https://dummyimage.com/80x80/e5e7eb/9ca3af&text=GC",
-      "updatedAt": "2024-12-02"
+      "logo": "https://inkythuatso.com/uploads/images/2021/11/gucci-logo-inkythuatso-01-02-09-59-44.jpg",
+      "id": "2"
     },
     {
       "id": "3",
