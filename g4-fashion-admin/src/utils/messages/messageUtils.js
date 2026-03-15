@@ -1,5 +1,5 @@
 export const countUnread = (messages) => {
-    return messages.filter(m => m.status === "Chưa đọc").length;
+    return messages.filter(m => m.status === "Chưa trả lời").length;
 };
 
 export const countReplied = (messages) => {
