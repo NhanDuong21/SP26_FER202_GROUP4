@@ -828,7 +828,7 @@
       "title": "Vấn đề thanh toán đơn hàng",
       "content": "Mình thanh toán nhưng hệ thống báo chưa thanh toán, nhờ shop kiểm tra.",
       "category": "Đơn hàng",
-      "priority": "Cao",
+      "priority": "Khẩn cấp",
       "status": "Chưa trả lời",
       "time": "2026-03-11 08:05"
     },
