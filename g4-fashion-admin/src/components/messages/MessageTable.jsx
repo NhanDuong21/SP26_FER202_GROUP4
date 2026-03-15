@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { Eye, Send, Trash2, Check, Clock } from "lucide-react";
 import MessageViewModal from "./MessageViewModal"; // modal xem chi tiết
+import MessageDeleteModal from "./MessageDeleteModal"; // modal xác nhận xóa
+import MessageReplyModal from "./MessageReplyModal"; // modal trả lời
+
 import {
     tableHeaderCellClass,
     tableCellClass,
@@ -10,6 +13,7 @@ import {
 export default function MessageTable({ messages, onReply, onDelete }) {
     const [selectedMessage, setSelectedMessage] = useState(null);
     const [showViewModal, setShowViewModal] = useState(false);
+    const [showReplyModal, setShowReplyModal] = useState(false);
 
     // Mở modal khi nhấn "Xem chi tiết"
     const onView = (msg) => {
@@ -22,7 +26,28 @@ export default function MessageTable({ messages, onReply, onDelete }) {
         setSelectedMessage(null);
         setShowViewModal(false);
     };
-    
+
+    const onOpenReplyModal = (msg) => {
+        setSelectedMessage(msg);
+        setShowReplyModal(true);
+    };
+
+    const onCloseReplyModal = () => {
+        setShowReplyModal(false);
+        setSelectedMessage(null);
+    };
+
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const onOpenDeleteModal = (msg) => {
+        setSelectedMessage(msg);
+        setShowDeleteModal(true);
+    };
+
+    const onCloseDeleteModal = () => {
+        setShowDeleteModal(false);
+        setSelectedMessage(null);
+    };
+
     const getPriorityColor = (priority) => {
         switch (priority.toLowerCase()) {
             case "cao":
@@ -100,7 +125,7 @@ export default function MessageTable({ messages, onReply, onDelete }) {
                                         </span>
                                     )}
 
-                                    {msg.status.toLowerCase() === "chưa đọc" && (
+                                    {msg.status.toLowerCase() === "chưa trả lời" && (
                                         <span className="whitespace-nowrap rounded px-2 py-1 text-xs bg-red-100 text-red-700 inline-flex items-center gap-1">
                                             <Clock size={12} /> {msg.status}
                                         </span>
@@ -123,7 +148,7 @@ export default function MessageTable({ messages, onReply, onDelete }) {
                                         </button>
 
                                         <button
-                                            onClick={() => onReply(msg)}
+                                            onClick={() => onOpenReplyModal(msg)}
                                             className={`${iconActionButtonClass} bg-green-50 text-green-600 hover:bg-green-100`}
                                             title="Trả lời"
                                         >
@@ -131,7 +156,7 @@ export default function MessageTable({ messages, onReply, onDelete }) {
                                         </button>
 
                                         <button
-                                            onClick={() => onDelete(msg)}
+                                            onClick={() => onOpenDeleteModal(msg)}
                                             className={`${iconActionButtonClass} bg-red-50 text-red-600 hover:bg-red-100`}
                                             title="Xóa"
                                         >
@@ -150,6 +175,28 @@ export default function MessageTable({ messages, onReply, onDelete }) {
                 open={showViewModal}
                 message={selectedMessage}
                 onClose={onCloseViewModal}
+            />
+            
+            {/* Modal trả lời */}
+            <MessageReplyModal
+                open={showReplyModal}
+                message={selectedMessage}
+                onClose={onCloseReplyModal}
+                onSend={(replyText) => {
+                    onReply(selectedMessage, replyText);
+                    onCloseReplyModal();
+                }}
+            />
+
+            {/* Modal xác nhận xóa */}
+            <MessageDeleteModal
+                isOpen={showDeleteModal}
+                onClose={onCloseDeleteModal}
+                onConfirm={(id) => {
+                    onDelete(id);
+                    onCloseDeleteModal();
+                }}
+                message={selectedMessage}
             />
         </>
     );
