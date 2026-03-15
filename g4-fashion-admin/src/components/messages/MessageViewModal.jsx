@@ -10,11 +10,13 @@ export default function MessageViewModal({ open, message, onClose, onReply }) {
   if (!open || !message) return null;
 
   const getPriorityColor = (priority) => {
-    switch (priority.toLowerCase()) {
-      case "cao":
+    switch (priority?.toLowerCase()) {
+      case "khẩn cấp":
         return "bg-red-100 text-red-700";
+      case "cao":
+        return "bg-orange-100 text-orange-700";
       case "trung bình":
-        return "bg-blue-100 text-blue-700";
+        return "bg-yellow-100 text-yellow-700";
       case "thấp":
         return "bg-green-100 text-green-700";
       default:
@@ -133,7 +135,7 @@ export default function MessageViewModal({ open, message, onClose, onReply }) {
             >
               Đóng
             </button>
-            
+
           </div>
 
         </div>
