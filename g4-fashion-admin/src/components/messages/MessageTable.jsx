@@ -50,8 +50,10 @@ export default function MessageTable({ messages, onReply, onDelete }) {
 
     const getPriorityColor = (priority) => {
         switch (priority.toLowerCase()) {
-            case "cao":
+            case "khẩn cấp":
                 return "bg-red-100 text-red-700";
+            case "cao":
+                return "bg-orange-100 text-orange-700";    
             case "trung bình":
                 return "bg-yellow-100 text-yellow-700";
             case "thấp":
