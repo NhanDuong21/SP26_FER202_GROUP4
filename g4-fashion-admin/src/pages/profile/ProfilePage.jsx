@@ -8,13 +8,21 @@ function ProfilePage() {
   const [formData, setFormData] = useState({});
 
   useEffect(() => {
-    fetch("http://localhost:3000/users/1")
-      .then((res) => res.json())
-      .then((data) => {
-        setUser(data);
-        setFormData(data);
-      });
-  }, []);
+  fetch("http://localhost:3001/users/1")
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("Không lấy được dữ liệu user");
+      }
+      return res.json();
+    })
+    .then((data) => {
+      setUser(data);
+      setFormData(data);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -24,19 +32,29 @@ function ProfilePage() {
   };
 
   const handleSave = () => {
-    fetch("http://localhost:3000/users/1", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(formData)
+  fetch("http://localhost:3001/users/1", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(formData)
+  })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("Lưu dữ liệu thất bại");
+      }
+      return res.json();
     })
-      .then((res) => res.json())
-      .then((data) => {
-        setUser(data);
-        setEditing(false);
-      });
-  };
+    .then((data) => {
+      setUser(data);
+      setEditing(false);
+      alert("Cập nhật thông tin thành công");
+    })
+    .catch((err) => {
+      console.error(err);
+      alert("Có lỗi khi lưu dữ liệu");
+    });
+};
 
   if (!user) return <p className="p-10">Loading...</p>;
 

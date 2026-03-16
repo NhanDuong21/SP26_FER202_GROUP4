@@ -11,14 +11,16 @@ import {
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
 function Header({ isCollapsed, onToggleSidebar, onOpenMobileSidebar }) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/users/1")
+    fetch("http://localhost:3001/users/1")
       .then((res) => res.json())
       .then((data) => setUser(data));
   }, []);
+
   return (
     <header className="sticky top-0 z-20 border-b border-slate-200 bg-white">
       <div className="flex h-[78px] items-center justify-between px-4 sm:px-6 lg:px-8">
