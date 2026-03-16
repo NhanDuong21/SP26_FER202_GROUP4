@@ -20,7 +20,9 @@ export default function OrdersPage() {
   const [keyword, setKeyword] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [paymentFilter, setPaymentFilter] = useState("");
-  
+
+  const ITEMS_PER_PAGE = 10;
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -44,9 +46,21 @@ export default function OrdersPage() {
     fetchOrders();
   }, []);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [keyword, statusFilter, paymentFilter]);
+
   const filteredOrders = useMemo(() => {
     return filterOrders(orders, keyword, statusFilter, paymentFilter);
   }, [orders, keyword, statusFilter, paymentFilter]);
+
+  const totalPages = Math.ceil(filteredOrders.length / ITEMS_PER_PAGE);
+
+  const paginatedOrders = useMemo(() => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    return filteredOrders.slice(startIndex, endIndex);
+  }, [filteredOrders, currentPage]);
 
   const handleChangeStatus = async (order, newStatus) => {
     try {
@@ -55,13 +69,16 @@ export default function OrdersPage() {
       const payload = {
         status: newStatus,
         completedAt: newStatus === "completed" ? new Date().toISOString() : null,
+        cancelledAt: newStatus === "cancelled" ? new Date().toISOString() : null,
       };
 
       const updatedRes = await orderService.updateOrderStatus(order.id, payload);
       const updatedOrder = updatedRes.data;
 
       setOrders((prev) =>
-        prev.map((item) => (item.id === order.id ? { ...item, ...updatedOrder } : item))
+        prev.map((item) =>
+          item.id === order.id ? { ...item, ...updatedOrder } : item
+        )
       );
 
       toast.success("Cập nhật trạng thái đơn hàng thành công");
@@ -123,7 +140,8 @@ export default function OrdersPage() {
           <option value="">Tất cả trạng thái</option>
           <option value="pending">Chờ xử lý</option>
           <option value="processing">Đang xử lý</option>
-          <option value="completed">Hoàn thành</option>
+          <option value="completed">Đã hoàn thành</option>
+          <option value="cancelled">Đã hủy</option>
         </select>
 
         <select
@@ -174,7 +192,7 @@ export default function OrdersPage() {
                   </td>
                 </tr>
               ) : (
-                filteredOrders.map((order) => {
+                paginatedOrders.map((order) => {
                   const orderStatus = getOrderStatusInfo(order.status);
                   const paymentStatus = getPaymentStatusInfo(order.paymentStatus);
                   const actions = getOrderActions(order.status);
@@ -216,7 +234,11 @@ export default function OrdersPage() {
 
                       <td className="px-5 py-4">
                         {actions.length === 0 ? (
-                          <span className="text-xs text-slate-400">Không có</span>
+                          <span
+                            className={`inline-flex rounded-full px-3 py-1 text-xs font-medium ${orderStatus.className}`}
+                          >
+                            {orderStatus.label}
+                          </span>
                         ) : (
                           <select
                             defaultValue=""
@@ -227,7 +249,7 @@ export default function OrdersPage() {
                               handleChangeStatus(order, value);
                               e.target.value = "";
                             }}
-                            className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs outline-none focus:border-sky-400"
+                            className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs outline-none focus:border-sky-400 disabled:cursor-not-allowed disabled:opacity-60"
                           >
                             <option value="">Chọn thao tác</option>
                             {actions.map((action) => (
@@ -245,6 +267,51 @@ export default function OrdersPage() {
             </tbody>
           </table>
         </div>
+
+        {filteredOrders.length > 0 && (
+          <div className="flex flex-col gap-3 border-t border-slate-100 px-5 py-4 md:flex-row md:items-center md:justify-between">
+            <p className="text-sm text-slate-500">
+              Hiển thị{" "}
+              <span className="font-medium text-slate-700">
+                {(currentPage - 1) * ITEMS_PER_PAGE + 1}
+              </span>{" "}
+              -{" "}
+              <span className="font-medium text-slate-700">
+                {Math.min(currentPage * ITEMS_PER_PAGE, filteredOrders.length)}
+              </span>{" "}
+              trong tổng số{" "}
+              <span className="font-medium text-slate-700">
+                {filteredOrders.length}
+              </span>{" "}
+              đơn hàng
+            </p>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                className="rounded-xl border border-slate-200 px-4 py-2 text-sm text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                Trước
+              </button>
+
+              <span className="text-sm text-slate-600">
+                Trang <span className="font-semibold">{currentPage}</span> /{" "}
+                <span className="font-semibold">{totalPages || 1}</span>
+              </span>
+
+              <button
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(prev + 1, totalPages || 1))
+                }
+                disabled={currentPage === totalPages || totalPages === 0}
+                className="rounded-xl border border-slate-200 px-4 py-2 text-sm text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                Sau
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
