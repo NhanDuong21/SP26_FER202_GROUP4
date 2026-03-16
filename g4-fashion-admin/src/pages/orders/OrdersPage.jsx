@@ -51,7 +51,11 @@ export default function OrdersPage() {
   }, [keyword, statusFilter, paymentFilter]);
 
   const filteredOrders = useMemo(() => {
-    return filterOrders(orders, keyword, statusFilter, paymentFilter);
+    const result = filterOrders(orders, keyword, statusFilter, paymentFilter);
+
+    return [...result].sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
   }, [orders, keyword, statusFilter, paymentFilter]);
 
   const totalPages = Math.ceil(filteredOrders.length / ITEMS_PER_PAGE);
@@ -70,6 +74,7 @@ export default function OrdersPage() {
         status: newStatus,
         completedAt: newStatus === "completed" ? new Date().toISOString() : null,
         cancelledAt: newStatus === "cancelled" ? new Date().toISOString() : null,
+        paymentStatus: newStatus === "completed" ? "paid" : order.paymentStatus,
       };
 
       const updatedRes = await orderService.updateOrderStatus(order.id, payload);
