@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import {
   Eye,
   Pencil,
@@ -100,13 +101,16 @@ export default function CustomersPage() {
     try {
       if (editingCustomer) {
         await customerService.update(editingCustomer.id, payload);
+        toast.success("Cập nhật khách hàng thành công");
       } else {
         await customerService.create(payload);
+        toast.success("Thêm khách hàng thành công");
       }
       await fetchCustomers();
       handleCloseForm();
     } catch (err) {
       console.error("Lỗi lưu khách hàng:", err);
+      toast.error("Không thể lưu khách hàng");
     }
   };
 
@@ -135,8 +139,10 @@ export default function CustomersPage() {
       await customerService.remove(deletingCustomer.id);
       await fetchCustomers();
       handleCloseDelete();
+      toast.success("Xóa khách hàng thành công");
     } catch (err) {
       console.error("Lỗi xóa khách hàng:", err);
+      toast.error("Không thể xóa khách hàng");
     }
   };
 
