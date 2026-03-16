@@ -21,27 +21,27 @@ function SettingsPage() {
 
   // load dữ liệu
   useEffect(() => {
-    fetch("http://localhost:3000/settings/1")
-      .then((res) => res.json())
-      .then((data) => {
-        setSettings((prev) => ({
-          ...prev,
-          siteName: data.siteName,
-          siteDescription: data.siteDescription,
-          timezone: data.timezone,
-          language: data.language,
-        }));
-      });
+  fetch("http://localhost:3001/settings/1")
+    .then((res) => res.json())
+    .then((data) => {
+      setSettings((prev) => ({
+        ...prev,
+        siteName: data.siteName,
+        siteDescription: data.siteDescription,
+        timezone: data.timezone,
+        language: data.language,
+      }));
+    });
 
-    fetch("http://localhost:3000/users/1")
-      .then((res) => res.json())
-      .then((user) => {
-        setSettings((prev) => ({
-          ...prev,
-          adminEmail: user.email,
-        }));
-      });
-  }, []);
+  fetch("http://localhost:3001/users/1")
+    .then((res) => res.json())
+    .then((user) => {
+      setSettings((prev) => ({
+        ...prev,
+        adminEmail: user.email,
+      }));
+    });
+}, []);
 
   const handleChange = (e) => {
     setSettings({
@@ -58,7 +58,7 @@ function SettingsPage() {
   };
 
   const handleReset = () => {
-    fetch("http://localhost:3000/settings/1")
+    fetch("http://localhost:3001/settings/1")
       .then((res) => res.json())
       .then((data) =>
         setSettings((prev) => ({
@@ -70,7 +70,7 @@ function SettingsPage() {
         }))
       );
 
-    fetch("http://localhost:3000/users/1")
+    fetch("http://localhost:3001/users/1")
       .then((res) => res.json())
       .then((user) =>
         setSettings((prev) => ({
@@ -91,7 +91,7 @@ function SettingsPage() {
 
     // xử lý đổi mật khẩu
     if (tab === "password") {
-      fetch("http://localhost:3000/users/1")
+      fetch("http://localhost:3001/users/1")
         .then((res) => res.json())
         .then((user) => {
           if (password.oldPassword !== user.password) {
@@ -109,7 +109,7 @@ function SettingsPage() {
             return;
           }
 
-          fetch("http://localhost:3000/users/1", {
+          fetch("http://localhost:3001/users/1", {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
@@ -132,7 +132,7 @@ function SettingsPage() {
     }
 
     // lưu settings
-    fetch("http://localhost:3000/settings/1", {
+    fetch("http://localhost:3001/settings/1", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -145,7 +145,7 @@ function SettingsPage() {
       }),
     });
 
-    fetch("http://localhost:3000/users/1", {
+    fetch("http://localhost:3001/users/1", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
