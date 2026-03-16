@@ -5,9 +5,9 @@ import {
   modalContainerClass,
   modalCloseButtonClass,
   secondaryButtonClass,
-} from "../../utils/categories/uiClasses";
+} from "../../utils/uiClasses";
 
-export default function DeleteConfirmModal({
+export default function CategoryDeleteModal({
   isOpen,
   onClose,
   onConfirm,

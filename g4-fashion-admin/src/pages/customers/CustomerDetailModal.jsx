@@ -9,7 +9,7 @@ import {
   secondaryButtonClass,
 } from "../../utils/customers/uiClasses";
 import { getCustomerStatusBadgeClass, getCustomerLevelBadgeClass } from "../../utils/customers/customerUi";
-import { formatCurrency } from "../../utils/categories/formatCurrency";
+import { formatCurrency } from "../../utils/formatCurrency";
 
 export default function CustomerDetailModal({
   isOpen,

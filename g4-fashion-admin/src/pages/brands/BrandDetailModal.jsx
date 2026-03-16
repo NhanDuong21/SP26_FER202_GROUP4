@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { CalendarDays, FolderOpen, Package, Tag, X } from "lucide-react";
+import { Building2, Globe, Package, Calendar, X } from "lucide-react";
 import {
   modalOverlayClass,
   modalContainerClass,
@@ -7,14 +7,12 @@ import {
   modalCloseButtonClass,
   infoItemClass,
   secondaryButtonClass,
-} from "../../utils/categories/uiClasses";
-import { getCategoryStatusBadgeClass } from "../../utils/categories/categoryUi";
+} from "../../utils/uiClasses";
 
-export default function CategoryDetailModal({
+export default function BrandDetailModal({
   isOpen,
   onClose,
-  category,
-  getParentName,
+  brand,
 }) {
   useEffect(() => {
     if (!isOpen) return;
@@ -27,10 +25,16 @@ export default function CategoryDetailModal({
     return () => document.removeEventListener("keydown", handleEsc);
   }, [isOpen, onClose]);
 
-  if (!isOpen || !category) return null;
+  if (!isOpen || !brand) return null;
 
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) onClose();
+  };
+
+  const getBrandStatusBadgeClass = (status) => {
+    return status === "active"
+      ? "inline-flex rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700"
+      : "inline-flex rounded-full bg-rose-100 px-3 py-1 text-xs font-semibold text-rose-700";
   };
 
   return (
@@ -38,16 +42,16 @@ export default function CategoryDetailModal({
       <div className={`${modalContainerClass} max-w-2xl`}>
         <div className={modalHeaderClass}>
           <div className="flex items-start gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sky-600">
-              <FolderOpen size={22} />
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-100 text-blue-600">
+              <Building2 size={22} />
             </div>
 
             <div>
               <h2 className="text-xl font-bold text-slate-800">
-                Chi tiết danh mục
+                Chi tiết thương hiệu
               </h2>
               <p className="mt-1 text-sm text-slate-500">
-                Xem thông tin chi tiết của danh mục
+                Xem thông tin chi tiết của thương hiệu
               </p>
             </div>
           </div>
@@ -60,34 +64,29 @@ export default function CategoryDetailModal({
         <div className="grid grid-cols-1 gap-6 px-6 py-6 md:grid-cols-[140px_1fr]">
           <div>
             <img
-              src={category.image}
-              alt={category.name}
-              className="h-32 w-32 rounded-3xl border border-slate-200 object-cover"
+              src={brand.logo}
+              alt={brand.name}
+              className="h-32 w-32 rounded-2xl border border-slate-200 object-cover"
             />
           </div>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className={infoItemClass}>
               <p className="mb-2 flex items-center gap-2 text-sm text-slate-500">
-                <FolderOpen size={16} />
-                Tên danh mục
+                <Building2 size={16} />
+                Tên thương hiệu
               </p>
-              <p className="font-semibold text-slate-800">{category.name}</p>
+              <p className="font-semibold text-slate-800">{brand.name}</p>
             </div>
 
             <div className={infoItemClass}>
-              <p className="mb-2 flex items-center gap-2 text-sm text-slate-500">
-                <Tag size={16} />
-                Slug
-              </p>
-              <p className="font-semibold text-slate-800">{category.slug}</p>
+              <p className="mb-2 text-sm text-slate-500">Slug</p>
+              <p className="font-semibold text-slate-800">{brand.slug}</p>
             </div>
 
             <div className={infoItemClass}>
-              <p className="mb-2 text-sm text-slate-500">Danh mục cha</p>
-              <p className="font-semibold text-slate-800">
-                {getParentName(category.parentId)}
-              </p>
+              <p className="mb-2 text-sm text-slate-500">Quốc gia</p>
+              <p className="font-semibold text-slate-800">{brand.country}</p>
             </div>
 
             <div className={infoItemClass}>
@@ -96,24 +95,46 @@ export default function CategoryDetailModal({
                 Số sản phẩm
               </p>
               <p className="font-semibold text-slate-800">
-                {category.productCount}
+                {brand.productCount}
               </p>
             </div>
 
             <div className={infoItemClass}>
               <p className="mb-2 text-sm text-slate-500">Trạng thái</p>
-              <span className={getCategoryStatusBadgeClass(category.status)}>
-                {category.status === "active" ? "Hoạt động" : "Ngưng hoạt động"}
+              <span className={getBrandStatusBadgeClass(brand.status)}>
+                {brand.status === "active" ? "Hoạt động" : "Ngưng hoạt động"}
               </span>
             </div>
 
             <div className={infoItemClass}>
+              <p className="mb-2 text-sm text-slate-500">Nổi bật</p>
+              <span className={brand.featured ? "inline-flex rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700" : "inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600"}>
+                {brand.featured ? "Có" : "Không"}
+              </span>
+            </div>
+
+            <div className={`${infoItemClass} md:col-span-2`}>
               <p className="mb-2 flex items-center gap-2 text-sm text-slate-500">
-                <CalendarDays size={16} />
+                <Globe size={16} />
+                Website
+              </p>
+              <a
+                href={brand.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="break-all text-blue-600 hover:underline font-semibold"
+              >
+                {brand.website}
+              </a>
+            </div>
+
+            <div className={`${infoItemClass} md:col-span-2`}>
+              <p className="mb-2 flex items-center gap-2 text-sm text-slate-500">
+                <Calendar size={16} />
                 Ngày cập nhật
               </p>
               <p className="font-semibold text-slate-800">
-                {category.updatedAt}
+                {brand.updatedAt}
               </p>
             </div>
           </div>

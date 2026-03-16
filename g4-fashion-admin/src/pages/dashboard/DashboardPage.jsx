@@ -1,4 +1,5 @@
 function DashboardPage() {
+  
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
       <h1 className="text-[28px] font-extrabold text-slate-900">Dashboard</h1>

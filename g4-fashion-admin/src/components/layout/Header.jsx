@@ -9,7 +9,18 @@ import {
   UserCircle2,
 } from "lucide-react";
 
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 function Header({ isCollapsed, onToggleSidebar, onOpenMobileSidebar }) {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    fetch("http://localhost:3001/users/1")
+      .then((res) => res.json())
+      .then((data) => setUser(data));
+  }, []);
+
   return (
     <header className="sticky top-0 z-20 border-b border-slate-200 bg-white">
       <div className="flex h-[78px] items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -59,17 +70,28 @@ function Header({ isCollapsed, onToggleSidebar, onOpenMobileSidebar }) {
             <Languages size={18} />
           </button>
 
-          <div className="ml-1 flex items-center gap-3 border-l border-slate-200 pl-3 sm:pl-4">
-            <div className="flex h-11 w-11 items-center justify-center rounded-full bg-slate-100 text-slate-500">
-              <UserCircle2 size={26} />
-            </div>
+          <div className="ml-1 border-l border-slate-200 pl-4">
+            <Link
+              to="/profile"
+              className="flex items-center gap-3 rounded-lg px-2 py-1 transition hover:bg-slate-100"
+            >
+              <div className="h-11 w-11 overflow-hidden rounded-full border border-slate-200">
+                <img
+                  src={user?.avatar}
+                  alt="avatar"
+                  className="h-full w-full object-cover"
+                />
+              </div>
 
-            <div className="hidden sm:block">
-              <p className="text-[15px] font-semibold leading-tight text-slate-800">
-                Admin G4 Fashion
-              </p>
-              <p className="text-sm text-slate-500">admin@g4fashion.com</p>
-            </div>
+              <div className="hidden sm:block leading-tight">
+                <p className="text-[15px] font-semibold text-slate-800">
+                  {user?.name}
+                </p>
+                <p className="text-sm text-slate-500">
+                  {user?.email}
+                </p>
+              </div>
+            </Link>
           </div>
         </div>
       </div>
