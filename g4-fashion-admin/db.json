@@ -8,6 +8,20 @@
       "id": "1"
     }
   ],
+  "languages": [
+    {
+      "code": "en",
+      "name": "English",
+      "dir": "ltr",
+      "id": "0ae7"
+    },
+    {
+      "code": "vi",
+      "name": "Tiếng Việt",
+      "dir": "ltr",
+      "id": "ab5a"
+    }
+  ],
   "users": [
     {
       "id": "1",
