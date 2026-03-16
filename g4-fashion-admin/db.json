@@ -196,13 +196,17 @@
   ],
   "customers": [
     {
+      "id": "CUST-001",
+      "code": "CUST-001",
       "name": "Nguyễn Văn b",
       "email": "nguyenvana@email.com",
       "phone": "0123456789",
       "level": "Gold",
+      "orderCount": 0,
+      "totalSpent": 0,
+      "lastOrderDate": null,
       "status": "active",
-      "updatedAt": "2026-03-12",
-      "id": "CUST-001"
+      "updatedAt": "2026-03-12"
     },
     {
       "id": "CUST-002",
