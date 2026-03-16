@@ -1,7 +1,7 @@
 import { Eye, Pencil, Trash2, AlertTriangle, CheckCircle, Info } from "lucide-react";
+import { tableCellClass, iconActionButtonClass } from "../../utils/uiClasses";
 
-export default function NotificationTable({ notifications, onDelete }) {
-
+export default function NotificationTable({ notifications, onView, onEdit, onDelete }) {
     const getTypeBadge = (type) => {
         switch (type) {
             case "Cảnh báo":
@@ -65,12 +65,12 @@ export default function NotificationTable({ notifications, onDelete }) {
 
                 <thead className="bg-slate-50 text-left">
                     <tr>
-                        <th className="p-4">Loại</th>
+                        <th className="p-4">Icon</th>
                         <th className="p-4">Tiêu đề & Nội dung</th>
                         <th className="p-4">Loại</th>
-                        <th className="whitespace-nowrap p-4">Độ ưu tiên</th>
+                        <th className="p-4 whitespace-nowrap">Độ ưu tiên</th>
                         <th className="p-4">Trạng thái</th>
-                        <th className="whitespace-nowrap p-4">Tỷ lệ đọc</th>
+                        <th className="p-4 whitespace-nowrap">Tỷ lệ đọc</th>
                         <th className="p-4">Thời gian</th>
                         <th className="p-4 text-center">Thao tác</th>
                     </tr>
@@ -78,80 +78,98 @@ export default function NotificationTable({ notifications, onDelete }) {
 
                 <tbody>
 
-                    {notifications.map((item) => (
+                    {notifications.map((notification) => (
 
                         <tr
-                            key={item.id}
+                            key={notification.id}
                             className="border-t hover:bg-slate-50"
                         >
 
                             {/* Icon */}
                             <td className="p-4">
-                                {getTypeIcon(item.type)}
+                                {getTypeIcon(notification.type)}
                             </td>
 
                             {/* Title + content */}
                             <td className="p-4">
 
                                 <div className="font-medium text-slate-800">
-                                    {item.title}
+                                    {notification.title}
                                 </div>
 
-                                <div className="text-xs text-slate-500 mt-1">
-                                    {item.content}
+                                <div className="text-sm text-slate-500 line-clamp-2 mt-1">
+                                    {notification.content}
                                 </div>
 
                             </td>
 
                             {/* Type */}
-                            <td className="whitespace-nowrap p-4">
-                                <span className={`px-2 py-1 text-xs rounded-full ${getTypeBadge(item.type)}`}>
-                                    {item.type}
+                            <td className="p-4 whitespace-nowrap">
+                                <span
+                                    className={`px-2 py-1 text-xs rounded-full ${getTypeBadge(notification.type)}`}
+                                >
+                                    {notification.type}
                                 </span>
                             </td>
 
                             {/* Priority */}
-                            <td className="whitespace-nowrap p-4">
-                                <span className={`px-2 py-1 text-xs rounded-full ${getPriorityBadge(item.priority)}`}>
-                                    {item.priority}
+                            <td className="p-4 whitespace-nowrap">
+                                <span
+                                    className={`px-2 py-1 text-xs rounded-full ${getPriorityBadge(notification.priority)}`}
+                                >
+                                    {notification.priority}
                                 </span>
                             </td>
 
                             {/* Status */}
-                            <td className="whitespace-nowrap p-4">
-                                <span className={`px-2 py-1 text-xs rounded-full ${getStatusBadge(item.status)}`}>
-                                    {item.status}
+                            <td className="p-4 whitespace-nowrap">
+                                <span
+                                    className={`px-2 py-1 text-xs rounded-full ${getStatusBadge(notification.status)}`}
+                                >
+                                    {notification.status}
                                 </span>
                             </td>
 
-                            {/* Read rate */}
-                            <td className="whitespace-nowrap p-4 text-sm">
-                                {item.readRate || "0%"}
+                            {/* Read Rate */}
+                            <td className="p-4 text-sm whitespace-nowrap">
+                                {notification.readRate || "0%"}
                             </td>
 
                             {/* Time */}
-                            <td className="p-4 text-sm">
-                                {item.time}
+                            <td className="p-4 text-sm whitespace-nowrap">
+                                {notification.time}
                             </td>
 
                             {/* Actions */}
-                            <td className="p-4 flex justify-center gap-3">
+                            <td className={tableCellClass}>
 
-                                <Eye
-                                    size={18}
-                                    className="cursor-pointer text-slate-500 hover:text-blue-600"
-                                />
+                                <div className="flex items-center justify-center gap-2">
 
-                                <Pencil
-                                    size={18}
-                                    className="cursor-pointer text-green-600 hover:text-green-700"
-                                />
+                                    <button
+                                        onClick={() => onView(notification)}
+                                        className={`${iconActionButtonClass} bg-blue-50 text-blue-600 hover:bg-blue-100`}
+                                        title="Xem chi tiết"
+                                    >
+                                        <Eye size={18} />
+                                    </button>
 
-                                <Trash2
-                                    size={18}
-                                    onClick={() => onDelete(item.id)}
-                                    className="cursor-pointer text-red-500 hover:text-red-700"
-                                />
+                                    <button
+                                        onClick={() => onEdit(notification)}
+                                        className={`${iconActionButtonClass} bg-green-50 text-green-600 hover:bg-green-100`}
+                                        title="Sửa"
+                                    >
+                                        <Pencil size={18} />
+                                    </button>
+
+                                    <button
+                                        onClick={() => onDelete(notification)}
+                                        className={`${iconActionButtonClass} bg-red-50 text-red-600 hover:bg-red-100`}
+                                        title="Xóa"
+                                    >
+                                        <Trash2 size={18} />
+                                    </button>
+
+                                </div>
 
                             </td>
 
