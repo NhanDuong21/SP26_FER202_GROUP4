@@ -875,25 +875,25 @@
   ],
   "notifications": [
     {
-      "id": 1,
+      "id": "1",
       "title": "Bảo trì hệ thống",
-      "content": "Hệ thống sẽ được bảo trì vào ngày 15/12 từ 23:00 đến 01:00.",
+      "content": "Hệ thống sẽ được bảo trì vào ngày 15/12 từ 23:00 đến 01:00. Trong thời gian này, dịch vụ có thể bị gián đoạn. Xin lỗi vì sự bất tiện này. Vui lòng lên kế hoạch trước để tránh ảnh hưởng đến trải nghiệm của bạn. Cảm ơn sự thông cảm của bạn.",
       "type": "Cảnh báo",
       "priority": "Cao",
       "status": "Đã xuất bản",
       "time": "2024-12-15 23:00"
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "Flash Sale 12.12",
-      "content": "Sự kiện Flash Sale giảm giá tới 50% cho tất cả sản phẩm.",
+      "content": "Sự kiện Flash Sale 12.12 chính thức diễn ra với hàng ngàn sản phẩm thời trang được giảm giá lên đến 50%. Ngoài ra, khách hàng còn có cơ hội nhận thêm mã giảm giá đặc biệt và quà tặng hấp dẫn khi mua sắm trong khung giờ vàng. Hãy nhanh tay đặt hàng để không bỏ lỡ những ưu đãi cực kỳ hấp dẫn chỉ có trong ngày hôm nay.",
       "type": "Thành Công",
       "priority": "Trung bình",
       "status": "Đã lên lịch",
       "time": "2024-12-12 08:00"
     },
     {
-      "id": 3,
+      "id": "3",
       "title": "Cập nhật chính sách đổi trả",
       "content": "Chính sách đổi trả được cập nhật, cho phép đổi trong vòng 30 ngày.",
       "type": "Thông Tin",
@@ -902,7 +902,7 @@
       "time": "2024-12-05 14:00"
     },
     {
-      "id": 4,
+      "id": "4",
       "title": "Lỗi hệ thống thanh toán",
       "content": "Đã phát hiện lỗi khi thanh toán qua ví điện tử, đang khắc phục.",
       "type": "Lỗi",
@@ -911,7 +911,7 @@
       "time": "2024-12-09 09:30"
     },
     {
-      "id": 5,
+      "id": "5",
       "title": "Ra mắt bộ sưu tập mới",
       "content": "7N Fashion ra mắt bộ sưu tập Thu Đông 2024.",
       "type": "Thông Tin",
