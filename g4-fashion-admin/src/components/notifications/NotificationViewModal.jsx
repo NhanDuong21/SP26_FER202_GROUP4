@@ -93,6 +93,13 @@ export default function NotificationViewModal({ open, notification, onClose }) {
                                 </span>
                             </div>
 
+                            <div>
+                                <strong>Đối tượng nhận:</strong>{" "}
+                                <span className="text-slate-700">
+                                    {notification.target}
+                                </span>
+                            </div>
+
                         </div>
 
                         <div className="space-y-2 text-sm">
