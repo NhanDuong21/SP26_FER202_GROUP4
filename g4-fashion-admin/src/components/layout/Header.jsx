@@ -57,10 +57,13 @@ function Header({ isCollapsed, onToggleSidebar, onOpenMobileSidebar }) {
             <Settings size={18} />
           </button>
 
-          <button className="relative flex h-10 w-10 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-600">
+          <Link
+            to="/notifications"
+            className="relative flex h-10 w-10 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
+          >
             <Bell size={18} />
             <span className="absolute right-2 top-2 h-2.5 w-2.5 rounded-full bg-red-500" />
-          </button>
+          </Link>
 
           <button className="hidden h-10 w-10 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 sm:flex">
             <RotateCcw size={18} />
