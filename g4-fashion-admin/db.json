@@ -879,6 +879,7 @@
       "type": "Cảnh báo",
       "priority": "Cao",
       "status": "Đã xuất bản",
+      "target": "Tất cả khách hàng",
       "time": "2024-12-15 23:00"
     },
     {
@@ -888,33 +889,37 @@
       "type": "Thành Công",
       "priority": "Trung bình",
       "status": "Đã lên lịch",
+      "target": "Khách VIP",
       "time": "2024-12-12 08:00"
     },
     {
       "id": "3",
       "title": "Cập nhật chính sách đổi trả",
-      "content": "Chính sách đổi trả được cập nhật, cho phép đổi trong vòng 30 ngày.",
+      "content": "Chính sách đổi trả được cập nhật, cho phép đổi trong vòng 30 ngày. Khách hàng có thể mang sản phẩm đến cửa hàng gần nhất hoặc gửi yêu cầu đổi trả trực tuyến thông qua trang web chính thức của chúng tôi.",
       "type": "Thông Tin",
       "priority": "Thấp",
       "status": "Đã gửi",
+      "target": "Tất cả khách hàng",
       "time": "2024-12-05 14:00"
     },
     {
       "id": "4",
       "title": "Lỗi hệ thống thanh toán",
-      "content": "Đã phát hiện lỗi khi thanh toán qua ví điện tử, đang khắc phục.",
+      "content": "Đã phát hiện lỗi khi thanh toán qua ví điện tử và một số cổng thanh toán trực tuyến. Đội ngũ kỹ thuật đang khẩn trương khắc phục sự cố để đảm bảo giao dịch của khách hàng được thực hiện bình thường.",
       "type": "Lỗi",
       "priority": "Khẩn cấp",
       "status": "Đã xuất bản",
+      "target": "Tất cả khách hàng",
       "time": "2024-12-09 09:30"
     },
     {
       "id": "5",
       "title": "Ra mắt bộ sưu tập mới",
-      "content": "7N Fashion ra mắt bộ sưu tập Thu Đông 2024.",
+      "content": "7N Fashion chính thức ra mắt bộ sưu tập Thu Đông 2024 với nhiều thiết kế hiện đại, chất liệu cao cấp và phong cách trẻ trung. Hãy ghé thăm cửa hàng hoặc website để khám phá những sản phẩm mới nhất.",
       "type": "Thông Tin",
       "priority": "Trung bình",
       "status": "Bản nháp",
+      "target": "Khách VIP",
       "time": "2024-12-20 10:00"
     }
   ],
