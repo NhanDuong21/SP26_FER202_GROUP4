@@ -10,16 +10,16 @@ import {
   secondaryButtonClass,
 } from "../../utils/uiClasses";
 
-export default function NotificationCreateModal({ open, onClose, onCreate }) {
+export default function NotificationCreateModal({ open, onClose, onCreate, notifications = [] }) {
 
   const [form, setForm] = useState({
     title: "",
+    content: "",
     type: "",
     priority: "",
     status: "",
     target: "",
-    time: "",
-    content: "",
+    time: ""
   });
 
   const [errors, setErrors] = useState({});
@@ -63,6 +63,10 @@ export default function NotificationCreateModal({ open, onClose, onCreate }) {
       newErrors.content = "Vui lòng nhập nội dung!";
     }
 
+    if (!form.time) {
+      newErrors.time = "Vui lòng chọn thời gian gửi!";
+    }
+
     setErrors(newErrors);
 
     return Object.keys(newErrors).length === 0;
@@ -72,9 +76,33 @@ export default function NotificationCreateModal({ open, onClose, onCreate }) {
 
     if (!validate()) return;
 
+    const date = new Date(form.time);
+
+    const formattedTime =
+      date.getFullYear() +
+      "-" +
+      String(date.getMonth() + 1).padStart(2, "0") +
+      "-" +
+      String(date.getDate()).padStart(2, "0") +
+      " " +
+      String(date.getHours()).padStart(2, "0") +
+      ":" +
+      String(date.getMinutes()).padStart(2, "0");
+
+    const newId =
+      notifications && notifications.length > 0
+        ? String(Math.max(...notifications.map(n => Number(n.id))) + 1)
+        : "1";
+
     const newNotification = {
-      ...form,
-      id: Date.now(),
+      id: String(newId),
+      title: form.title,
+      content: form.content,
+      type: form.type,
+      priority: form.priority,
+      status: form.status,
+      target: form.target,
+      time: formattedTime
     };
 
     onCreate(newNotification);
@@ -292,8 +320,17 @@ export default function NotificationCreateModal({ open, onClose, onCreate }) {
                 name="time"
                 value={form.time}
                 onChange={handleChange}
-                className="w-full mt-1 border rounded-lg px-3 py-2 text-gray-500"
+                step="60"
+                className={`w-full mt-1 border rounded-lg px-3 py-2
+  ${form.time ? "text-slate-800" : "text-gray-400"}
+  ${errors.time ? "border-red-400" : ""}`}
               />
+
+              {errors.time && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.time}
+                </p>
+              )}
 
             </div>
 
