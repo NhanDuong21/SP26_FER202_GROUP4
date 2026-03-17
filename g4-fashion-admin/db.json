@@ -219,28 +219,69 @@
   ],
   "customers": [
     {
-      "id": "1",
-      "name": "Nguyễn Văn An",
-      "email": "an.nguyen@example.com",
-      "phone": "0901000001",
-      "createdAt": "2026-01-10T09:15:00",
-      "status": "active"
+      "id": "CUST-001",
+      "code": "CUST-001",
+      "name": "Nguyễn Văn A",
+      "email": "nguyenvana@email.com",
+      "phone": "0123456789",
+      "level": "Gold",
+      "orderCount": 15,
+      "totalSpent": 12500000,
+      "lastOrderDate": "2024-12-09",
+      "status": "active",
+      "updatedAt": "2026-03-12"
     },
     {
-      "id": "2",
-      "name": "Trần Thị Bình",
-      "email": "binh.tran@example.com",
-      "phone": "0901000002",
-      "createdAt": "2026-02-14T14:30:00",
-      "status": "active"
+      "id": "CUST-002",
+      "code": "CUST-002",
+      "name": "Trần Thị B",
+      "email": "tranthib@email.com",
+      "phone": "0987654321",
+      "level": "Gold",
+      "orderCount": 8,
+      "totalSpent": 6800000,
+      "lastOrderDate": "2024-12-08",
+      "status": "active",
+      "updatedAt": "2024-12-08"
     },
     {
-      "id": "3",
-      "name": "Lê Minh Châu",
-      "email": "chau.le@example.com",
-      "phone": "0901000003",
-      "createdAt": "2026-03-05T11:20:00",
-      "status": "active"
+      "id": "CUST-003",
+      "code": "CUST-003",
+      "name": "Lê Văn C",
+      "email": "levanc@email.com",
+      "phone": "0169852147",
+      "level": "Silver",
+      "orderCount": 3,
+      "totalSpent": 1950000,
+      "lastOrderDate": "2024-12-09",
+      "status": "active",
+      "updatedAt": "2024-12-09"
+    },
+    {
+      "id": "CUST-004",
+      "code": "CUST-004",
+      "name": "Phạm Thị D",
+      "email": "phamthid@email.com",
+      "phone": "0741852963",
+      "level": "VIP",
+      "orderCount": 22,
+      "totalSpent": 18750000,
+      "lastOrderDate": "2024-12-07",
+      "status": "active",
+      "updatedAt": "2024-12-07"
+    },
+    {
+      "id": "CUST-005",
+      "code": "CUST-005",
+      "name": "Hoàng Văn E",
+      "email": "hoangvane@email.com",
+      "phone": "0456789123",
+      "level": "Bronze",
+      "orderCount": 1,
+      "totalSpent": 320000,
+      "lastOrderDate": "2024-09-15",
+      "status": "inactive",
+      "updatedAt": "2024-09-15"
     }
   ],
   "products": [
