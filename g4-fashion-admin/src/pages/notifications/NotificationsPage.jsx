@@ -6,6 +6,7 @@ import NotificationStats from "../../components/notifications/NotificationStats"
 import NotificationTable from "../../components/notifications/NotificationTable";
 import NotificationCreateModal from "../../components/notifications/NotificationCreateModal";
 import NotificationViewModal from "../../components/notifications/NotificationViewModal";
+import NotificationEditModal from "../../components/notifications/NotificationEditModal";
 import NotificationDeleteModal from "../../components/notifications/NotificationDeleteModal";
 import { notificationService } from "../../services/notificationService";
 import { primaryButtonClass } from "../../utils/uiClasses";
@@ -16,6 +17,9 @@ export default function NotificationsPage() {
 
   // Create Modal State
   const [isCreateOpen, setIsCreateOpen] = useState(false);
+
+  // Edit Modal State
+  const [isEditOpen, setIsEditOpen] = useState(false);
 
   // View Modal State
   const [isViewOpen, setIsViewOpen] = useState(false);
@@ -47,6 +51,27 @@ export default function NotificationsPage() {
     }
   };
 
+  const handleUpdateNotification = async (updatedNotification) => {
+    try {
+
+      await notificationService.update(
+        updatedNotification.id,
+        updatedNotification
+      );
+
+      toast.success("Cập nhật thông báo thành công");
+
+      setIsEditOpen(false);
+
+      await loadNotifications();
+
+    } catch (error) {
+
+      console.error(error);
+      toast.error("Cập nhật thông báo thất bại");
+
+    }
+  };
 
   // View Modal Handlers
   const handleOpenView = (notification) => {
@@ -56,6 +81,17 @@ export default function NotificationsPage() {
 
   const handleCloseView = () => {
     setIsViewOpen(false);
+    setSelectedNotification(null);
+  };
+
+  // Edit Modal Handlers
+  const handleOpenEdit = (notification) => {
+    setSelectedNotification(notification);
+    setIsEditOpen(true);
+  };
+
+  const handleCloseEdit = () => {
+    setIsEditOpen(false);
     setSelectedNotification(null);
   };
 
@@ -131,6 +167,7 @@ export default function NotificationsPage() {
       <NotificationTable
         notifications={notifications}
         onView={handleOpenView}
+        onEdit={handleOpenEdit}
         onDelete={handleOpenDelete}
       />
 
@@ -138,6 +175,14 @@ export default function NotificationsPage() {
         open={isCreateOpen}
         onClose={() => setIsCreateOpen(false)}
         onCreate={handleCreateNotification}
+        notifications={notifications}
+      />
+
+      <NotificationEditModal
+        open={isEditOpen}
+        notification={selectedNotification}
+        onClose={handleCloseEdit}
+        onSave={handleUpdateNotification}
       />
 
       <NotificationViewModal
