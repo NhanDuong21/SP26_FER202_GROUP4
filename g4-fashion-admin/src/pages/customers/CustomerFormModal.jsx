@@ -83,8 +83,15 @@ export default function CustomerFormModal({
       return;
     }
 
+    // Generate code for new customers
+    const code = editingCustomer ? editingCustomer.code : `CUST-${Date.now()}`;
+
     const payload = {
       ...formData,
+      code,
+      orderCount: editingCustomer ? editingCustomer.orderCount || 0 : 0,
+      totalSpent: editingCustomer ? editingCustomer.totalSpent || 0 : 0,
+      lastOrderDate: editingCustomer ? editingCustomer.lastOrderDate || null : null,
       updatedAt: new Date().toISOString().slice(0, 10),
     };
 

@@ -9,12 +9,12 @@ function Sidebar({ isCollapsed, isMobileOpen, onCloseMobile }) {
 
   useEffect(() => {
     // lấy user
-    fetch("http://localhost:3000/users/1")
+    fetch("http://localhost:3001/users/1")
       .then((res) => res.json())
       .then((data) => setUser(data));
 
     // lấy settings
-    fetch("http://localhost:3000/settings/1")
+    fetch("http://localhost:3001/settings/1")
       .then((res) => res.json())
       .then((data) => setSettings(data));
   }, []);
