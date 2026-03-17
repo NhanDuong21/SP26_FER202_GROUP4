@@ -74,18 +74,18 @@ export default function BrandDetailModal({
             <div className={infoItemClass}>
               <p className="mb-2 flex items-center gap-2 text-sm text-slate-500">
                 <Building2 size={16} />
-                Tên thương hiệu
+                  Tên thương hiệu
               </p>
               <p className="font-semibold text-slate-800">{brand.name}</p>
             </div>
 
             <div className={infoItemClass}>
-              <p className="mb-2 text-sm text-slate-500">Slug</p>
+              <p className="mb-2 text-sm text-slate-500"> Slug</p>
               <p className="font-semibold text-slate-800">{brand.slug}</p>
             </div>
 
             <div className={infoItemClass}>
-              <p className="mb-2 text-sm text-slate-500">Quốc gia</p>
+              <p className="mb-2 text-sm text-slate-500"> Quốc gia </p>
               <p className="font-semibold text-slate-800">{brand.country}</p>
             </div>
 
@@ -100,14 +100,14 @@ export default function BrandDetailModal({
             </div>
 
             <div className={infoItemClass}>
-              <p className="mb-2 text-sm text-slate-500">Trạng thái</p>
+              <p className="mb-2 text-sm text-slate-500"> Trạng thái </p>
               <span className={getBrandStatusBadgeClass(brand.status)}>
                 {brand.status === "active" ? "Hoạt động" : "Ngưng hoạt động"}
               </span>
             </div>
 
             <div className={infoItemClass}>
-              <p className="mb-2 text-sm text-slate-500">Nổi bật</p>
+              <p className="mb-2 text-sm text-slate-500"> Nổi bật </p>
               <span className={brand.featured ? "inline-flex rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700" : "inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600"}>
                 {brand.featured ? "Có" : "Không"}
               </span>
