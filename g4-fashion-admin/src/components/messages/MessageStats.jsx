@@ -11,7 +11,7 @@ export default function MessageStats({ stats }) {
             iconClass: "bg-blue-100 text-blue-600",
         },
         {
-            title: "Chưa đọc",
+            title: "Chưa trả lời",
             value: stats.unread,
             icon: Clock,
             iconClass: "bg-gray-100 text-gray-600",
