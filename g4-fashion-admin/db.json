@@ -805,6 +805,18 @@
   ],
   "messages": [
     {
+      "id": "MSG-001",
+      "name": "Nguyễn Thị Hoa",
+      "email": "hoa.nguyen@example.com",
+      "phone": "0901000008",
+      "title": "Sản phẩm bị lỗi",
+      "content": "Áo mình nhận được bị lỗi đường may, shop hỗ trợ giúp mình.",
+      "category": "Sản phẩm",
+      "priority": "Khẩn cấp",
+      "status": "Chưa trả lời",
+      "time": "2026-03-13 16:05"
+    },
+    {
       "id": "MSG-002",
       "name": "Trần Thị Bình",
       "email": "binh.tran@example.com",
@@ -869,6 +881,58 @@
       "time": "2026-03-07 13:10",
       "reply": "Size M hiện có sẵn cho mẫu váy dạ hội sang trọng. Bạn có thể đặt hàng trực tiếp trên website.",
       "replyTime": "2026-03-07 13:45"
+    },
+    {
+      "id": "MSG-007",
+      "name": "Phạm Quốc Huy",
+      "email": "huy.pham@example.com",
+      "phone": "0901000004",
+      "title": "Hỏi về phí vận chuyển",
+      "content": "Shop cho mình hỏi phí vận chuyển về Cần Thơ là bao nhiêu?",
+      "category": "Vận chuyển",
+      "priority": "Thấp",
+      "status": "Chưa trả lời",
+      "time": "2026-03-13 09:20"
+    },
+    {
+      "id": "MSG-008",
+      "name": "Ngô Thị Lan",
+      "email": "lan.ngo@example.com",
+      "phone": "0901000005",
+      "title": "Không đăng nhập được tài khoản",
+      "content": "Mình không đăng nhập được tài khoản dù đã nhập đúng mật khẩu.",
+      "category": "Hỗ trợ",
+      "priority": "Cao",
+      "status": "Chưa trả lời",
+      "time": "2026-03-13 11:15"
+    },
+    {
+      "id": "MSG-009",
+      "name": "Đỗ Hoàng Nam",
+      "email": "nam.do@example.com",
+      "phone": "0901000006",
+      "title": "Hỏi về chương trình khuyến mãi",
+      "content": "Shop có chương trình giảm giá nào cho khách hàng mới không?",
+      "category": "Khuyến mãi",
+      "priority": "Thấp",
+      "status": "Đã trả lời",
+      "time": "2026-03-10 15:30",
+      "reply": "Hiện tại shop đang có chương trình giảm 10% cho khách hàng mới khi đăng ký tài khoản.",
+      "replyTime": "2026-03-10 16:00"
+    },
+    {
+      "id": "MSG-010",
+      "name": "Võ Thị Mai",
+      "email": "mai.vo@example.com",
+      "phone": "0901000007",
+      "title": "Hỏi về tình trạng đơn hàng",
+      "content": "Đơn ORD-018 của mình hiện đang ở đâu?",
+      "category": "Đơn hàng",
+      "priority": "Trung bình",
+      "status": "Đã trả lời",
+      "time": "2026-03-12 14:40",
+      "reply": "Đơn hàng của bạn đang được vận chuyển và dự kiến giao trong ngày mai.",
+      "replyTime": "2026-03-12 15:10"
     }
   ],
   "notifications": [
@@ -921,6 +985,56 @@
       "status": "Bản nháp",
       "target": "Khách VIP",
       "time": "2024-12-20 10:00"
+    },
+    {
+      "id": "6",
+      "title": "Miễn phí vận chuyển cuối tuần",
+      "content": "Trong hai ngày cuối tuần này, tất cả đơn hàng từ 199.000đ trở lên sẽ được miễn phí vận chuyển trên toàn quốc. Đây là cơ hội tốt để bạn mua sắm các sản phẩm thời trang yêu thích mà không cần lo lắng về chi phí giao hàng.",
+      "type": "Thành Công",
+      "priority": "Trung bình",
+      "status": "Đã xuất bản",
+      "target": "Tất cả khách hàng",
+      "time": "2024-12-21 09:00"
+    },
+    {
+      "id": "7",
+      "title": "Khuyến mãi dành riêng cho khách VIP",
+      "content": "Chương trình ưu đãi đặc biệt dành cho khách hàng VIP với mức giảm giá lên đến 30% cho các sản phẩm mới nhất. Ngoài ra, khách VIP còn được tặng thêm điểm thưởng và quà tặng độc quyền khi mua sắm trong thời gian diễn ra chương trình.",
+      "type": "Thông Tin",
+      "priority": "Cao",
+      "status": "Đã lên lịch",
+      "target": "Khách VIP",
+      "time": "2024-12-22 10:00"
+    },
+    {
+      "id": "8",
+      "title": "Cập nhật ứng dụng di động",
+      "content": "Ứng dụng di động của 7N Fashion đã được cập nhật phiên bản mới với nhiều cải tiến về giao diện và hiệu năng. Người dùng có thể trải nghiệm tốc độ tải nhanh hơn và nhiều tính năng tiện lợi khi mua sắm.",
+      "type": "Thông Tin",
+      "priority": "Thấp",
+      "status": "Đã gửi",
+      "target": "Tất cả khách hàng",
+      "time": "2024-12-18 15:30"
+    },
+    {
+      "id": "9",
+      "title": "Hệ thống đăng nhập tạm thời gián đoạn",
+      "content": "Một số người dùng có thể gặp lỗi khi đăng nhập vào hệ thống do quá tải máy chủ. Đội ngũ kỹ thuật đang tiến hành nâng cấp hệ thống để khắc phục tình trạng này trong thời gian sớm nhất.",
+      "type": "Cảnh báo",
+      "priority": "Cao",
+      "status": "Đã xuất bản",
+      "target": "Tất cả khách hàng",
+      "time": "2024-12-19 11:45"
+    },
+    {
+      "id": "10",
+      "title": "Thông báo bảo mật tài khoản",
+      "content": "Để đảm bảo an toàn cho tài khoản của bạn, vui lòng không chia sẻ mật khẩu với bất kỳ ai và kích hoạt xác thực hai bước nếu có thể. Nếu phát hiện hoạt động bất thường, hãy liên hệ ngay với bộ phận hỗ trợ.",
+      "type": "Cảnh báo",
+      "priority": "Trung bình",
+      "status": "Đã xuất bản",
+      "target": "Tất cả khách hàng",
+      "time": "2024-12-17 16:00"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
