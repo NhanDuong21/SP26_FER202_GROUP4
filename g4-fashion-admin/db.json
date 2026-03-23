@@ -391,7 +391,7 @@
       "brandId": "4",
       "price": 290000,
       "salePrice": 249000,
-      "stock": 118,
+      "stock": 112,
       "status": "selling",
       "image": "https://product.hstatic.net/200000690725/product/2_f96661887cd54a95976fd9ad14489acc_master.png",
       "description": "Áo polo basic nam, phù hợp mặc đi làm và đi chơi.",
@@ -1084,6 +1084,33 @@
       ],
       "createdAt": "2026-03-14T11:00:00",
       "completedAt": "2026-03-16T17:59:16.968Z",
+      "cancelledAt": null
+    },
+    {
+      "id": "OD027",
+      "code": "ORD-027",
+      "customerId": "CUST-005",
+      "customerName": "Hoàng Văn E",
+      "customerPhone": "0456789123",
+      "status": "completed",
+      "paymentStatus": "paid",
+      "trafficSource": "facebook",
+      "subtotal": 747000,
+      "discount": 50000,
+      "shippingFee": 30000,
+      "totalAmount": 727000,
+      "items": [
+        {
+          "productId": "6",
+          "productName": "Áo polo basic nam",
+          "categoryId": "1",
+          "brandId": "4",
+          "quantity": 3,
+          "price": 249000
+        }
+      ],
+      "createdAt": "2026-03-24T12:40:00",
+      "completedAt": "2026-03-23T17:47:07.813Z",
       "cancelledAt": null
     }
   ],
