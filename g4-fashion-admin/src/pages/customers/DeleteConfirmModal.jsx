@@ -11,7 +11,7 @@ export default function DeleteConfirmModal({
   isOpen,
   onClose,
   onConfirm,
-  customerName,
+  customerName = "khách hàng này",
 }) {
   useEffect(() => {
     if (!isOpen) return;
@@ -30,7 +30,7 @@ export default function DeleteConfirmModal({
 
   return (
     <div onClick={handleOverlayClick} className={modalOverlayClass}>
-      <div className={`${modalContainerClass} max-w-md p-6`}> 
+      <div className={`${modalContainerClass} max-w-md p-6`}>
         <div className="flex items-start justify-between">
           <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-red-100 text-red-600">
             <AlertTriangle size={26} />
@@ -43,9 +43,12 @@ export default function DeleteConfirmModal({
         <h3 className="mt-4 text-xl font-bold text-slate-800">Xác nhận xóa</h3>
 
         <p className="mt-3 text-sm leading-6 text-slate-600">
-          Bạn có chắc muốn xóa khách hàng{' '}
-          <span className="font-semibold text-slate-800">{customerName}</span>?
-          Hành động này không thể hoàn tác.
+          Bạn có chắc chắn muốn xóa khách hàng{" "}
+          <span className="font-semibold text-slate-800 break-words">"{customerName}"</span>?
+          <br />
+          <span className="text-red-600 font-medium mt-1 inline-block">
+            Hành động này không thể hoàn tác và có thể ảnh hưởng đến lịch sử đơn hàng.
+          </span>
         </p>
 
         <div className="mt-6 flex justify-end gap-3">
@@ -55,9 +58,9 @@ export default function DeleteConfirmModal({
 
           <button
             onClick={onConfirm}
-            className="rounded-2xl bg-red-600 px-4 py-2.5 font-medium text-white transition hover:bg-red-700"
+            className="rounded-2xl bg-red-600 px-5 py-2.5 font-medium text-white transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
           >
-            Xóa khách hàng
+            Xác nhận xóa
           </button>
         </div>
       </div>
