@@ -76,14 +76,14 @@
   ],
   "categories": [
     {
-      "id": "1",
       "name": "Áo nam",
       "slug": "ao-nam",
       "parentId": null,
       "productCount": 156,
       "status": "active",
       "image": "https://png.pngtree.com/png-vector/20241203/ourlarge/pngtree-classic-folded-grey-shirt-png-image_14539541.png",
-      "updatedAt": "2026-03-13"
+      "updatedAt": "2026-03-23",
+      "id": "1"
     },
     {
       "id": "2",
@@ -266,13 +266,36 @@
     }
   ],
   "customers": [
+            {
+      "id": "CUST-001",
+      "code": "CUST-001",
+      "name": "Nguyễn Văn A",
+      "email": "nguyenvana@email.com",
+      "phone": "0123456789",
+      "orderCount": 3,
+      "totalSpent": 1950000,
+      "lastOrderDate": "2024-12-09",
+      "status": "active",
+      "updatedAt": "2024-12-09"
+    },
+        {
+      "id": "CUST-002",
+      "code": "CUST-002",
+      "name": "Trần Thị B",
+      "email": "tranthib@email.com",
+      "phone": "0987654321",
+      "orderCount": 3,
+      "totalSpent": 1950000,
+      "lastOrderDate": "2024-12-09",
+      "status": "active",
+      "updatedAt": "2024-12-09"
+    },
     {
       "id": "CUST-003",
       "code": "CUST-003",
       "name": "Lê Văn C",
       "email": "levanc@email.com",
       "phone": "0169852147",
-      "level": "Silver",
       "orderCount": 3,
       "totalSpent": 1950000,
       "lastOrderDate": "2024-12-09",
@@ -285,8 +308,6 @@
       "name": "Phạm Thị D",
       "email": "phamthid@email.com",
       "phone": "0741852963",
-      "level": "VIP",
-      "orderCount": 22,
       "totalSpent": 18750000,
       "lastOrderDate": "2024-12-07",
       "status": "active",
@@ -298,7 +319,6 @@
       "name": "Hoàng Văn E",
       "email": "hoangvane@email.com",
       "phone": "0456789123",
-      "level": "Bronze",
       "orderCount": 1,
       "totalSpent": 320000,
       "lastOrderDate": "2024-09-15",
@@ -353,21 +373,6 @@
       "createdAt": "2024-12-03"
     },
     {
-      "id": "4",
-      "code": "PRD-004",
-      "name": "Áo khoác nam mùa đông",
-      "slug": "ao-khoac-nam-mua-dong",
-      "categoryId": "1",
-      "brandId": "1",
-      "price": 650000,
-      "salePrice": 650000,
-      "stock": 0,
-      "status": "out_of_stock",
-      "image": "https://bizweb.dktcdn.net/100/502/737/products/o1cn01kvnfvm1njij1xjrsm2213224.jpg?v=1703735357723",
-      "description": "Áo khoác nam giữ ấm tốt, thiết kế tối giản.",
-      "createdAt": "2024-12-04"
-    },
-    {
       "id": "5",
       "code": "PRD-005",
       "name": "Chân váy mini",
@@ -381,21 +386,6 @@
       "image": "https://boo.vn/media/catalog/product/1/_/1.2.25.1.18.002.225.23.10200011_1__4.webp",
       "description": "Chân váy ngắn trẻ trung, dễ phối đồ.",
       "createdAt": "2024-12-05"
-    },
-    {
-      "id": "6",
-      "code": "PRD-006",
-      "name": "Áo polo basic nam",
-      "slug": "ao-polo-basic-nam",
-      "categoryId": "1",
-      "brandId": "4",
-      "price": 290000,
-      "salePrice": 249000,
-      "stock": 112,
-      "status": "selling",
-      "image": "https://product.hstatic.net/200000690725/product/2_f96661887cd54a95976fd9ad14489acc_master.png",
-      "description": "Áo polo basic nam, phù hợp mặc đi làm và đi chơi.",
-      "createdAt": "2024-12-06"
     }
   ],
   "orders": [
@@ -1163,7 +1153,7 @@
     },
     {
       "id": "R003",
-      "productId": "6",
+      "productId": null,
       "customerId": "1",
       "rating": 5,
       "comment": "Mặc thoải mái",
@@ -1186,7 +1176,7 @@
     {
       "id": "F003",
       "customerId": "1",
-      "productId": "6",
+      "productId": null,
       "createdAt": "2026-03-10T08:30:00"
     }
   ],
