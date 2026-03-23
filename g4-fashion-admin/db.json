@@ -232,32 +232,6 @@
   ],
   "customers": [
     {
-      "id": "CUST-001",
-      "code": "CUST-001",
-      "name": "Nguyễn Văn A",
-      "email": "nguyenvana@email.com",
-      "phone": "0123456789",
-      "level": "Gold",
-      "orderCount": 15,
-      "totalSpent": 12500000,
-      "lastOrderDate": "2024-12-09",
-      "status": "active",
-      "updatedAt": "2026-03-12"
-    },
-    {
-      "id": "CUST-002",
-      "code": "CUST-002",
-      "name": "Trần Thị B",
-      "email": "tranthib@email.com",
-      "phone": "0987654321",
-      "level": "Gold",
-      "orderCount": 8,
-      "totalSpent": 6800000,
-      "lastOrderDate": "2024-12-08",
-      "status": "active",
-      "updatedAt": "2024-12-08"
-    },
-    {
       "id": "CUST-003",
       "code": "CUST-003",
       "name": "Lê Văn C",
