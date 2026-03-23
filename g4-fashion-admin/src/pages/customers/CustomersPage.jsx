@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLanguage } from "../../contexts/LanguageContext";
 import toast from "react-hot-toast";
 import {
   Eye,
@@ -29,6 +30,7 @@ import DeleteConfirmModal from "./DeleteConfirmModal";
 import { formatCurrency } from "../../utils/formatCurrency";
 
 export default function CustomersPage() {
+  const { t } = useLanguage();
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -53,8 +55,8 @@ export default function CustomersPage() {
       const res = await customerService.getAll();
       setCustomers(res.data);
     } catch (err) {
-      console.error("Lỗi lấy khách hàng:", err);
-      setError("Không thể tải dữ liệu khách hàng.");
+      console.error(t("Lỗi lấy khách hàng:"), err);
+      setError(t("Không thể tải dữ liệu khách hàng."));
     } finally {
       setLoading(false);
     }
@@ -101,16 +103,16 @@ export default function CustomersPage() {
     try {
       if (editingCustomer) {
         await customerService.update(editingCustomer.id, payload);
-        toast.success("Cập nhật khách hàng thành công");
+        toast.success(t("Cập nhật khách hàng thành công"));
       } else {
         await customerService.create(payload);
-        toast.success("Thêm khách hàng thành công");
+        toast.success(t("Thêm khách hàng thành công"));
       }
       await fetchCustomers();
       handleCloseForm();
     } catch (err) {
-      console.error("Lỗi lưu khách hàng:", err);
-      toast.error("Không thể lưu khách hàng");
+      console.error(t("Lỗi lưu khách hàng:"), err);
+      toast.error(t("Không thể lưu khách hàng"));
     }
   };
 
@@ -141,8 +143,8 @@ export default function CustomersPage() {
       handleCloseDelete();
       toast.success("Xóa khách hàng thành công");
     } catch (err) {
-      console.error("Lỗi xóa khách hàng:", err);
-      toast.error("Không thể xóa khách hàng");
+      console.error(t("Lỗi xóa khách hàng:"), err);
+      toast.error(t("Không thể xóa khách hàng"));
     }
   };
 
@@ -151,16 +153,16 @@ export default function CustomersPage() {
       <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-slate-800">
-            Quản lý Khách hàng
+            {t("Quản lý Khách hàng")}
           </h1>
           <p className="mt-2 text-slate-500">
-            Danh sách khách hàng trong hệ thống
+            {t("Danh sách khách hàng trong hệ thống")}
           </p>
         </div>
 
         <button onClick={handleOpenCreate} className={primaryButtonClass}>
           <User size={18} />
-          Thêm khách hàng
+          {t("Thêm khách hàng")}
         </button>
       </div>
 
@@ -169,7 +171,7 @@ export default function CustomersPage() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
             type="text"
-            placeholder="Tìm kiếm theo tên, email hoặc điện thoại"
+            placeholder={t("Tìm kiếm theo tên, email hoặc điện thoại")}
             value={searchText}
             onChange={handleSearchChange}
             className={`${inputClass} pl-10`}
@@ -181,9 +183,9 @@ export default function CustomersPage() {
           onChange={handleStatusFilterChange}
           className="w-full md:w-48 rounded-2xl border border-slate-300 px-4 py-3 text-sm text-slate-700 outline-none"
         >
-          <option value="">Tất cả trạng thái</option>
-          <option value="active">Hoạt động</option>
-          <option value="inactive">Ngưng hoạt động</option>
+          <option value="">{t("Tất cả trạng thái")}</option>
+          <option value="active">{t("Hoạt động")}</option>
+          <option value="inactive">{t("Ngưng hoạt động")}</option>
         </select>
       </div>
 
@@ -208,14 +210,14 @@ export default function CustomersPage() {
             <table className="w-full min-w-[900px] text-sm">
               <thead className="bg-slate-50">
                 <tr>
-                  <th className={tableHeaderCellClass}>Khách hàng</th>
-                  <th className={tableHeaderCellClass}>Thông tin liên hệ</th>
-                  <th className={tableHeaderCellClass}>Cấp độ</th>
-                  <th className={tableHeaderCellClass}>Đơn hàng</th>
-                  <th className={tableHeaderCellClass}>Tổng chi tiêu</th>
-                  <th className={tableHeaderCellClass}>Đơn hàng cuối</th>
-                  <th className={tableHeaderCellClass}>Trạng thái</th>
-                  <th className={`${tableHeaderCellClass} text-center`}>Thao tác</th>
+                  <th className={tableHeaderCellClass}>{t("Khách hàng")}</th>
+                  <th className={tableHeaderCellClass}>{t("Thông tin liên hệ")}</th>
+                  <th className={tableHeaderCellClass}>{t("Cấp độ")}</th>
+                  <th className={tableHeaderCellClass}>{t("Đơn hàng")}</th>
+                  <th className={tableHeaderCellClass}>{t("Tổng chi tiêu")}</th>
+                  <th className={tableHeaderCellClass}>{t("Đơn hàng cuối")}</th>
+                  <th className={tableHeaderCellClass}>{t("Trạng thái")}</th>
+                  <th className={`${tableHeaderCellClass} text-center`}>{t("Thao tác")}</th>
                 </tr>
               </thead>
 

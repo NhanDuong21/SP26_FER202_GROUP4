@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useLanguage } from "../../contexts/LanguageContext";
 import {
   DollarSign,
   ShoppingCart,
@@ -37,6 +38,7 @@ import {
 const COLORS = ["#3b82f6", "#14b8a6", "#f97316", "#a855f7", "#eab308"];
 
 export default function StatisticsPage() {
+  const { t, language } = useLanguage();
   const [statistics, setStatistics] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -87,9 +89,9 @@ export default function StatisticsPage() {
           },
         });
       } catch (err) {
-        console.error("Lỗi lấy thống kê:", err);
-        setError("Không thể tải dữ liệu thống kê.");
-        toast.error("Tải thống kê thất bại");
+        console.error(t("Lỗi lấy thống kê:"), err);
+        setError(t("Không thể tải dữ liệu thống kê."));
+        toast.error(t("Tải thống kê thất bại"));
       } finally {
         setLoading(false);
       }
@@ -101,7 +103,7 @@ export default function StatisticsPage() {
   if (loading) {
     return (
       <div className="rounded-3xl bg-white p-6 shadow-sm text-slate-500">
-        Đang tải dữ liệu...
+        {t("Đang tải dữ liệu...")}
       </div>
     );
   }
@@ -116,31 +118,31 @@ export default function StatisticsPage() {
 
   const statCards = [
     {
-      title: "Doanh thu tháng này",
+      title: t("Doanh thu tháng này"),
       value: `${formatCurrency(statistics.summary.totalRevenue)} đ`,
       icon: DollarSign,
       iconClass: "bg-emerald-100 text-emerald-600",
     },
     {
-      title: "Đơn hàng",
+      title: t("Đơn hàng"),
       value: statistics.summary.totalOrders,
       icon: ShoppingCart,
       iconClass: "bg-sky-100 text-sky-600",
     },
     {
-      title: "Đơn chờ xử lý",
+      title: t("Đơn chờ xử lý"),
       value: statistics.summary.pendingOrders,
       icon: ShoppingCart,
       iconClass: "bg-orange-100 text-orange-600",
     },
     {
-      title: "Lượt truy cập",
+      title: t("Lượt truy cập"),
       value: statistics.summary.totalVisits,
       icon: Eye,
       iconClass: "bg-violet-100 text-violet-600",
     },
     {
-      title: "Tỷ lệ chuyển đổi",
+      title: t("Tỷ lệ chuyển đổi"),
       value: `${statistics.summary.conversionRate}%`,
       icon: Percent,
       iconClass: "bg-amber-100 text-amber-600",
@@ -151,10 +153,10 @@ export default function StatisticsPage() {
     <div className="p-6">
       <div className="mb-6">
         <h1 className="text-3xl font-bold tracking-tight text-slate-800">
-          Thống kê & Báo cáo
+          {t("Thống kê & Báo cáo")}
         </h1>
         <p className="mt-2 text-slate-500">
-          Phân tích dữ liệu bán hàng và hiệu suất kinh doanh
+          {t("Phân tích dữ liệu bán hàng và hiệu suất kinh doanh")}
         </p>
       </div>
 
@@ -186,7 +188,7 @@ export default function StatisticsPage() {
       <div className="mb-6 grid grid-cols-1 gap-6 xl:grid-cols-3">
         <div className="rounded-3xl bg-white p-5 shadow-sm xl:col-span-2">
           <h2 className="mb-4 text-lg font-semibold text-slate-800">
-            Doanh thu theo tháng
+            {t("Doanh thu theo tháng")}
           </h2>
 
           <div className="h-[320px]">
@@ -218,7 +220,7 @@ export default function StatisticsPage() {
 
         <div className="rounded-3xl bg-white p-5 shadow-sm">
           <h2 className="mb-4 text-lg font-semibold text-slate-800">
-            Nguồn traffic
+            {t("Nguồn traffic")}
           </h2>
 
           <div className="h-[320px]">
@@ -245,7 +247,7 @@ export default function StatisticsPage() {
       <div className="mb-6 grid grid-cols-1 gap-6 xl:grid-cols-2">
         <div className="rounded-3xl bg-white p-5 shadow-sm">
           <h2 className="mb-4 text-lg font-semibold text-slate-800">
-            Doanh thu theo ngày trong tháng
+            {t("Doanh thu theo ngày trong tháng")}
           </h2>
 
           <div className="h-[320px]">
@@ -276,7 +278,7 @@ export default function StatisticsPage() {
         </div>
         <div className="rounded-3xl bg-white p-5 shadow-sm">
           <h2 className="mb-4 text-lg font-semibold text-slate-800">
-            Doanh thu theo danh mục
+            {t("Doanh thu theo danh mục")}
           </h2>
 
           <div className="h-[320px]">
@@ -294,7 +296,7 @@ export default function StatisticsPage() {
 
         <div className="rounded-3xl bg-white p-5 shadow-sm">
           <h2 className="mb-6 text-lg font-semibold text-slate-800">
-            Thống kê khách hàng
+            {t("Thống kê khách hàng")}
           </h2>
 
           <div className="grid grid-cols-2 gap-8">
@@ -324,18 +326,18 @@ export default function StatisticsPage() {
 
       <div className="rounded-3xl bg-white p-5 shadow-sm">
         <h2 className="mb-6 text-lg font-semibold text-slate-800">
-          Chỉ số hiệu suất
+          {t("Chỉ số hiệu suất")}
         </h2>
 
         <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
-          <SmallStat icon={Heart} color="text-rose-400" value={statistics.performanceStats.totalLikes} label="Tổng lượt thích" />
-          <SmallStat icon={Eye} color="text-sky-400" value={statistics.performanceStats.totalPageviews} label="Pageviews" />
-          <SmallStat icon={Star} color="text-amber-400" value={statistics.performanceStats.averageRating} label="Đánh giá trung bình" />
+          <SmallStat icon={Heart} color="text-rose-400" value={statistics.performanceStats.totalLikes} label={t("Tổng lượt thích")} />
+          <SmallStat icon={Eye} color="text-sky-400" value={statistics.performanceStats.totalPageviews} label={t("Pageviews")} />
+          <SmallStat icon={Star} color="text-amber-400" value={statistics.performanceStats.averageRating} label={t("Đánh giá trung bình")} />
           <SmallStat
             icon={Users}
             color="text-violet-400"
             value={`${formatCurrency(statistics.performanceStats.averageOrderValue)} đ`}
-            label="Giá trị đơn TB"
+            label={t("Giá trị đơn TB")}
           />
         </div>
       </div>

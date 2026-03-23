@@ -4,9 +4,8 @@
       "siteName": "G4 Fashion",
       "siteDescription": "Hệ thống quản trị cửa hàng thời trang",
       "timezone": "Asia/Ho_Chi_Minh",
-      "language": "vi",
-      "id": "1",
-      "theme": "light"
+      "language": "en",
+      "id": "1"
     }
   ],
   "languages": [
@@ -23,6 +22,42 @@
       "id": "ab5a"
     }
   ],
+  "translations": {
+    "en": {
+      "Cài đặt hệ thống": "System Settings",
+      "Mật khẩu": "Password",
+      "Ngôn ngữ": "Language",
+      "Lưu thay đổi": "Save Changes",
+      "Tên website": "Site Name",
+      "Email quản trị": "Admin Email",
+      "Chọn ngôn ngữ": "Choose language",
+      "Mật khẩu hiện tại": "Current password",
+      "Mật khẩu mới": "New password",
+      "Xác nhận mật khẩu": "Confirm password",
+      "Mật khẩu cũ không đúng!": "Current password is incorrect",
+      "Mật khẩu phải >= 6 ký tự": "Password must be at least 6 characters",
+      "Xác nhận mật khẩu không khớp": "Password confirmation does not match",
+      "Đổi mật khẩu thành công": "Password changed successfully",
+      "Đã lưu cài đặt!": "Settings saved!"
+    },
+    "vi": {
+      "Cài đặt hệ thống": "Cài đặt hệ thống",
+      "Mật khẩu": "Mật khẩu",
+      "Ngôn ngữ": "Ngôn ngữ",
+      "Lưu thay đổi": "Lưu thay đổi",
+      "Tên website": "Tên website",
+      "Email quản trị": "Email quản trị",
+      "Chọn ngôn ngữ": "Chọn ngôn ngữ",
+      "Mật khẩu hiện tại": "Mật khẩu hiện tại",
+      "Mật khẩu mới": "Mật khẩu mới",
+      "Xác nhận mật khẩu": "Xác nhận mật khẩu",
+      "Mật khẩu cũ không đúng!": "Mật khẩu cũ không đúng!",
+      "Mật khẩu phải >= 6 ký tự": "Mật khẩu phải >= 6 ký tự",
+      "Xác nhận mật khẩu không khớp": "Xác nhận mật khẩu không khớp",
+      "Đổi mật khẩu thành công": "Đổi mật khẩu thành công",
+      "Đã lưu cài đặt!": "Đã lưu cài đặt!"
+    }
+  },
   "users": [
     {
       "id": "1",

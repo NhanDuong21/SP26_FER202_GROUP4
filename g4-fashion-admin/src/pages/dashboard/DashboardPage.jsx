@@ -1,7 +1,11 @@
 import { useMemo } from "react";
+import { useLanguage } from "../../contexts/LanguageContext";
 import data from "../../../db.json";
 
 function DashboardPage() {
+  const { language, t } = useLanguage();
+  const locale = language === "en" ? "en-US" : "vi-VN";
+
   const stats = useMemo(() => {
     const completedOrders = data.orders.filter(
       (order) => order.status === "completed"
@@ -63,55 +67,55 @@ function DashboardPage() {
     });
 
     return Object.entries(monthMap).map(([month, revenue]) => ({
-      month: `T${parseInt(month, 10)}`,
+      month: `${t("T")}${parseInt(month, 10)}`,
       revenue,
     }));
-  }, []);
+  }, [t]);
 
   const maxRevenue = Math.max(...monthlyRevenue.map((item) => item.revenue), 1);
 
   const formatCurrency = (value) => {
-    return new Intl.NumberFormat("vi-VN").format(value);
+    return new Intl.NumberFormat(locale).format(value);
   };
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-[36px] font-extrabold text-slate-900">Dashboard</h1>
+        <h1 className="text-[36px] font-extrabold text-slate-900">{t("Dashboard")}</h1>
         <p className="mt-2 text-slate-500">
-          Tổng quan về hoạt động kinh doanh và chỉ số quan trọng
+          {t("Tổng quan về hoạt động kinh doanh và chỉ số quan trọng")}
         </p>
       </div>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
         <StatCard
-          title="Tổng doanh thu"
-          value={`₫${formatCurrency(stats.totalRevenue)}`}
-          change="12.5% so với tháng trước"
+          title={t("Tổng doanh thu")}
+          value={`${language === "en" ? "$" : "₫"}${formatCurrency(stats.totalRevenue)}`}
+          change={`12.5% ${t("so với tháng trước")}`}
           changeColor="text-emerald-500"
           icon="💰"
         />
 
         <StatCard
-          title="Đơn hàng mới"
+          title={t("Đơn hàng mới")}
           value={stats.totalOrders}
-          change="8.3% so với tháng trước"
+          change={`8.3% ${t("so với tháng trước")}`}
           changeColor="text-emerald-500"
           icon="🛒"
         />
 
-    <StatCard
-          title="Khách hàng"
+        <StatCard
+          title={t("Khách hàng")}
           value={stats.totalCustomers}
-          change="2.1% so với tháng trước"
+          change={`2.1% ${t("so với tháng trước")}`}
           changeColor="text-rose-500"
           icon="👤"
         />
 
         <StatCard
-          title="Sản phẩm"
+          title={t("Sản phẩm")}
           value={stats.totalProducts}
-          change="15.7% so với tháng trước"
+          change={`15.7% ${t("so với tháng trước")}`}
           changeColor="text-emerald-500"
           icon="🏷️"
         />
@@ -120,7 +124,7 @@ function DashboardPage() {
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm xl:col-span-2">
           <h2 className="mb-6 text-lg font-bold text-slate-800">
-            Doanh thu theo tháng
+            {t("Doanh thu theo tháng")}
           </h2>
 
           <div className="flex h-[320px] items-end justify-between gap-4">
@@ -154,20 +158,20 @@ function DashboardPage() {
 
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           <h2 className="mb-6 text-lg font-bold text-slate-800">
-            Trạng thái đơn hàng
+            {t("Trạng thái đơn hàng")}
           </h2>
 
           <ul className="space-y-4">
             <StatusItem
-              label={`Hoàn thành (${stats.completedCount})`}
+              label={`${t("Hoàn thành")} (${stats.completedCount})`}
               color="green"
             />
             <StatusItem
-              label={`Đang xử lý (${stats.pendingCount})`}
+              label={`${t("Đang xử lý")} (${stats.pendingCount})`}
               color="yellow"
             />
             <StatusItem
-              label={`Đã hủy (${stats.cancelledCount})`}
+              label={`${t("Đã hủy")} (${stats.cancelledCount})`}
               color="red"
             />
           </ul>

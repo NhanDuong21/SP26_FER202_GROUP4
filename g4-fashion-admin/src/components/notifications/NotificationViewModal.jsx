@@ -1,3 +1,4 @@
+import { useLanguage } from "../../contexts/LanguageContext";
 import { X, AlertTriangle, CheckCircle, Info } from "lucide-react";
 import {
     modalOverlayClass,
@@ -7,6 +8,7 @@ import {
 } from "../../utils/uiClasses";
 
 export default function NotificationViewModal({ open, notification, onClose }) {
+    const { t } = useLanguage();
 
     if (!open || !notification) return null;
 
@@ -61,7 +63,7 @@ export default function NotificationViewModal({ open, notification, onClose }) {
                 {/* Header */}
                 <div className={modalHeaderClass}>
                     <h2 className="text-xl font-bold text-slate-800">
-                        Chi tiết thông báo
+                        {t("Chi tiết thông báo")}
                     </h2>
 
                     <button onClick={onClose} className={modalCloseButtonClass}>
@@ -77,7 +79,7 @@ export default function NotificationViewModal({ open, notification, onClose }) {
                         <div className="space-y-2 text-sm">
 
                             <div className="flex items-center gap-2">
-                                <strong>Loại:</strong>
+                                                <strong>{t("Loại:")}</strong>
                                 {getTypeIcon(notification.type)}
                                 <span className="text-slate-700">
                                     {notification.type}
@@ -85,7 +87,7 @@ export default function NotificationViewModal({ open, notification, onClose }) {
                             </div>
 
                             <div>
-                                <strong>Độ ưu tiên:</strong>{" "}
+                                <strong>{t("Độ ưu tiên:")}</strong>{" "}
                                 <span
                                     className={`px-2 py-1 rounded text-xs ${getPriorityColor(notification.priority)}`}
                                 >
@@ -94,7 +96,7 @@ export default function NotificationViewModal({ open, notification, onClose }) {
                             </div>
 
                             <div>
-                                <strong>Đối tượng nhận:</strong>{" "}
+                                <strong>{t("Đối tượng nhận:")}</strong>{" "}
                                 <span className="text-slate-700">
                                     {notification.target}
                                 </span>
@@ -105,7 +107,7 @@ export default function NotificationViewModal({ open, notification, onClose }) {
                         <div className="space-y-2 text-sm">
 
                             <div>
-                                <strong>Trạng thái:</strong>{" "}
+                                <strong>{t("Trạng thái:")}</strong>{" "}
                                 <span
                                     className={`px-2 py-1 rounded text-xs ${getStatusColor(notification.status)}`}
                                 >
@@ -114,7 +116,7 @@ export default function NotificationViewModal({ open, notification, onClose }) {
                             </div>
 
                             <div>
-                                <strong>Thời gian:</strong> {notification.time}
+                                <strong>{t("Thời gian:")}</strong> {notification.time}
                             </div>
 
                         </div>
@@ -126,7 +128,7 @@ export default function NotificationViewModal({ open, notification, onClose }) {
                         <span className="text-red-500 mr-2">*</span>
 
                         <span className="font-semibold mr-2">
-                            Tiêu đề:
+                            {t("Tiêu đề:")}
                         </span>
 
                         <span className="text-slate-700">
@@ -140,7 +142,7 @@ export default function NotificationViewModal({ open, notification, onClose }) {
 
                         <div className="flex items-center font-semibold text-slate-800">
                             <span className="text-red-500 mr-2">*</span>
-                            Nội dung:
+                            {t("Nội dung:")}
                         </div>
 
                         <div className="ml-6 mt-2 bg-gray-100 p-4 rounded-lg text-slate-700 text-sm">
@@ -155,7 +157,7 @@ export default function NotificationViewModal({ open, notification, onClose }) {
                             onClick={onClose}
                             className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 text-sm"
                         >
-                            Đóng
+                            {t("Đóng")}
                         </button>
                     </div>
 

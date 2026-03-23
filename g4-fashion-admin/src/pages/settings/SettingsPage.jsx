@@ -14,7 +14,6 @@ function SettingsPage() {
   });
 
   const [tab, setTab] = useState("general");
-  const [languages, setLanguages] = useState([]);
 
   // thêm state password
   const [password, setPassword] = useState({
@@ -53,14 +52,6 @@ function SettingsPage() {
       language,
     }));
   }, [language]);
-
-  useEffect(() => {
-    fetch("http://localhost:3001/languages")
-      .then((res) => res.json())
-      .then((data) => {
-        setLanguages(data);
-      });
-  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -340,10 +331,13 @@ function SettingsPage() {
                 onChange={handleChange}
                 className="rounded-lg border border-slate-300 px-3 py-2"
               >
-                <option value="">-- Chọn ngôn ngữ --</option>
-                {languages.map((lang) => (
+                <option value="">{t("Chọn ngôn ngữ")}</option>
+                {[
+                  { code: "en", nameKey: "English" },
+                  { code: "vi", nameKey: "Tiếng Việt" },
+                ].map((lang) => (
                   <option key={lang.code} value={lang.code}>
-                    {lang.name}
+                    {t(lang.nameKey)}
                   </option>
                 ))}
               </select>
