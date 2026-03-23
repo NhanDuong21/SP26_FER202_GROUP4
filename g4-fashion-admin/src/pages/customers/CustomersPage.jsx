@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLanguage } from "../../contexts/LanguageContext";
 import toast from "react-hot-toast";
 import { User, ShoppingCart, Search } from "lucide-react";
 import {
@@ -134,7 +135,7 @@ export default function CustomersPage() {
       <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-slate-800">
-            Quản lý Khách hàng
+            {t("Quản lý Khách hàng")}
           </h1>
           <p className="mt-2 text-slate-500">
             Danh sách và thống kê khách hàng trong hệ thống
@@ -142,7 +143,7 @@ export default function CustomersPage() {
         </div>
         <button onClick={handleOpenCreate} className={primaryButtonClass}>
           <User size={18} />
-          Thêm khách hàng
+          {t("Thêm khách hàng")}
         </button>
       </div>
 

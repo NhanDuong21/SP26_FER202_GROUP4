@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useLanguage } from "../../contexts/LanguageContext";
 import toast from "react-hot-toast";
 import { Search, ShoppingCart } from "lucide-react";
 import { orderService } from "../../services/orderService";
@@ -13,6 +14,7 @@ import {
 } from "../../utils/ordersUtils/orderHelper";
 
 export default function OrdersPage() {
+  const { t } = useLanguage();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -89,9 +91,9 @@ export default function OrdersPage() {
 
         setOrders(orderData);
       } catch (err) {
-        console.error("Lỗi lấy đơn hàng:", err);
-        setError("Không thể tải dữ liệu đơn hàng.");
-        toast.error("Tải đơn hàng thất bại");
+        console.error(t("Lỗi lấy đơn hàng:"), err);
+        setError(t("Không thể tải dữ liệu đơn hàng."));
+        toast.error(t("Tải đơn hàng thất bại"));
       } finally {
         setLoading(false);
       }
@@ -166,7 +168,7 @@ export default function OrdersPage() {
         )
       );
 
-      toast.success("Cập nhật trạng thái đơn hàng thành công");
+      toast.success(t("Cập nhật trạng thái đơn hàng thành công"));
     } catch (err) {
       console.error("Lỗi cập nhật trạng thái:", err);
       toast.error(err?.message || "Cập nhật trạng thái thất bại");
@@ -195,10 +197,10 @@ export default function OrdersPage() {
     <div className="p-6">
       <div className="mb-6">
         <h1 className="text-3xl font-bold tracking-tight text-slate-800">
-          Quản lý Đơn hàng
+          {t("Quản lý Đơn hàng")}
         </h1>
         <p className="mt-2 text-slate-500">
-          Theo dõi và xử lý đơn hàng của khách hàng
+          {t("Theo dõi và xử lý đơn hàng của khách hàng")}
         </p>
       </div>
 
@@ -210,7 +212,7 @@ export default function OrdersPage() {
           />
           <input
             type="text"
-            placeholder="Tìm kiếm theo mã đơn hàng, tên khách hàng, số điện thoại"
+            placeholder={t("Tìm kiếm theo mã đơn hàng, tên khách hàng, số điện thoại")}
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
             className="w-full rounded-2xl border border-slate-200 bg-white py-3 pl-11 pr-4 text-sm outline-none transition focus:border-sky-400"
@@ -222,11 +224,11 @@ export default function OrdersPage() {
           onChange={(e) => setStatusFilter(e.target.value)}
           className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-sky-400"
         >
-          <option value="">Tất cả trạng thái</option>
-          <option value="pending">Chờ xử lý</option>
-          <option value="processing">Đang xử lý</option>
-          <option value="completed">Đã hoàn thành</option>
-          <option value="cancelled">Đã hủy</option>
+          <option value="">{t("Tất cả trạng thái")}</option>
+          <option value="pending">{t("Chờ xử lý")}</option>
+          <option value="processing">{t("Đang xử lý")}</option>
+          <option value="completed">{t("Đã hoàn thành")}</option>
+          <option value="cancelled">{t("Đã hủy")}</option>
         </select>
 
         <select
@@ -234,9 +236,9 @@ export default function OrdersPage() {
           onChange={(e) => setPaymentFilter(e.target.value)}
           className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-sky-400"
         >
-          <option value="">Tất cả thanh toán</option>
-          <option value="paid">Đã thanh toán</option>
-          <option value="unpaid">Chưa thanh toán</option>
+          <option value="">{t("Tất cả thanh toán")}</option>
+          <option value="paid">{t("Đã thanh toán")}</option>
+          <option value="unpaid">{t("Chưa thanh toán")}</option>
         </select>
       </div>
 
@@ -247,9 +249,9 @@ export default function OrdersPage() {
               <ShoppingCart size={20} />
             </div>
             <div>
-              <h2 className="font-semibold text-slate-800">Danh sách đơn hàng</h2>
+              <h2 className="font-semibold text-slate-800">{t("Danh sách đơn hàng")}</h2>
               <p className="text-sm text-slate-500">
-                Hiển thị {filteredOrders.length} / {orders.length} đơn hàng
+                {t("Hiển thị")} {filteredOrders.length} / {orders.length} {t("đơn hàng")}
               </p>
             </div>
           </div>
@@ -259,13 +261,13 @@ export default function OrdersPage() {
           <table className="min-w-full text-sm">
             <thead className="bg-slate-50 text-slate-600">
               <tr>
-                <th className="px-5 py-4 text-left font-semibold">Mã đơn hàng</th>
-                <th className="px-5 py-4 text-left font-semibold">Khách hàng</th>
-                <th className="px-5 py-4 text-left font-semibold">Tổng tiền</th>
-                <th className="px-5 py-4 text-left font-semibold">Trạng thái đơn</th>
-                <th className="px-5 py-4 text-left font-semibold">Thanh toán</th>
-                <th className="px-5 py-4 text-left font-semibold">Ngày đặt</th>
-                <th className="px-5 py-4 text-left font-semibold">Thao tác</th>
+                <th className="px-5 py-4 text-left font-semibold">{t("Mã đơn hàng")}</th>
+                <th className="px-5 py-4 text-left font-semibold">{t("Khách hàng")}</th>
+                <th className="px-5 py-4 text-left font-semibold">{t("Tổng tiền")}</th>
+                <th className="px-5 py-4 text-left font-semibold">{t("Trạng thái đơn")}</th>
+                <th className="px-5 py-4 text-left font-semibold">{t("Thanh toán")}</th>
+                <th className="px-5 py-4 text-left font-semibold">{t("Ngày đặt")}</th>
+                <th className="px-5 py-4 text-left font-semibold">{t("Thao tác")}</th>
               </tr>
             </thead>
 
@@ -336,7 +338,7 @@ export default function OrdersPage() {
                             }}
                             className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs outline-none focus:border-sky-400 disabled:cursor-not-allowed disabled:opacity-60"
                           >
-                            <option value="">Chọn thao tác</option>
+                            <option value="">{t("Chọn thao tác")}</option>
                             {actions.map((action) => (
                               <option key={action.value} value={action.value}>
                                 {action.label}

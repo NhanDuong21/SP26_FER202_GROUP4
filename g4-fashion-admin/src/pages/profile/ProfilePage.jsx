@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 function ProfilePage() {
+  const { t } = useLanguage();
 
   const [tab, setTab] = useState("info");
   const [user, setUser] = useState(null);
@@ -48,15 +50,15 @@ function ProfilePage() {
     .then((data) => {
       setUser(data);
       setEditing(false);
-      alert("Cập nhật thông tin thành công");
+      alert(t("Cập nhật thông tin thành công"));
     })
     .catch((err) => {
       console.error(err);
-      alert("Có lỗi khi lưu dữ liệu");
+      alert(t("Có lỗi khi lưu dữ liệu"));
     });
 };
 
-  if (!user) return <p className="p-10">Loading...</p>;
+  if (!user) return <p className="p-10">{t("Loading...")}</p>;
 
   return (
     <div className="bg-gray-50 p-8 min-h-screen">
@@ -93,13 +95,13 @@ function ProfilePage() {
 
             <div className="mt-3">
               <span className="bg-blue-50 text-blue-600 text-xs px-3 py-1 rounded-full font-medium">
-                Công nghệ thông tin
+                {t("Công nghệ thông tin")}
               </span>
             </div>
 
             <p className="text-gray-400 text-xs mt-4">
               <i className="far fa-calendar-alt mr-1"></i>
-              Tham gia từ {user.createdAt}
+              {t("Tham gia từ")} {user.createdAt}
             </p>
 
           </div>
@@ -124,7 +126,7 @@ function ProfilePage() {
                   : "text-gray-500"
                   }`}
               >
-                Thông tin cá nhân
+                {t("Thông tin cá nhân")}
               </button>
 
               <button
@@ -134,7 +136,7 @@ function ProfilePage() {
                   : "text-gray-500"
                   }`}
               >
-                Lịch sử hoạt động
+                {t("Lịch sử hoạt động")}
               </button>
 
               
@@ -150,9 +152,9 @@ function ProfilePage() {
 
                 <h3 className="text-lg font-bold text-gray-800">
 
-                  {tab === "info" && "Thông tin cá nhân"}
-                  {tab === "history" && "Lịch sử hoạt động"}
-                  {tab === "stats" && "Thống kê"}
+                  {tab === "info" && t("Thông tin cá nhân")}
+                  {tab === "history" && t("Lịch sử hoạt động")}
+                  {tab === "stats" && t("Thống kê")}
 
                 </h3>
 
@@ -162,7 +164,7 @@ function ProfilePage() {
                     className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm flex items-center gap-2 hover:bg-blue-700"
                   >
                     <i className="fas fa-pen text-xs"></i>
-                    Chỉnh sửa
+                    {t("Chỉnh sửa")}
                   </button>
                 )}
 
@@ -178,7 +180,7 @@ function ProfilePage() {
                   {/* EMAIL */}
 
                   <div className="flex">
-                    <div className="w-32 text-gray-400 text-sm">Name:</div>
+                    <div className="w-32 text-gray-400 text-sm">{t("Name:")}</div>
 
                     {editing ? (
                       <input
@@ -195,7 +197,7 @@ function ProfilePage() {
                   </div>
 
                   <div className="flex">
-                    <div className="w-32 text-gray-400 text-sm">Email:</div>
+                    <div className="w-32 text-gray-400 text-sm">{t("Email:")}</div>
 
                     {editing ? (
                       <input
@@ -213,7 +215,7 @@ function ProfilePage() {
                   
 
                   <div className="flex">
-                    <div className="w-32 text-gray-400 text-sm">Sex:</div>
+                    <div className="w-32 text-gray-400 text-sm">{t("Sex:")}</div>
 
                     {editing ? (
                       <input
@@ -230,7 +232,7 @@ function ProfilePage() {
                   </div>
 
                   <div className="flex">
-                    <div className="w-32 text-gray-400 text-sm">Date:</div>
+                    <div className="w-32 text-gray-400 text-sm">{t("Date:")}</div>
 
                     {editing ? (
                       <input
@@ -250,7 +252,7 @@ function ProfilePage() {
 
 
                   <div className="flex">
-                    <div className="w-32 text-gray-400 text-sm">Phone:</div>
+                    <div className="w-32 text-gray-400 text-sm">{t("Phone:")}</div>
 
                     {editing ? (
                       <input
@@ -269,7 +271,7 @@ function ProfilePage() {
                   {/* ADDRESS */}
 
                   <div className="flex">
-                    <div className="w-32 text-gray-400 text-sm">Địa chỉ:</div>
+                    <div className="w-32 text-gray-400 text-sm">{t("Địa chỉ:")}</div>
 
                     {editing ? (
                       <input
@@ -288,7 +290,7 @@ function ProfilePage() {
                   {/* STATUS */}
 
                   <div className="flex">
-                    <div className="w-32 text-gray-400 text-sm">Trạng thái:</div>
+                    <div className="w-32 text-gray-400 text-sm">{t("Trạng thái:")}</div>
 
                     {editing ? (
                       <input
@@ -314,7 +316,7 @@ function ProfilePage() {
                         onClick={handleSave}
                         className="bg-green-600 text-white px-4 py-2 rounded-lg"
                       >
-                        Lưu
+                        {t("Lưu")}
                       </button>
 
                       <button
@@ -324,7 +326,7 @@ function ProfilePage() {
                         }}
                         className="bg-gray-400 text-white px-4 py-2 rounded-lg"
                       >
-                        Hủy
+                        {t("Hủy")}
                       </button>
 
                     </div>
