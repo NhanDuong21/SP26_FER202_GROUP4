@@ -10,6 +10,8 @@ import {
 import {
   getCategoryProductCount,
   getCategoryStats,
+  hasChildCategories,
+  hasProductsInCategory,
 } from "../../utils/categories/categoryHelpers";
 import { useCategoriesData } from "../../hooks/categories/useCategoriesData";
 import { useCategoryFilters } from "../../hooks/categories/useCategoryFilters";
@@ -72,7 +74,7 @@ export default function CategoriesPage() {
     if (!parentId) return t("Danh mục gốc");
 
     const parent = categories.find(
-      (item) => Number(item.id) === Number(parentId),
+      (item) => String(item.id) === String(parentId),
     );
 
     return parent ? parent.name : t("Không xác định");
@@ -101,6 +103,22 @@ export default function CategoriesPage() {
   };
 
   const handleConfirmDelete = async () => {
+    if (!deletingCategory) return;
+
+    const hasChildren = hasChildCategories(deletingCategory.id, categories);
+    const hasProducts = hasProductsInCategory(deletingCategory.id, products);
+
+    if (hasChildren || hasProducts) {
+      if (hasChildren && hasProducts) {
+        toast.error("Không thể xóa danh mục đang có sản phẩm và danh mục con");
+      } else if (hasChildren) {
+        toast.error("Không thể xóa danh mục đang có danh mục con");
+      } else {
+        toast.error("Không thể xóa danh mục đang có sản phẩm");
+      }
+      return;
+    }
+
     try {
       await deleteCategory(deletingCategory.id);
       toast.success(t("Xóa danh mục thành công"));

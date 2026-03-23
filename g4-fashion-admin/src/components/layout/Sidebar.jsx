@@ -58,7 +58,7 @@ function Sidebar({ isCollapsed, isMobileOpen, onCloseMobile }) {
                       {settings?.siteName}
                     </h1>
                     <p className="mt-1 text-sm font-medium uppercase tracking-wide text-slate-300">
-                      {t("Trang quản trị")}
+                      {t("ADMIN PANEL")}
                     </p>
                   </div>
                 )}

@@ -11,7 +11,6 @@ import {
   primaryButtonClass,
 } from "../../utils/uiClasses";
 import { PRODUCT_STATUS_OPTIONS } from "../../utils/products/productUi";
-import { slugify } from "../../utils/slugify";
 
 export default function ProductFormModal({
   open,
@@ -22,6 +21,7 @@ export default function ProductFormModal({
   brands,
   onClose,
   onChange,
+  onNameChange,
   onSubmit,
 }) {
   useEffect(() => {
@@ -88,17 +88,7 @@ export default function ProductFormModal({
                   type="text"
                   name="name"
                   value={formData.name}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    onChange(e);
-
-                    onChange({
-                      target: {
-                        name: "slug",
-                        value: slugify(value),
-                      },
-                    });
-                  }}
+                  onChange={(e) => onNameChange(e.target.value)}
                   placeholder="Nhập tên sản phẩm"
                   className={inputClass}
                 />
@@ -135,11 +125,13 @@ export default function ProductFormModal({
                   className={inputClass}
                 >
                   <option value="">-- Chọn danh mục --</option>
-                  {categories.map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
+                  {categories
+                    .filter((category) => category.status === "active")
+                    .map((category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.name}
+                      </option>
+                    ))}
                 </select>
                 {errors.categoryId && (
                   <p className="mt-1 text-sm text-red-500">
@@ -159,11 +151,13 @@ export default function ProductFormModal({
                   className={inputClass}
                 >
                   <option value="">-- Chọn thương hiệu --</option>
-                  {brands.map((brand) => (
-                    <option key={brand.id} value={brand.id}>
-                      {brand.name}
-                    </option>
-                  ))}
+                  {brands
+                    .filter((brand) => brand.status === "active")
+                    .map((brand) => (
+                      <option key={brand.id} value={brand.id}>
+                        {brand.name}
+                      </option>
+                    ))}
                 </select>
                 {errors.brandId && (
                   <p className="mt-1 text-sm text-red-500">{errors.brandId}</p>
@@ -258,6 +252,9 @@ export default function ProductFormModal({
                   placeholder="Dán URL ảnh sản phẩm"
                   className={inputClass}
                 />
+                {errors.image && (
+                  <p className="mt-1 text-sm text-red-500">{errors.image}</p>
+                )}
               </div>
 
               <div className={previewBoxClass}>
@@ -272,6 +269,9 @@ export default function ProductFormModal({
                       src={formData.image}
                       alt="Preview"
                       className="max-h-52 rounded-2xl object-contain"
+                      onError={(e) => {
+                        e.currentTarget.style.display = "none";
+                      }}
                     />
                   ) : (
                     <p className="text-sm text-slate-400">

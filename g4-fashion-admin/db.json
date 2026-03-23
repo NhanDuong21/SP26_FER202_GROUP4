@@ -145,6 +145,15 @@
       "status": "active",
       "image": "https://lamia.com.vn/storage/so-mi/quan-baggy-nu-tron-lq092.jpg",
       "updatedAt": "2026-03-11"
+    },
+    {
+      "id": "0deb",
+      "name": "quần âu",
+      "slug": "quan-au",
+      "parentId": null,
+      "status": "active",
+      "image": "https://picsum.photos/seed/p1/200/200",
+      "updatedAt": "2026-03-23"
     }
   ],
   "brands": [

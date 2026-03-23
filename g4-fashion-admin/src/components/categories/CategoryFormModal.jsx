@@ -22,7 +22,6 @@ const getCategoryFormData = (category) => ({
   name: category?.name || "",
   slug: category?.slug || "",
   parentId: category?.parentId ?? "",
-  productCount: category?.productCount || 0,
   status: category?.status || "active",
   image: category?.image || "",
 });
@@ -97,14 +96,7 @@ export default function CategoryFormModal({
 
       return {
         ...prev,
-        [name]:
-          name === "productCount"
-            ? Number(value)
-            : name === "parentId"
-              ? value === ""
-                ? ""
-                : value
-              : value,
+        [name]: name === "parentId" ? (value === "" ? "" : value) : value,
       };
     });
 
@@ -276,24 +268,6 @@ export default function CategoryFormModal({
 
             <div>
               <label className="mb-2 block text-sm font-medium text-slate-700">
-                Số sản phẩm
-              </label>
-              <input
-                type="number"
-                name="productCount"
-                value={formData.productCount}
-                onChange={handleChange}
-                className={inputClass}
-              />
-              {errors.productCount && (
-                <p className="mt-1 text-sm text-red-500">
-                  {errors.productCount}
-                </p>
-              )}
-            </div>
-
-            <div>
-              <label className="mb-2 block text-sm font-medium text-slate-700">
                 Trạng thái
               </label>
               <div className="relative">
@@ -325,6 +299,9 @@ export default function CategoryFormModal({
                 placeholder="https://dummyimage.com/80x80/..."
                 className={inputClass}
               />
+              {errors.image && (
+                <p className="mt-1 text-sm text-red-500">{errors.image}</p>
+              )}
             </div>
           </div>
 
