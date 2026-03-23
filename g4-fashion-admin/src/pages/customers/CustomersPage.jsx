@@ -169,7 +169,7 @@ export default function CustomersPage() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
             type="text"
-            placeholder="Tìm kiếm theo tên, email, điện thoại hoặc mã khách hàng"
+            placeholder="Tìm kiếm theo tên, email hoặc điện thoại"
             value={searchText}
             onChange={handleSearchChange}
             className={`${inputClass} pl-10`}
@@ -214,7 +214,7 @@ export default function CustomersPage() {
                   <th className={tableHeaderCellClass}>Đơn hàng</th>
                   <th className={tableHeaderCellClass}>Tổng chi tiêu</th>
                   <th className={tableHeaderCellClass}>Đơn hàng cuối</th>
-                  <th className={tableHeaderCellClass}>Trang thái</th>
+                  <th className={tableHeaderCellClass}>Trạng thái</th>
                   <th className={`${tableHeaderCellClass} text-center`}>Thao tác</th>
                 </tr>
               </thead>
@@ -234,9 +234,7 @@ export default function CustomersPage() {
                           <div className="font-semibold text-slate-800">
                             {c.name}
                           </div>
-                          <div className="text-xs text-slate-500">
-                            {c.code}
-                          </div>
+                          <div className="text-xs text-slate-500">{c.code}</div>
                         </div>
                       </div>
                     </td>

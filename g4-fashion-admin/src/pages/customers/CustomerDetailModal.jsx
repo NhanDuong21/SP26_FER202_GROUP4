@@ -79,6 +79,11 @@ export default function CustomerDetailModal({
             </div>
 
             <div className={infoItemClass}>
+              <p className="mb-2 text-sm text-slate-500">Mã khách hàng</p>
+              <p className="font-semibold text-slate-800">{customer.code}</p>
+            </div>
+
+            <div className={infoItemClass}>
               <p className="mb-2 text-sm text-slate-500">Cấp độ</p>
               <span className={getCustomerLevelBadgeClass(customer.level)}>
                 {customer.level}
@@ -86,23 +91,21 @@ export default function CustomerDetailModal({
             </div>
 
             <div className={infoItemClass}>
-              <p className="mb-2 flex items-center gap-2 text-sm text-slate-500">
-                <ShoppingCart size={16} /> Tổng đơn hàng
-              </p>
-              <p className="font-semibold text-slate-800">{customer.orderCount}</p>
+              <p className="mb-2 text-sm text-slate-500">Đơn hàng</p>
+              <p className="font-semibold text-slate-800">{customer.orderCount || 0}</p>
             </div>
 
             <div className={infoItemClass}>
-              <p className="mb-2 flex items-center gap-2 text-sm text-slate-500">
-                <CalendarDays size={16} /> Đơn hàng cuối
+              <p className="mb-2 text-sm text-slate-500">Đơn hàng cuối</p>
+              <p className="font-semibold text-slate-800">
+                {customer.lastOrderDate ? new Date(customer.lastOrderDate).toLocaleDateString('vi-VN') : "-"}
               </p>
-              <p className="font-semibold text-slate-800">{customer.lastOrderDate}</p>
             </div>
 
             <div className={infoItemClass}>
               <p className="mb-2 text-sm text-slate-500">Tổng chi tiêu</p>
               <p className="font-semibold text-slate-800">
-                {formatCurrency(customer.totalSpent)}
+                {formatCurrency(customer.totalSpent || 0)}
               </p>
             </div>
 
