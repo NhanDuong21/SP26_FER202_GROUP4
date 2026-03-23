@@ -1,3 +1,10 @@
+export const validTransitions = {
+  pending: ["processing", "cancelled"],
+  processing: ["completed", "cancelled"],
+  completed: [],
+  cancelled: [],
+};
+
 export const getOrderStatusInfo = (status) => {
   switch (status) {
     case "pending":
@@ -80,4 +87,16 @@ export const filterOrders = (orders, keyword, statusFilter, paymentFilter) => {
 
     return matchKeyword && matchStatus && matchPayment;
   });
+};
+
+export const canTransitionTo = (fromStatus, toStatus) => {
+  return validTransitions[fromStatus]?.includes(toStatus);
+};
+
+export const shouldDecreaseStock = (fromStatus, toStatus) => {
+  return fromStatus === "pending" && toStatus === "processing";
+};
+
+export const shouldRestoreStock = (fromStatus, toStatus) => {
+  return fromStatus === "processing" && toStatus === "cancelled";
 };
