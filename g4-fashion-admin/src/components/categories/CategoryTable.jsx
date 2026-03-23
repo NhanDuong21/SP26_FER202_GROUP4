@@ -12,6 +12,7 @@ import {
 export default function CategoryTable({
   categories,
   getParentName,
+  getProductCount,
   onView,
   onEdit,
   onDelete,
@@ -66,7 +67,7 @@ export default function CategoryTable({
 
               <td className={tableCellClass}>
                 <span className="font-semibold text-blue-600">
-                  {category.productCount}
+                  {getProductCount(category.id)}
                 </span>
               </td>
 

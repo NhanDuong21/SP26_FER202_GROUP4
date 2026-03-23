@@ -15,6 +15,7 @@ export default function CategoryDetailModal({
   onClose,
   category,
   getParentName,
+  getProductCount,
 }) {
   useEffect(() => {
     if (!isOpen) return;
@@ -96,7 +97,7 @@ export default function CategoryDetailModal({
                 Số sản phẩm
               </p>
               <p className="font-semibold text-slate-800">
-                {category.productCount}
+                {getProductCount(category.id)}
               </p>
             </div>
 

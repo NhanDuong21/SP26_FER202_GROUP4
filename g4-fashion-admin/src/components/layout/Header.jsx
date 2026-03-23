@@ -6,7 +6,6 @@ import {
   PanelLeftOpen,
   RotateCcw,
   Settings,
-  UserCircle2,
 } from "lucide-react";
 
 import { useEffect, useState } from "react";
@@ -16,15 +15,14 @@ import { useTheme } from "../../contexts/ThemeContext";
 
 function Header({ isCollapsed, onToggleSidebar, onOpenMobileSidebar }) {
   const navigate = useNavigate();
-  const { language, t } = useLanguage();
+  const { language } = useLanguage();
   const { theme, setTheme } = useTheme();
   const [user, setUser] = useState(null);
+  const [toggleSwitch, setToggleSwitch] = useState(false);
 
   useEffect(() => {
     setToggleSwitch(theme === "dark");
   }, [theme]);
-
-  const [toggleSwitch, setToggleSwitch] = useState(false);
 
   useEffect(() => {
     fetch("http://localhost:3001/users/1")
@@ -60,23 +58,24 @@ function Header({ isCollapsed, onToggleSidebar, onOpenMobileSidebar }) {
             {language === "en" ? "EN" : "VN"}
           </button>
 
-          <div 
+          <div
             onClick={() => {
-              setToggleSwitch(!toggleSwitch);
-              setTheme(toggleSwitch ? "light" : "dark");
+              const next = !toggleSwitch;
+              setToggleSwitch(next);
+              setTheme(next ? "dark" : "light");
             }}
             className={`hidden h-7 w-12 cursor-pointer items-center rounded-full px-1 transition sm:flex ${
               toggleSwitch ? "bg-blue-500" : "bg-slate-200"
             }`}
           >
-            <div 
+            <div
               className={`h-5 w-5 rounded-full bg-white shadow-sm transition ${
                 toggleSwitch ? "translate-x-5" : ""
               }`}
             />
           </div>
 
-          <button 
+          <button
             onClick={() => navigate("/settings")}
             className="hidden h-10 w-10 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 sm:flex"
           >
@@ -120,9 +119,7 @@ function Header({ isCollapsed, onToggleSidebar, onOpenMobileSidebar }) {
                 <p className="text-[15px] font-semibold text-slate-800">
                   {user?.name}
                 </p>
-                <p className="text-sm text-slate-500">
-                  {user?.email}
-                </p>
+                <p className="text-sm text-slate-500">{user?.email}</p>
               </div>
             </Link>
           </div>
