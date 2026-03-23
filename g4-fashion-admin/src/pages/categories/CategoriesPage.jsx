@@ -7,7 +7,10 @@ import {
   sectionHeaderClass,
   primaryButtonClass,
 } from "../../utils/uiClasses";
-import { getCategoryStats } from "../../utils/categories/categoryHelpers";
+import {
+  getCategoryProductCount,
+  getCategoryStats,
+} from "../../utils/categories/categoryHelpers";
 import { useCategoriesData } from "../../hooks/categories/useCategoriesData";
 import { useCategoryFilters } from "../../hooks/categories/useCategoryFilters";
 import { useCategoryModals } from "../../hooks/categories/useCategoryModals";
@@ -22,6 +25,7 @@ import Pagination from "../../components/common/Pagination";
 export default function CategoriesPage() {
   const {
     categories,
+    products,
     loading,
     error,
     fetchCategories,
@@ -58,7 +62,11 @@ export default function CategoriesPage() {
   } = useCategoryFilters(categories);
 
   const { t } = useLanguage();
-  const stats = useMemo(() => getCategoryStats(categories), [categories]);
+
+  const stats = useMemo(
+    () => getCategoryStats(categories, products),
+    [categories, products],
+  );
 
   const getParentName = (parentId) => {
     if (!parentId) return t("Danh mục gốc");
@@ -68,6 +76,10 @@ export default function CategoriesPage() {
     );
 
     return parent ? parent.name : t("Không xác định");
+  };
+
+  const getProductCount = (categoryId) => {
+    return getCategoryProductCount(categoryId, products);
   };
 
   const handleSubmitForm = async (payload) => {
@@ -140,7 +152,9 @@ export default function CategoriesPage() {
         />
 
         {loading ? (
-          <div className="px-6 py-10 text-slate-500">{t("Đang tải dữ liệu...")}</div>
+          <div className="px-6 py-10 text-slate-500">
+            {t("Đang tải dữ liệu...")}
+          </div>
         ) : error ? (
           <div className="px-6 py-10 text-red-500">{error}</div>
         ) : (
@@ -148,6 +162,7 @@ export default function CategoriesPage() {
             <CategoryTable
               categories={paginatedCategories}
               getParentName={getParentName}
+              getProductCount={getProductCount}
               onView={handleOpenDetail}
               onEdit={handleOpenEdit}
               onDelete={handleOpenDelete}
@@ -182,6 +197,7 @@ export default function CategoriesPage() {
         onClose={handleCloseDetail}
         category={selectedCategory}
         getParentName={getParentName}
+        getProductCount={getProductCount}
       />
     </div>
   );

@@ -1,11 +1,14 @@
-export const getCategoryStats = (categories = []) => {
+export const getCategoryProductCount = (categoryId, products = []) => {
+  return products.filter(
+    (item) => String(item.categoryId) === String(categoryId),
+  ).length;
+};
+
+export const getCategoryStats = (categories = [], products = []) => {
   return {
     total: categories.length,
     active: categories.filter((item) => item.status === "active").length,
-    totalProducts: categories.reduce(
-      (sum, item) => sum + (item.productCount || 0),
-      0,
-    ),
+    totalProducts: products.length,
     root: categories.filter((item) => !item.parentId).length,
   };
 };
