@@ -461,8 +461,8 @@
       "customerId": "3",
       "customerName": "Lê Minh Châu",
       "customerPhone": "0901000003",
-      "status": "pending",
-      "paymentStatus": "unpaid",
+      "status": "completed",
+      "paymentStatus": "paid",
       "trafficSource": "google",
       "subtotal": 999000,
       "discount": 100000,
@@ -479,7 +479,7 @@
         }
       ],
       "createdAt": "2026-03-11T08:00:00",
-      "completedAt": null
+      "completedAt": "2026-03-16T17:23:11.526Z"
     },
     {
       "id": "OD005",
@@ -766,6 +766,303 @@
       ],
       "createdAt": "2026-03-08T10:10:00",
       "completedAt": "2026-03-08T10:55:00"
+    },
+    {
+      "id": "OD016",
+      "code": "ORD-016",
+      "customerId": "2",
+      "customerName": "Trần Thị Bình",
+      "customerPhone": "0901000002",
+      "status": "cancelled",
+      "paymentStatus": "unpaid",
+      "trafficSource": "facebook",
+      "subtotal": 399000,
+      "discount": 0,
+      "shippingFee": 30000,
+      "totalAmount": 429000,
+      "items": [
+        {
+          "productId": "1",
+          "productName": "Áo sơ mi nam trắng Premium",
+          "categoryId": "2",
+          "brandId": "4",
+          "quantity": 2,
+          "price": 199000
+        }
+      ],
+      "createdAt": "2026-03-12T09:00:00",
+      "completedAt": null,
+      "cancelledAt": "2026-03-12T10:00:00"
+    },
+    {
+      "id": "OD017",
+      "code": "ORD-017",
+      "customerId": "2",
+      "customerName": "Trần Thị Bình",
+      "customerPhone": "0901000002",
+      "status": "cancelled",
+      "paymentStatus": "unpaid",
+      "trafficSource": "facebook",
+      "subtotal": 498000,
+      "discount": 20000,
+      "shippingFee": 30000,
+      "totalAmount": 508000,
+      "items": [
+        {
+          "productId": "6",
+          "productName": "Áo polo basic nam",
+          "categoryId": "1",
+          "brandId": "4",
+          "quantity": 2,
+          "price": 249000
+        }
+      ],
+      "createdAt": "2026-03-12T09:15:00",
+      "completedAt": null,
+      "cancelledAt": "2026-03-16T17:48:31.549Z"
+    },
+    {
+      "id": "OD018",
+      "code": "ORD-018",
+      "customerId": "3",
+      "customerName": "Lê Minh Châu",
+      "customerPhone": "0901000003",
+      "status": "completed",
+      "paymentStatus": "paid",
+      "trafficSource": "direct",
+      "subtotal": 999000,
+      "discount": 100000,
+      "shippingFee": 0,
+      "totalAmount": 899000,
+      "items": [
+        {
+          "productId": "3",
+          "productName": "Váy dạ hội sang trọng",
+          "categoryId": "4",
+          "brandId": "2",
+          "quantity": 1,
+          "price": 999000
+        }
+      ],
+      "createdAt": "2026-03-12T10:00:00",
+      "completedAt": "2026-03-16T17:48:42.963Z",
+      "cancelledAt": null
+    },
+    {
+      "id": "OD019",
+      "code": "ORD-019",
+      "customerId": "1",
+      "customerName": "Nguyễn Văn An",
+      "customerPhone": "0901000001",
+      "status": "completed",
+      "paymentStatus": "paid",
+      "trafficSource": "google",
+      "subtotal": 450000,
+      "discount": 0,
+      "shippingFee": 30000,
+      "totalAmount": 480000,
+      "items": [
+        {
+          "productId": "2",
+          "productName": "Quần jeans nữ skinny",
+          "categoryId": "3",
+          "brandId": "3",
+          "quantity": 1,
+          "price": 450000
+        }
+      ],
+      "createdAt": "2026-03-12T11:10:00",
+      "completedAt": "2026-03-16T17:48:46.350Z",
+      "cancelledAt": null
+    },
+    {
+      "id": "OD020",
+      "code": "ORD-020",
+      "customerId": "2",
+      "customerName": "Trần Thị Bình",
+      "customerPhone": "0901000002",
+      "status": "completed",
+      "paymentStatus": "paid",
+      "trafficSource": "facebook",
+      "subtotal": 747000,
+      "discount": 50000,
+      "shippingFee": 30000,
+      "totalAmount": 727000,
+      "items": [
+        {
+          "productId": "6",
+          "productName": "Áo polo basic nam",
+          "categoryId": "1",
+          "brandId": "4",
+          "quantity": 3,
+          "price": 249000
+        }
+      ],
+      "createdAt": "2026-03-12T13:20:00",
+      "completedAt": "2026-03-16T17:48:47.737Z",
+      "cancelledAt": null
+    },
+    {
+      "id": "OD021",
+      "code": "ORD-021",
+      "customerId": "1",
+      "customerName": "Nguyễn Văn An",
+      "customerPhone": "0901000001",
+      "status": "pending",
+      "paymentStatus": "unpaid",
+      "trafficSource": "google",
+      "subtotal": 398000,
+      "discount": 0,
+      "shippingFee": 30000,
+      "totalAmount": 428000,
+      "items": [
+        {
+          "productId": "1",
+          "productName": "Áo sơ mi nam trắng Premium",
+          "categoryId": "2",
+          "brandId": "4",
+          "quantity": 2,
+          "price": 199000
+        }
+      ],
+      "createdAt": "2026-03-13T08:15:00",
+      "completedAt": null,
+      "cancelledAt": null
+    },
+    {
+      "id": "OD022",
+      "code": "ORD-022",
+      "customerId": "2",
+      "customerName": "Trần Thị Bình",
+      "customerPhone": "0901000002",
+      "status": "pending",
+      "paymentStatus": "unpaid",
+      "trafficSource": "facebook",
+      "subtotal": 498000,
+      "discount": 20000,
+      "shippingFee": 30000,
+      "totalAmount": 508000,
+      "items": [
+        {
+          "productId": "6",
+          "productName": "Áo polo basic nam",
+          "categoryId": "1",
+          "brandId": "4",
+          "quantity": 2,
+          "price": 249000
+        }
+      ],
+      "createdAt": "2026-03-13T09:05:00",
+      "completedAt": null,
+      "cancelledAt": null
+    },
+    {
+      "id": "OD023",
+      "code": "ORD-023",
+      "customerId": "3",
+      "customerName": "Lê Minh Châu",
+      "customerPhone": "0901000003",
+      "status": "pending",
+      "paymentStatus": "unpaid",
+      "trafficSource": "direct",
+      "subtotal": 999000,
+      "discount": 100000,
+      "shippingFee": 0,
+      "totalAmount": 899000,
+      "items": [
+        {
+          "productId": "3",
+          "productName": "Váy dạ hội sang trọng",
+          "categoryId": "4",
+          "brandId": "2",
+          "quantity": 1,
+          "price": 999000
+        }
+      ],
+      "createdAt": "2026-03-13T10:30:00",
+      "completedAt": null,
+      "cancelledAt": null
+    },
+    {
+      "id": "OD024",
+      "code": "ORD-024",
+      "customerId": "1",
+      "customerName": "Nguyễn Văn An",
+      "customerPhone": "0901000001",
+      "status": "pending",
+      "paymentStatus": "unpaid",
+      "trafficSource": "google",
+      "subtotal": 450000,
+      "discount": 0,
+      "shippingFee": 30000,
+      "totalAmount": 480000,
+      "items": [
+        {
+          "productId": "2",
+          "productName": "Quần jeans nữ skinny",
+          "categoryId": "3",
+          "brandId": "3",
+          "quantity": 1,
+          "price": 450000
+        }
+      ],
+      "createdAt": "2026-03-13T11:10:00",
+      "completedAt": null,
+      "cancelledAt": null
+    },
+    {
+      "id": "OD025",
+      "code": "ORD-025",
+      "customerId": "2",
+      "customerName": "Trần Thị Bình",
+      "customerPhone": "0901000002",
+      "status": "pending",
+      "paymentStatus": "unpaid",
+      "trafficSource": "facebook",
+      "subtotal": 747000,
+      "discount": 50000,
+      "shippingFee": 30000,
+      "totalAmount": 727000,
+      "items": [
+        {
+          "productId": "6",
+          "productName": "Áo polo basic nam",
+          "categoryId": "1",
+          "brandId": "4",
+          "quantity": 3,
+          "price": 249000
+        }
+      ],
+      "createdAt": "2026-03-13T12:40:00",
+      "completedAt": null,
+      "cancelledAt": null
+    },
+    {
+      "id": "OD026",
+      "code": "ORD-026",
+      "customerId": "4",
+      "customerName": "Phạm Thu Hà",
+      "customerPhone": "0901000004",
+      "status": "completed",
+      "paymentStatus": "paid",
+      "trafficSource": "google",
+      "subtotal": 498000,
+      "discount": 20000,
+      "shippingFee": 30000,
+      "totalAmount": 508000,
+      "items": [
+        {
+          "productId": "6",
+          "productName": "Áo polo basic nam",
+          "categoryId": "1",
+          "brandId": "4",
+          "quantity": 2,
+          "price": 249000
+        }
+      ],
+      "createdAt": "2026-03-14T11:00:00",
+      "completedAt": "2026-03-16T17:59:16.968Z",
+      "cancelledAt": null
     }
   ],
   "visits": [
@@ -842,6 +1139,240 @@
       "customerId": "1",
       "productId": "6",
       "createdAt": "2026-03-10T08:30:00"
+    }
+  ],
+  "messages": [
+    {
+      "id": "MSG-001",
+      "name": "Nguyễn Thị Hoa",
+      "email": "hoa.nguyen@example.com",
+      "phone": "0901000008",
+      "title": "Sản phẩm bị lỗi",
+      "content": "Áo mình nhận được bị lỗi đường may, shop hỗ trợ giúp mình.",
+      "category": "Sản phẩm",
+      "priority": "Khẩn cấp",
+      "status": "Chưa trả lời",
+      "time": "2026-03-13 16:05"
+    },
+    {
+      "id": "MSG-002",
+      "name": "Trần Thị Bình",
+      "email": "binh.tran@example.com",
+      "phone": "0901000002",
+      "title": "Hỏi về chính sách đổi trả",
+      "content": "Nếu sản phẩm không vừa size thì có thể đổi trong bao lâu?",
+      "category": "Hỗ trợ",
+      "priority": "Thấp",
+      "status": "Đã trả lời",
+      "time": "2026-03-09 14:20",
+      "reply": "Bạn có thể đổi sản phẩm trong vòng 7 ngày kể từ ngày nhận hàng. Vui lòng giữ nguyên nhãn mác và hóa đơn.",
+      "replyTime": "2026-03-09 15:00"
+    },
+    {
+      "id": "MSG-003",
+      "name": "Lê Minh Châu",
+      "email": "chau.le@example.com",
+      "phone": "0901000003",
+      "title": "Vấn đề thanh toán đơn hàng",
+      "content": "Mình thanh toán nhưng hệ thống báo chưa thanh toán, nhờ shop kiểm tra.",
+      "category": "Đơn hàng",
+      "priority": "Khẩn cấp",
+      "status": "Chưa trả lời",
+      "time": "2026-03-11 08:05"
+    },
+    {
+      "id": "MSG-004",
+      "name": "Nguyễn Văn An",
+      "email": "an.nguyen@example.com",
+      "phone": "0901000001",
+      "title": "Hỏi về áo polo basic",
+      "content": "Áo polo basic nam có những màu nào?",
+      "category": "Sản phẩm",
+      "priority": "Thấp",
+      "status": "Đã trả lời",
+      "time": "2026-03-08 16:30",
+      "reply": "Áo polo basic hiện có các màu: trắng, đen, xanh navy và xám. Bạn có thể đặt màu yêu thích trên website.",
+      "replyTime": "2026-03-08 17:00"
+    },
+    {
+      "id": "MSG-005",
+      "name": "Trần Thị Bình",
+      "email": "binh.tran@example.com",
+      "phone": "0901000002",
+      "title": "Chậm giao hàng",
+      "content": "Đơn ORD-015 của mình vẫn chưa nhận được hàng.",
+      "category": "Vận chuyển",
+      "priority": "Cao",
+      "status": "Chưa trả lời",
+      "time": "2026-03-12 10:45"
+    },
+    {
+      "id": "MSG-006",
+      "name": "Lê Minh Châu",
+      "email": "chau.le@example.com",
+      "phone": "0901000003",
+      "title": "Hỏi về váy dạ hội",
+      "content": "Váy dạ hội sang trọng có size M không?",
+      "category": "Sản phẩm",
+      "priority": "Trung bình",
+      "status": "Đã trả lời",
+      "time": "2026-03-07 13:10",
+      "reply": "Size M hiện có sẵn cho mẫu váy dạ hội sang trọng. Bạn có thể đặt hàng trực tiếp trên website.",
+      "replyTime": "2026-03-07 13:45"
+    },
+    {
+      "id": "MSG-007",
+      "name": "Phạm Quốc Huy",
+      "email": "huy.pham@example.com",
+      "phone": "0901000004",
+      "title": "Hỏi về phí vận chuyển",
+      "content": "Shop cho mình hỏi phí vận chuyển về Cần Thơ là bao nhiêu?",
+      "category": "Vận chuyển",
+      "priority": "Thấp",
+      "status": "Chưa trả lời",
+      "time": "2026-03-13 09:20"
+    },
+    {
+      "id": "MSG-008",
+      "name": "Ngô Thị Lan",
+      "email": "lan.ngo@example.com",
+      "phone": "0901000005",
+      "title": "Không đăng nhập được tài khoản",
+      "content": "Mình không đăng nhập được tài khoản dù đã nhập đúng mật khẩu.",
+      "category": "Hỗ trợ",
+      "priority": "Cao",
+      "status": "Chưa trả lời",
+      "time": "2026-03-13 11:15"
+    },
+    {
+      "id": "MSG-009",
+      "name": "Đỗ Hoàng Nam",
+      "email": "nam.do@example.com",
+      "phone": "0901000006",
+      "title": "Hỏi về chương trình khuyến mãi",
+      "content": "Shop có chương trình giảm giá nào cho khách hàng mới không?",
+      "category": "Khuyến mãi",
+      "priority": "Thấp",
+      "status": "Đã trả lời",
+      "time": "2026-03-10 15:30",
+      "reply": "Hiện tại shop đang có chương trình giảm 10% cho khách hàng mới khi đăng ký tài khoản.",
+      "replyTime": "2026-03-10 16:00"
+    },
+    {
+      "id": "MSG-010",
+      "name": "Võ Thị Mai",
+      "email": "mai.vo@example.com",
+      "phone": "0901000007",
+      "title": "Hỏi về tình trạng đơn hàng",
+      "content": "Đơn ORD-018 của mình hiện đang ở đâu?",
+      "category": "Đơn hàng",
+      "priority": "Trung bình",
+      "status": "Đã trả lời",
+      "time": "2026-03-12 14:40",
+      "reply": "Đơn hàng của bạn đang được vận chuyển và dự kiến giao trong ngày mai.",
+      "replyTime": "2026-03-12 15:10"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "1",
+      "title": "Bảo trì hệ thống",
+      "content": "Hệ thống sẽ được bảo trì vào ngày 15/12 từ 23:00 đến 01:00. Trong thời gian này, dịch vụ có thể bị gián đoạn. Xin lỗi vì sự bất tiện này. Vui lòng lên kế hoạch trước để tránh ảnh hưởng đến trải nghiệm của bạn. Cảm ơn sự thông cảm của bạn.",
+      "type": "Cảnh báo",
+      "priority": "Cao",
+      "status": "Đã xuất bản",
+      "target": "Tất cả khách hàng",
+      "time": "2024-12-15 23:00"
+    },
+    {
+      "id": "2",
+      "title": "Flash Sale 12.12",
+      "content": "Sự kiện Flash Sale 12.12 chính thức diễn ra với hàng ngàn sản phẩm thời trang được giảm giá lên đến 50%. Ngoài ra, khách hàng còn có cơ hội nhận thêm mã giảm giá đặc biệt và quà tặng hấp dẫn khi mua sắm trong khung giờ vàng. Hãy nhanh tay đặt hàng để không bỏ lỡ những ưu đãi cực kỳ hấp dẫn chỉ có trong ngày hôm nay.",
+      "type": "Thành Công",
+      "priority": "Trung bình",
+      "status": "Đã lên lịch",
+      "target": "Khách VIP",
+      "time": "2024-12-12 08:00"
+    },
+    {
+      "id": "3",
+      "title": "Cập nhật chính sách đổi trả",
+      "content": "Chính sách đổi trả được cập nhật, cho phép đổi trong vòng 30 ngày. Khách hàng có thể mang sản phẩm đến cửa hàng gần nhất hoặc gửi yêu cầu đổi trả trực tuyến thông qua trang web chính thức của chúng tôi.",
+      "type": "Thông Tin",
+      "priority": "Thấp",
+      "status": "Đã gửi",
+      "target": "Tất cả khách hàng",
+      "time": "2024-12-05 14:00"
+    },
+    {
+      "id": "4",
+      "title": "Lỗi hệ thống thanh toán",
+      "content": "Đã phát hiện lỗi khi thanh toán qua ví điện tử và một số cổng thanh toán trực tuyến. Đội ngũ kỹ thuật đang khẩn trương khắc phục sự cố để đảm bảo giao dịch của khách hàng được thực hiện bình thường.",
+      "type": "Lỗi",
+      "priority": "Khẩn cấp",
+      "status": "Đã xuất bản",
+      "target": "Tất cả khách hàng",
+      "time": "2024-12-09 09:30"
+    },
+    {
+      "id": "5",
+      "title": "Ra mắt bộ sưu tập mới",
+      "content": "7N Fashion chính thức ra mắt bộ sưu tập Thu Đông 2024 với nhiều thiết kế hiện đại, chất liệu cao cấp và phong cách trẻ trung. Hãy ghé thăm cửa hàng hoặc website để khám phá những sản phẩm mới nhất.",
+      "type": "Thông Tin",
+      "priority": "Trung bình",
+      "status": "Bản nháp",
+      "target": "Khách VIP",
+      "time": "2024-12-20 10:00"
+    },
+    {
+      "id": "6",
+      "title": "Miễn phí vận chuyển cuối tuần",
+      "content": "Trong hai ngày cuối tuần này, tất cả đơn hàng từ 199.000đ trở lên sẽ được miễn phí vận chuyển trên toàn quốc. Đây là cơ hội tốt để bạn mua sắm các sản phẩm thời trang yêu thích mà không cần lo lắng về chi phí giao hàng.",
+      "type": "Thành Công",
+      "priority": "Trung bình",
+      "status": "Đã xuất bản",
+      "target": "Tất cả khách hàng",
+      "time": "2024-12-21 09:00"
+    },
+    {
+      "id": "7",
+      "title": "Khuyến mãi dành riêng cho khách VIP",
+      "content": "Chương trình ưu đãi đặc biệt dành cho khách hàng VIP với mức giảm giá lên đến 30% cho các sản phẩm mới nhất. Ngoài ra, khách VIP còn được tặng thêm điểm thưởng và quà tặng độc quyền khi mua sắm trong thời gian diễn ra chương trình.",
+      "type": "Thông Tin",
+      "priority": "Cao",
+      "status": "Đã lên lịch",
+      "target": "Khách VIP",
+      "time": "2024-12-22 10:00"
+    },
+    {
+      "id": "8",
+      "title": "Cập nhật ứng dụng di động",
+      "content": "Ứng dụng di động của 7N Fashion đã được cập nhật phiên bản mới với nhiều cải tiến về giao diện và hiệu năng. Người dùng có thể trải nghiệm tốc độ tải nhanh hơn và nhiều tính năng tiện lợi khi mua sắm.",
+      "type": "Thông Tin",
+      "priority": "Thấp",
+      "status": "Đã gửi",
+      "target": "Tất cả khách hàng",
+      "time": "2024-12-18 15:30"
+    },
+    {
+      "id": "9",
+      "title": "Hệ thống đăng nhập tạm thời gián đoạn",
+      "content": "Một số người dùng có thể gặp lỗi khi đăng nhập vào hệ thống do quá tải máy chủ. Đội ngũ kỹ thuật đang tiến hành nâng cấp hệ thống để khắc phục tình trạng này trong thời gian sớm nhất.",
+      "type": "Cảnh báo",
+      "priority": "Cao",
+      "status": "Đã xuất bản",
+      "target": "Tất cả khách hàng",
+      "time": "2024-12-19 11:45"
+    },
+    {
+      "id": "10",
+      "title": "Thông báo bảo mật tài khoản",
+      "content": "Để đảm bảo an toàn cho tài khoản của bạn, vui lòng không chia sẻ mật khẩu với bất kỳ ai và kích hoạt xác thực hai bước nếu có thể. Nếu phát hiện hoạt động bất thường, hãy liên hệ ngay với bộ phận hỗ trợ.",
+      "type": "Cảnh báo",
+      "priority": "Trung bình",
+      "status": "Đã xuất bản",
+      "target": "Tất cả khách hàng",
+      "time": "2024-12-17 16:00"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
