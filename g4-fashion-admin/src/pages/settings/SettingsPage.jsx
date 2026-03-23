@@ -1,16 +1,20 @@
 import { useState, useEffect } from "react";
 import { Settings, RotateCcw, Save } from "lucide-react";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 function SettingsPage() {
+  const { language, setLanguage, t } = useLanguage();
+
   const [settings, setSettings] = useState({
     siteName: "",
     siteDescription: "",
     adminEmail: "",
     timezone: "",
-    language: "",
+    language: language || "",
   });
 
   const [tab, setTab] = useState("general");
+  const [languages, setLanguages] = useState([]);
 
   // thêm state password
   const [password, setPassword] = useState({
@@ -21,32 +25,49 @@ function SettingsPage() {
 
   // load dữ liệu
   useEffect(() => {
-  fetch("http://localhost:3001/settings/1")
-    .then((res) => res.json())
-    .then((data) => {
-      setSettings((prev) => ({
-        ...prev,
-        siteName: data.siteName,
-        siteDescription: data.siteDescription,
-        timezone: data.timezone,
-        language: data.language,
-      }));
-    });
+    fetch("http://localhost:3001/settings/1")
+      .then((res) => res.json())
+      .then((data) => {
+        setSettings((prev) => ({
+          ...prev,
+          siteName: data.siteName,
+          siteDescription: data.siteDescription,
+          timezone: data.timezone,
+          language: data.language,
+        }));
+      });
 
-  fetch("http://localhost:3001/users/1")
-    .then((res) => res.json())
-    .then((user) => {
-      setSettings((prev) => ({
-        ...prev,
-        adminEmail: user.email,
-      }));
-    });
-}, []);
+    fetch("http://localhost:3001/users/1")
+      .then((res) => res.json())
+      .then((user) => {
+        setSettings((prev) => ({
+          ...prev,
+          adminEmail: user.email,
+        }));
+      });
+  }, []);
+
+  useEffect(() => {
+    setSettings((prev) => ({
+      ...prev,
+      language,
+    }));
+  }, [language]);
+
+  useEffect(() => {
+    fetch("http://localhost:3001/languages")
+      .then((res) => res.json())
+      .then((data) => {
+        setLanguages(data);
+      });
+  }, []);
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
+
     setSettings({
       ...settings,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
 
@@ -57,18 +78,23 @@ function SettingsPage() {
     });
   };
 
-  const handleReset = () => {
+  const handleReset = (e) => {
+    if (e?.preventDefault) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
     fetch("http://localhost:3001/settings/1")
       .then((res) => res.json())
-      .then((data) =>
+      .then((data) => {
         setSettings((prev) => ({
           ...prev,
           siteName: data.siteName,
           siteDescription: data.siteDescription,
           timezone: data.timezone,
           language: data.language,
-        }))
-      );
+        }));
+      });
 
     fetch("http://localhost:3001/users/1")
       .then((res) => res.json())
@@ -87,7 +113,7 @@ function SettingsPage() {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    if (e?.preventDefault) e.preventDefault();
 
     // xử lý đổi mật khẩu
     if (tab === "password") {
@@ -95,17 +121,17 @@ function SettingsPage() {
         .then((res) => res.json())
         .then((user) => {
           if (password.oldPassword !== user.password) {
-            alert("Mật khẩu cũ không đúng!");
+            alert(t("Mật khẩu cũ không đúng!"));
             return;
           }
 
           if (password.newPassword.length < 6) {
-            alert("Mật khẩu phải >= 6 ký tự");
+            alert(t("Mật khẩu phải >= 6 ký tự"));
             return;
           }
 
           if (password.newPassword !== password.confirmPassword) {
-            alert("Xác nhận mật khẩu không khớp");
+            alert(t("Xác nhận mật khẩu không khớp"));
             return;
           }
 
@@ -118,7 +144,7 @@ function SettingsPage() {
               password: password.newPassword,
             }),
           }).then(() => {
-            alert("Đổi mật khẩu thành công");
+            alert(t("Đổi mật khẩu thành công"));
 
             setPassword({
               oldPassword: "",
@@ -155,7 +181,10 @@ function SettingsPage() {
       }),
     });
 
-    alert("Đã lưu cài đặt!");
+    alert(t("Đã lưu cài đặt!"));
+
+    // update app language immediately
+    setLanguage(settings.language);
   };
 
   return (
@@ -173,7 +202,7 @@ function SettingsPage() {
             }`}
           >
             <Settings size={20} />
-            Cài đặt hệ thống
+            {t("Cài đặt hệ thống")}
           </h2>
 
           <h2
@@ -183,26 +212,29 @@ function SettingsPage() {
             }`}
           >
             <Settings size={20} />
-            Mật khẩu
+            {t("Mật khẩu")}
+          </h2>
+
+          <h2
+            onClick={() => setTab("language")}
+            className={`flex cursor-pointer items-center gap-2 text-xl font-semibold ${
+              tab === "language" ? "text-blue-600" : "text-slate-800"
+            }`}
+          >
+            <Settings size={20} />
+            {t("Ngôn ngữ")}
           </h2>
 
         </div>
 
         <div className="flex gap-3">
           <button
-            onClick={handleReset}
-            className="flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-2 text-sm hover:bg-slate-100"
-          >
-            <RotateCcw size={16} />
-            Khôi phục
-          </button>
-
-          <button
+            type="submit"
             onClick={handleSubmit}
             className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700"
           >
             <Save size={16} />
-            Lưu thay đổi
+            {t("Lưu thay đổi")}
           </button>
         </div>
       </div>
@@ -210,11 +242,14 @@ function SettingsPage() {
       {/* FORM CÀI ĐẶT */}
       {tab === "general" && (
         <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-          <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <form
+            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+            onSubmit={handleSubmit}
+          >
 
             <div className="flex flex-col">
               <label className="text-sm font-medium text-slate-600 mb-1">
-                Tên website
+                {t("Tên website")}
               </label>
               <input
                 type="text"
@@ -227,7 +262,7 @@ function SettingsPage() {
 
             <div className="flex flex-col">
               <label className="text-sm font-medium text-slate-600 mb-1">
-                Email quản trị
+                {t("Email quản trị")}
               </label>
               <input
                 type="email"
@@ -250,7 +285,7 @@ function SettingsPage() {
 
             <div className="flex flex-col">
               <label className="text-sm font-medium text-slate-600 mb-1">
-                Mật khẩu hiện tại
+                {t("Mật khẩu hiện tại")}
               </label>
               <input
                 type="password"
@@ -263,7 +298,7 @@ function SettingsPage() {
 
             <div className="flex flex-col">
               <label className="text-sm font-medium text-slate-600 mb-1">
-                Mật khẩu mới
+                {t("Mật khẩu mới")}
               </label>
               <input
                 type="password"
@@ -276,7 +311,7 @@ function SettingsPage() {
 
             <div className="flex flex-col">
               <label className="text-sm font-medium text-slate-600 mb-1">
-                Xác nhận mật khẩu
+                {t("Xác nhận mật khẩu")}
               </label>
               <input
                 type="password"
@@ -289,6 +324,31 @@ function SettingsPage() {
 
           </div>
 
+        </div>
+      )}
+
+      {tab === "language" && (
+        <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
+            <div className="flex flex-col">
+              <label className="text-sm font-medium text-slate-600 mb-1">
+                {t("Chọn ngôn ngữ")}
+              </label>
+              <select
+                name="language"
+                value={settings.language}
+                onChange={handleChange}
+                className="rounded-lg border border-slate-300 px-3 py-2"
+              >
+                <option value="">-- Chọn ngôn ngữ --</option>
+                {languages.map((lang) => (
+                  <option key={lang.code} value={lang.code}>
+                    {lang.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </div>
       )}
     </div>

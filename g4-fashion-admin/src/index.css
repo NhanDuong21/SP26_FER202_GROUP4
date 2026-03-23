@@ -45,3 +45,231 @@ textarea {
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
+/* Basic dark mode overrides */
+:root.dark, html.dark, body.dark {
+  background: #1a1f2e;
+  color: #e8ecf1;
+}
+
+body.dark {
+  background: #1a1f2e;
+  color: #e8ecf1;
+}
+
+/* Background colors */
+body.dark .bg-white {
+  background-color: #0f172a !important;
+}
+
+body.dark .bg-[#f5f7fb] {
+  background-color: #1a1f2e !important;
+}
+
+body.dark .bg-[#f8f8f8] {
+  background-color: #1a1f2e !important;
+}
+
+body.dark .bg-slate-50 {
+  background-color: #252d3d !important;
+}
+
+body.dark .bg-slate-100 {
+  background-color: #2a3142 !important;
+}
+
+body.dark .bg-slate-200 {
+  background-color: #323a4d !important;
+}
+
+body.dark .bg-slate-300 {
+  background-color: #3d4557 !important;
+}
+
+body.dark .bg-slate-400 {
+  background-color: #475569 !important;
+}
+
+body.dark .bg-slate-500 {
+  background-color: #64748b !important;
+}
+
+body.dark .bg-slate-600 {
+  background-color: #475569 !important;
+}
+
+body.dark .bg-slate-700 {
+  background-color: #2a3142 !important;
+}
+
+body.dark .bg-slate-200 {
+  background-color: #323a4d !important;
+}
+
+body.dark .bg-slate-300 {
+  background-color: #3d4557 !important;
+}
+
+body.dark .bg-blue-600 {
+  background-color: #2563eb !important;
+}
+
+body.dark .bg-blue-700 {
+  background-color: #1d4ed8 !important;
+}
+
+body.dark .bg-red-500 {
+  background-color: #dc2626 !important;
+}
+
+body.dark .bg-green-600 {
+  background-color: #16a34a !important;
+}
+
+/* Text colors */
+body.dark .text-slate-800 {
+  color: #f1f5f9 !important;
+}
+
+body.dark .text-slate-600 {
+  color: #cbd5e1 !important;
+}
+
+body.dark .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+body.dark .text-slate-400 {
+  color: #94a3b8 !important;
+}
+
+body.dark .text-slate-300 {
+  color: #cbd5e1 !important;
+}
+
+body.dark .text-slate-200 {
+  color: #e2e8f0 !important;
+}
+
+body.dark .text-slate-100 {
+  color: #f1f5f9 !important;
+}
+
+body.dark .text-blue-600 {
+  color: #3b82f6 !important;
+}
+
+body.dark .text-white {
+  color: #f1f5f9 !important;
+}
+
+/* Border colors */
+body.dark .border-slate-200 {
+  border-color: #334155 !important;
+}
+
+body.dark .border-slate-300 {
+  border-color: #475569 !important;
+}
+
+body.dark .border-slate-400 {
+  border-color: #64748b !important;
+}
+
+body.dark .border-white\/10 {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark .border-white\/20 {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Hover states */
+body.dark .hover\:bg-slate-100:hover {
+  background-color: rgba(148, 163, 184, 0.2) !important;
+}
+
+body.dark .hover\:bg-slate-50:hover {
+  background-color: rgba(148, 163, 184, 0.1) !important;
+}
+
+body.dark .hover\:bg-white\/10:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark .hover\:text-white:hover {
+  color: #f1f5f9 !important;
+}
+
+body.dark .hover\:text-slate-600:hover {
+  color: #cbd5e1 !important;
+}
+
+/* Focus states */
+body.dark .focus\:bg-slate-100:focus {
+  background-color: rgba(148, 163, 184, 0.2) !important;
+}
+
+/* Specific component overrides */
+body.dark .rounded-xl {
+  /* Keep as is */
+}
+
+body.dark input, body.dark select, body.dark textarea {
+  background-color: #2a3142 !important;
+  border-color: #404a5f !important;
+  color: #e8ecf1 !important;
+}
+
+body.dark input::placeholder, body.dark select::placeholder, body.dark textarea::placeholder {
+  color: #a3aec1 !important;
+}
+
+body.dark button {
+  /* Keep default, but ensure text is visible */
+}
+
+/* Scrollbar */
+body.dark ::-webkit-scrollbar-thumb {
+  background: #3d4557 !important;
+}
+
+body.dark ::-webkit-scrollbar-track {
+  background: #1a1f2e !important;
+}
+
+/* Sidebar specific */
+body.dark .bg-\[#0e1b46\] {
+  background-color: #1a1f2e !important;
+}
+
+body.dark .text-slate-300 {
+  color: #cbd5e1 !important;
+}
+
+/* Header specific */
+body.dark .bg-white {
+  background-color: #252d3d !important;
+}
+
+/* Table specific */
+body.dark table th, body.dark table td {
+  background-color: transparent !important;
+  color: #f1f5f9 !important;
+  border-color: #334155 !important;
+}
+
+/* Modal specific */
+body.dark .bg-black\/50 {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+/* Toast specific */
+body.dark .bg-\#fff {
+  background-color: #252d3d !important;
+}
+
+body.dark .text-\#0f172a {
+  color: #e8ecf1 !important;
+}
+

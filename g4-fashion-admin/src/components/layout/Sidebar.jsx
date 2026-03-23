@@ -1,9 +1,12 @@
 import { NavLink } from "react-router-dom";
 import { UserCircle2, X } from "lucide-react";
-import { menuItems } from "../../utils/menuItems";
 import { useEffect, useState } from "react";
+import { useLanguage } from "../../contexts/LanguageContext";
+import { getMenuItems } from "../../utils/menuItems";
 
 function Sidebar({ isCollapsed, isMobileOpen, onCloseMobile }) {
+  const { t } = useLanguage();
+
   const [user, setUser] = useState(null);
   const [settings, setSettings] = useState(null);
 
@@ -55,7 +58,7 @@ function Sidebar({ isCollapsed, isMobileOpen, onCloseMobile }) {
                       {settings?.siteName}
                     </h1>
                     <p className="mt-1 text-sm font-medium uppercase tracking-wide text-slate-300">
-                      Trang quản trị
+                      {t("Trang quản trị")}
                     </p>
                   </div>
                 )}
@@ -101,7 +104,7 @@ function Sidebar({ isCollapsed, isMobileOpen, onCloseMobile }) {
 
           <nav className="flex-1 overflow-y-auto px-3 py-5">
             <div className="space-y-1.5">
-              {menuItems.map((item) => {
+              {getMenuItems(t).map((item) => {
                 const Icon = item.icon;
 
                 return (
