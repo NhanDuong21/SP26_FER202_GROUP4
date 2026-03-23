@@ -53,7 +53,6 @@ export const getOrderActions = (status) => {
     case "pending":
       return [
         { value: "processing", label: "Chuyển sang đang xử lý" },
-        { value: "completed", label: "Đánh dấu hoàn thành" },
         { value: "cancelled", label: "Hủy đơn" },
       ];
     case "processing":
