@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { Search, ShoppingCart } from "lucide-react";
 import { orderService } from "../../services/orderService";
+import { productService } from "../../services/productService";
 import { formatCurrency } from "../../utils/ordersUtils/formatCurrency";
 import { formatDateTime } from "../../utils/ordersUtils/formatDateTime";
 import {
@@ -23,6 +24,59 @@ export default function OrdersPage() {
 
   const ITEMS_PER_PAGE = 10;
   const [currentPage, setCurrentPage] = useState(1);
+
+  const validTransitions = {
+    pending: ["processing", "cancelled"],
+    processing: ["completed", "cancelled"],
+    completed: [],
+    cancelled: [],
+  };
+
+  const shouldDecreaseStock = (fromStatus, toStatus) => {
+    return fromStatus === "pending" && toStatus === "processing";
+  };
+
+  const shouldRestoreStock = (fromStatus, toStatus) => {
+    return fromStatus === "processing" && toStatus === "cancelled";
+  };
+
+  const updateProductStockByOrder = async (order, type) => {
+    const productsRes = await productService.getAll();
+    const products = productsRes.data || [];
+
+    for (const item of order.items || []) {
+      const product = products.find(
+        (p) => String(p.id) === String(item.productId)
+      );
+
+      if (!product) {
+        throw new Error(`Không tìm thấy sản phẩm ID=${item.productId}`);
+      }
+
+      const quantity = Number(item.quantity) || 0;
+      const currentStock = Number(product.stock) || 0;
+
+      if (type === "decrease") {
+        if (currentStock < quantity) {
+          throw new Error(
+            `Sản phẩm "${product.name}" không đủ tồn kho. Còn ${currentStock}, cần ${quantity}.`
+          );
+        }
+
+        await productService.update(product.id, {
+          ...product,
+          stock: currentStock - quantity,
+        });
+      }
+
+      if (type === "restore") {
+        await productService.update(product.id, {
+          ...product,
+          stock: currentStock + quantity,
+        });
+      }
+    }
+  };
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -70,11 +124,37 @@ export default function OrdersPage() {
     try {
       setUpdatingId(order.id);
 
+      const currentStatus = order.status;
+
+      if (!validTransitions[currentStatus]?.includes(newStatus)) {
+        toast.error("Không thể chuyển trạng thái theo cách này");
+        return;
+      }
+
+      if (shouldDecreaseStock(currentStatus, newStatus)) {
+        await updateProductStockByOrder(order, "decrease");
+      }
+
+      if (shouldRestoreStock(currentStatus, newStatus)) {
+        await updateProductStockByOrder(order, "restore");
+      }
+
       const payload = {
         status: newStatus,
-        completedAt: newStatus === "completed" ? new Date().toISOString() : null,
-        cancelledAt: newStatus === "cancelled" ? new Date().toISOString() : null,
-        paymentStatus: newStatus === "completed" ? "paid" : order.paymentStatus,
+        completedAt:
+          newStatus === "completed"
+            ? new Date().toISOString()
+            : order.completedAt || null,
+        cancelledAt:
+          newStatus === "cancelled"
+            ? new Date().toISOString()
+            : null,
+        paymentStatus:
+          newStatus === "completed"
+            ? "paid"
+            : newStatus === "cancelled"
+            ? "unpaid"
+            : order.paymentStatus,
       };
 
       const updatedRes = await orderService.updateOrderStatus(order.id, payload);
@@ -89,7 +169,7 @@ export default function OrdersPage() {
       toast.success("Cập nhật trạng thái đơn hàng thành công");
     } catch (err) {
       console.error("Lỗi cập nhật trạng thái:", err);
-      toast.error("Cập nhật trạng thái thất bại");
+      toast.error(err?.message || "Cập nhật trạng thái thất bại");
     } finally {
       setUpdatingId("");
     }
