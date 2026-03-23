@@ -135,7 +135,6 @@
       "logo": "https://inkythuatso.com/uploads/images/2021/11/gucci-logo-inkythuatso-01-02-09-59-44.jpg"
     },
     {
-      "id": "3",
       "name": "Zara",
       "slug": "zara",
       "country": "Tây Ban Nha",
@@ -143,11 +142,10 @@
       "featured": false,
       "status": "active",
       "website": "https://zara.com",
-      "logo": "https://dummyimage.com/80x80/e5e7eb/9ca3af&text=ZR",
-      "updatedAt": "2024-12-03"
+      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZZxJinG6ecDVpB1LJ8M71C6PanIeaEIcXjw&s",
+      "id": "3"
     },
     {
-      "id": "4",
       "name": "Uniqlo",
       "slug": "uniqlo",
       "country": "Nhật Bản",
@@ -155,8 +153,8 @@
       "featured": false,
       "status": "active",
       "website": "https://uniqlo.com",
-      "logo": "https://dummyimage.com/80x80/e5e7eb/9ca3af&text=UQ",
-      "updatedAt": "2024-12-04"
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/UNIQLO_logo_%28Japanese%29.svg/250px-UNIQLO_logo_%28Japanese%29.svg.png",
+      "id": "4"
     },
     {
       "id": "5",
