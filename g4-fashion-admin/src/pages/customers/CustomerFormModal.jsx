@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { UserPlus, Mail, Phone, Tag, X } from "lucide-react";
+import { useEffect, useState, useRef } from "react";
+import { UserPlus, Mail, Phone, X, AlertCircle } from "lucide-react";
 import {
   inputClass,
   inputWithIconClass,
@@ -10,6 +10,7 @@ import {
   secondaryButtonClass,
   primaryButtonClass,
 } from "../../utils/customers/uiClasses";
+import { formatCurrency } from "../../utils/formatCurrency"; // giả sử bạn có hàm này
 
 const initialFormData = {
   code: "",
@@ -17,9 +18,6 @@ const initialFormData = {
   email: "",
   phone: "",
   level: "Bronze",
-  orderCount: 0,
-  totalSpent: 0,
-  lastOrderDate: "",
   status: "active",
 };
 
@@ -31,34 +29,34 @@ export default function CustomerFormModal({
 }) {
   const [formData, setFormData] = useState(initialFormData);
   const [formError, setFormError] = useState("");
+  const nameInputRef = useRef(null);
 
   useEffect(() => {
     if (!isOpen) return;
 
-    const nextData = editingCustomer
-      ? {
-          code: editingCustomer.code || "",
-          name: editingCustomer.name || "",
-          email: editingCustomer.email || "",
-          phone: editingCustomer.phone || "",
-          level: editingCustomer.level || "Bronze",
-          orderCount: editingCustomer.orderCount || 0,
-          totalSpent: editingCustomer.totalSpent || 0,
-          lastOrderDate: editingCustomer.lastOrderDate || "",
-          status: editingCustomer.status || "active",
-        }
-      : initialFormData;
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setFormData(nextData);
+    if (editingCustomer) {
+      setFormData({
+        code: editingCustomer.code || editingCustomer.id || "",
+        name: editingCustomer.name || "",
+        email: editingCustomer.email || "",
+        phone: editingCustomer.phone || "",
+        level: editingCustomer.level || "Bronze",
+        status: editingCustomer.status || "active",
+      });
+    } else {
+      setFormData(initialFormData);
+      if (nameInputRef.current) nameInputRef.current.focus();
+    }
+
     setFormError("");
   }, [editingCustomer, isOpen]);
 
   useEffect(() => {
     if (!isOpen) return;
+
     const handleEsc = (e) => {
       if (e.key === "Escape") onClose();
     };
-
     document.addEventListener("keydown", handleEsc);
     return () => document.removeEventListener("keydown", handleEsc);
   }, [isOpen, onClose]);
@@ -71,34 +69,48 @@ export default function CustomerFormModal({
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    // Không cho thay đổi các trường tự động
+    if (["orderCount", "totalSpent", "lastOrderDate", "level"].includes(name)) {
+      return;
+    }
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const validate = () => {
     if (!formData.name.trim()) return "Tên khách hàng không được để trống.";
     if (!formData.email.trim()) return "Email không được để trống.";
-    // simple email check
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(formData.email))
-      return "Địa chỉ email không hợp lệ.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
+      return "Email không hợp lệ.";
+    if (formData.phone && !/^\d{9,11}$/.test(formData.phone.trim()))
+      return "Số điện thoại không hợp lệ (9-11 số).";
     return "";
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const msg = validate();
-    if (msg) {
-      setFormError(msg);
+    const errorMsg = validate();
+    if (errorMsg) {
+      setFormError(errorMsg);
       return;
     }
 
     const payload = {
       ...formData,
-      code: editingCustomer ? editingCustomer.code : `CUST-${Date.now()}`,
-      orderCount: Number(formData.orderCount) || 0,
-      totalSpent: Number(formData.totalSpent) || 0,
-      lastOrderDate: formData.lastOrderDate || null,
-      createdAt: editingCustomer ? editingCustomer.createdAt : new Date().toISOString(),
+      code: editingCustomer
+        ? editingCustomer.code || editingCustomer.id
+        : `CUST-${Date.now().toString().slice(-6)}`,
       updatedAt: new Date().toISOString(),
+      ...(editingCustomer ? {} : { createdAt: new Date().toISOString() }),
+      // Các trường này sẽ được cập nhật tự động từ orders
+      orderCount: editingCustomer?.orderCount ?? 0,
+      totalSpent: editingCustomer?.totalSpent ?? 0,
+      lastOrderDate: editingCustomer?.lastOrderDate ?? null,
+      level: editingCustomer?.level ?? "Bronze",
     };
 
     onSubmit(payload);
@@ -106,7 +118,7 @@ export default function CustomerFormModal({
 
   return (
     <div onClick={handleOverlayClick} className={modalOverlayClass}>
-      <div className={`${modalContainerClass} max-w-md`}> 
+      <div className={`${modalContainerClass} max-w-md`}>
         <div className={modalHeaderClass}>
           <div className="flex items-start gap-3">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-100 text-blue-600">
@@ -114,14 +126,13 @@ export default function CustomerFormModal({
             </div>
             <div>
               <h2 className="text-xl font-bold text-slate-800">
-                {editingCustomer ? "Cập nhật khách hàng" : "Thêm khách hàng"}
+                {editingCustomer ? "Cập nhật khách hàng" : "Thêm khách hàng mới"}
               </h2>
               <p className="mt-1 text-sm text-slate-500">
-                Nhập thông tin khách hàng
+                {editingCustomer ? "Chỉnh sửa thông tin cơ bản" : "Nhập thông tin khách hàng mới"}
               </p>
             </div>
           </div>
-
           <button onClick={onClose} className={modalCloseButtonClass}>
             <X size={20} />
           </button>
@@ -129,28 +140,29 @@ export default function CustomerFormModal({
 
         <form onSubmit={handleSubmit} className="px-6 py-5">
           {formError && (
-            <div className="mb-5 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
-              {formError}
+            <div className="mb-5 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600 flex items-center gap-2">
+              <AlertCircle size={16} /> {formError}
             </div>
           )}
 
           <div className="space-y-4">
+            {/* Mã khách hàng */}
             <div>
               <label className="mb-2 block text-sm font-medium text-slate-700">
                 Mã khách hàng
               </label>
               <input
                 type="text"
-                name="code"
-                value={formData.code}
+                value={formData.code || "(tự động)"}
                 readOnly
-                className={`${inputClass} bg-slate-50 text-slate-500`}
+                className={`${inputClass} bg-slate-50 text-slate-500 cursor-not-allowed`}
               />
             </div>
 
+            {/* Tên */}
             <div>
               <label className="mb-2 block text-sm font-medium text-slate-700">
-                Họ và tên
+                Họ và tên <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -158,17 +170,20 @@ export default function CustomerFormModal({
                 value={formData.name}
                 onChange={handleChange}
                 className={inputClass}
+                required
+                ref={nameInputRef}
               />
             </div>
 
+            {/* Email */}
             <div>
               <label className="mb-2 block text-sm font-medium text-slate-700">
-                Email
+                Email <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <Mail
-                  size={16}
                   className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                  size={16}
                 />
                 <input
                   type="email"
@@ -176,21 +191,23 @@ export default function CustomerFormModal({
                   value={formData.email}
                   onChange={handleChange}
                   className={inputWithIconClass}
+                  required
                 />
               </div>
             </div>
 
+            {/* SĐT */}
             <div>
               <label className="mb-2 block text-sm font-medium text-slate-700">
                 Số điện thoại
               </label>
               <div className="relative">
                 <Phone
-                  size={16}
                   className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                  size={16}
                 />
                 <input
-                  type="text"
+                  type="tel"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
@@ -199,34 +216,32 @@ export default function CustomerFormModal({
               </div>
             </div>
 
-            <div>
+            {/* Cấp độ - không cho chỉnh thủ công */}
+            <div className="opacity-70">
               <label className="mb-2 block text-sm font-medium text-slate-700">
-                Cấp độ
+                Cấp độ (tự động từ đơn hàng)
               </label>
-              <select
-                name="level"
-                value={formData.level}
-                onChange={handleChange}
-                className={inputClass}
-              >
-                <option value="Gold">Gold</option>
-                <option value="Silver">Silver</option>
-                <option value="VIP">VIP</option>
-                <option value="Bronze">Bronze</option>
-              </select>
+              <input
+                type="text"
+                value={editingCustomer?.level || "Bronze"}
+                readOnly
+                disabled
+                className={`${inputClass} bg-slate-100 cursor-not-allowed`}
+              />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            {/* Các trường tự động - hiển thị thông tin hiện tại */}
+            <div className="grid grid-cols-2 gap-4 opacity-70">
               <div>
                 <label className="mb-2 block text-sm font-medium text-slate-700">
                   Số đơn hàng
                 </label>
                 <input
                   type="number"
-                  name="orderCount"
-                  value={formData.orderCount}
-                  onChange={handleChange}
-                  className={inputClass}
+                  value={editingCustomer?.orderCount ?? 0}
+                  readOnly
+                  disabled
+                  className={`${inputClass} bg-slate-100 cursor-not-allowed`}
                 />
               </div>
 
@@ -235,28 +250,33 @@ export default function CustomerFormModal({
                   Tổng chi tiêu
                 </label>
                 <input
-                  type="number"
-                  name="totalSpent"
-                  value={formData.totalSpent}
-                  onChange={handleChange}
-                  className={inputClass}
+                  type="text"
+                  value={formatCurrency(editingCustomer?.totalSpent ?? 0)}
+                  readOnly
+                  disabled
+                  className={`${inputClass} bg-slate-100 cursor-not-allowed`}
                 />
               </div>
             </div>
 
-            <div>
+            <div className="opacity-70">
               <label className="mb-2 block text-sm font-medium text-slate-700">
                 Đơn hàng cuối
               </label>
               <input
-                type="date"
-                name="lastOrderDate"
-                value={formData.lastOrderDate?.slice(0, 10) || ""}
-                onChange={handleChange}
-                className={inputClass}
+                type="text"
+                value={
+                  editingCustomer?.lastOrderDate
+                    ? new Date(editingCustomer.lastOrderDate).toLocaleDateString("vi-VN")
+                    : "Chưa có"
+                }
+                readOnly
+                disabled
+                className={`${inputClass} bg-slate-100 cursor-not-allowed`}
               />
             </div>
 
+            {/* Trạng thái */}
             <div>
               <label className="mb-2 block text-sm font-medium text-slate-700">
                 Trạng thái
@@ -278,7 +298,7 @@ export default function CustomerFormModal({
               Hủy
             </button>
             <button type="submit" className={primaryButtonClass}>
-              {editingCustomer ? "Cập nhật" : "Thêm"}
+              {editingCustomer ? "Cập nhật" : "Thêm khách hàng"}
             </button>
           </div>
         </form>
