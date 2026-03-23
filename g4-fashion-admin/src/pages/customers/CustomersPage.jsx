@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
-import { useLanguage } from "../../contexts/LanguageContext";
-import toast from "react-hot-toast";
 import { User, ShoppingCart, Search } from "lucide-react";
 import {
   tableCellClass,
   tableHeaderCellClass,
   inputClass,
-  cardClass,
-  sectionHeaderClass,
   primaryButtonClass,
 } from "../../utils/customers/uiClasses";
 import { formatCurrency } from "../../utils/formatCurrency";
@@ -16,12 +12,10 @@ import CustomerDetailModal from "./CustomerDetailModal";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 
 export default function CustomersPage() {
-  // State cho thống kê từ orders
   const [customerStats, setCustomerStats] = useState([]);
   const [statsLoading, setStatsLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
 
-  // Modal states (giữ nguyên nếu bạn vẫn dùng thêm/sửa/xóa thủ công)
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingCustomer, setEditingCustomer] = useState(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
@@ -29,16 +23,13 @@ export default function CustomersPage() {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [deletingCustomer, setDeletingCustomer] = useState(null);
 
-  // Tính thống kê cấp độ từ orders
   const calculateCustomerStats = async () => {
     try {
       setStatsLoading(true);
-      const res = await fetch("http://localhost:3000/orders"); // sửa port nếu khác
-
+      const res = await fetch("http://localhost:3001/orders"); // ← Port backend của bạn
       if (!res.ok) {
-        throw new Error(`Lỗi fetch orders: ${res.status}`);
+        throw new Error(`Lỗi fetch orders: ${res.status} - ${res.statusText}`);
       }
-
       const orders = await res.json();
 
       if (!Array.isArray(orders) || orders.length === 0) {
@@ -47,15 +38,14 @@ export default function CustomersPage() {
       }
 
       const statsMap = {};
-
       orders.forEach((order) => {
-        const phone = order.customerPhone?.trim();
+        const phone = String(order.customerPhone || "").trim();
         if (!phone) return;
 
         if (!statsMap[phone]) {
           statsMap[phone] = {
             phone,
-            name: order.customerName?.trim() || "Khách vãng lai",
+            name: String(order.customerName || "").trim() || "Khách vãng lai",
             orderCount: 0,
             totalSpent: 0,
             lastOrderDate: "",
@@ -63,7 +53,7 @@ export default function CustomersPage() {
         }
 
         statsMap[phone].orderCount += 1;
-        statsMap[phone].totalSpent += Number(order.totalAmount || 0);
+        statsMap[phone].totalSpent += Number(order.totalAmount || 0) || 0;
 
         const orderDate = (order.completedAt || order.createdAt || "").slice(0, 10);
         if (orderDate && (!statsMap[phone].lastOrderDate || orderDate > statsMap[phone].lastOrderDate)) {
@@ -82,20 +72,13 @@ export default function CustomersPage() {
         const diffDays = lastDate ? Math.floor((today - lastDate) / (1000 * 60 * 60 * 24)) : 999;
         const status = diffDays <= 30 ? "active" : "inactive";
 
-        return {
-          ...item,
-          level,
-          status,
-        };
+        return { ...item, level, status };
       });
 
-      // Sắp xếp theo tổng chi tiêu giảm dần
       statsArray.sort((a, b) => b.totalSpent - a.totalSpent);
-
       setCustomerStats(statsArray);
     } catch (err) {
-      console.error("Lỗi tính stats:", err);
-      toast.error("Không thể tính thống kê từ đơn hàng");
+      console.error("Lỗi tính thống kê khách hàng:", err);
       setCustomerStats([]);
     } finally {
       setStatsLoading(false);
@@ -106,7 +89,6 @@ export default function CustomersPage() {
     calculateCustomerStats();
   }, []);
 
-  // Filter theo search (tên hoặc SĐT)
   const filteredStats = customerStats.filter((cust) =>
     [cust.name, cust.phone]
       .join(" ")
@@ -114,20 +96,10 @@ export default function CustomersPage() {
       .includes(searchText.toLowerCase().trim())
   );
 
-  // Các hàm modal (giữ nếu bạn vẫn cần thêm/sửa/xóa thủ công)
   const handleOpenCreate = () => {
     setEditingCustomer(null);
     setIsFormOpen(true);
   };
-
-  const handleCloseForm = () => setIsFormOpen(false);
-
-  const handleSubmitForm = async (payload) => {
-    // Logic submit nếu bạn vẫn dùng
-    // ...
-  };
-
-  // Các hàm modal khác giữ nguyên nếu cần...
 
   return (
     <div className="p-6">
@@ -135,7 +107,7 @@ export default function CustomersPage() {
       <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-slate-800">
-            {t("Quản lý Khách hàng")}
+            Quản lý Khách hàng
           </h1>
           <p className="mt-2 text-slate-500">
             Danh sách và thống kê khách hàng trong hệ thống
@@ -143,7 +115,7 @@ export default function CustomersPage() {
         </div>
         <button onClick={handleOpenCreate} className={primaryButtonClass}>
           <User size={18} />
-          {t("Thêm khách hàng")}
+          Thêm khách hàng
         </button>
       </div>
 
@@ -161,12 +133,10 @@ export default function CustomersPage() {
         </div>
       </div>
 
-      {/* Phần thống kê - chỉ giữ khung này */}
+      {/* Danh sách */}
       <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
         <div className="p-6 border-b border-slate-200">
-          <h2 className="text-xl font-bold text-slate-800">
-            Danh sách khách hàng
-          </h2>
+          <h2 className="text-xl font-bold text-slate-800">Danh sách khách hàng</h2>
           <p className="mt-1 text-sm text-slate-500">
             Dữ liệu được tính tự động từ tất cả đơn hàng
           </p>
@@ -194,7 +164,7 @@ export default function CustomersPage() {
               </thead>
               <tbody className="divide-y divide-slate-200">
                 {filteredStats.map((cust) => (
-                  <tr key={cust.phone} className="hover:bg-slate-50 transition">
+                  <tr key={cust.phone} className="hover:bg-slate-50 transition-colors">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
                         <div className="h-10 w-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500">
@@ -252,12 +222,11 @@ export default function CustomersPage() {
         )}
       </div>
 
-      {/* Giữ modal nếu bạn vẫn cần thêm/sửa/xóa thủ công */}
+      {/* Các modal */}
       <CustomerFormModal
         isOpen={isFormOpen}
         onClose={() => setIsFormOpen(false)}
         onSubmit={(payload) => {
-          // Logic submit nếu cần
           console.log("Submit customer:", payload);
           setIsFormOpen(false);
         }}
@@ -272,7 +241,6 @@ export default function CustomersPage() {
         isOpen={isDeleteOpen}
         onClose={() => setIsDeleteOpen(false)}
         onConfirm={() => {
-          // Logic xóa nếu cần
           setIsDeleteOpen(false);
         }}
         customerName={deletingCustomer?.name}

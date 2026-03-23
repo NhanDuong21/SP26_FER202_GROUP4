@@ -5,7 +5,8 @@
       "siteDescription": "Hệ thống quản trị cửa hàng thời trang",
       "timezone": "Asia/Ho_Chi_Minh",
       "language": "en",
-      "id": "1"
+      "id": "1",
+      "theme": "light"
     }
   ],
   "languages": [
