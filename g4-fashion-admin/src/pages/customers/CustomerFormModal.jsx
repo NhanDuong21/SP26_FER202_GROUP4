@@ -12,10 +12,14 @@ import {
 } from "../../utils/customers/uiClasses";
 
 const initialFormData = {
+  code: "",
   name: "",
   email: "",
   phone: "",
   level: "Bronze",
+  orderCount: 0,
+  totalSpent: 0,
+  lastOrderDate: "",
   status: "active",
 };
 
@@ -33,10 +37,14 @@ export default function CustomerFormModal({
 
     const nextData = editingCustomer
       ? {
+          code: editingCustomer.code || "",
           name: editingCustomer.name || "",
           email: editingCustomer.email || "",
           phone: editingCustomer.phone || "",
           level: editingCustomer.level || "Bronze",
+          orderCount: editingCustomer.orderCount || 0,
+          totalSpent: editingCustomer.totalSpent || 0,
+          lastOrderDate: editingCustomer.lastOrderDate || "",
           status: editingCustomer.status || "active",
         }
       : initialFormData;
@@ -83,16 +91,14 @@ export default function CustomerFormModal({
       return;
     }
 
-    // Generate code for new customers
-    const code = editingCustomer ? editingCustomer.code : `CUST-${Date.now()}`;
-
     const payload = {
       ...formData,
-      code,
-      orderCount: editingCustomer ? editingCustomer.orderCount || 0 : 0,
-      totalSpent: editingCustomer ? editingCustomer.totalSpent || 0 : 0,
-      lastOrderDate: editingCustomer ? editingCustomer.lastOrderDate || null : null,
-      updatedAt: new Date().toISOString().slice(0, 10),
+      code: editingCustomer ? editingCustomer.code : `CUST-${Date.now()}`,
+      orderCount: Number(formData.orderCount) || 0,
+      totalSpent: Number(formData.totalSpent) || 0,
+      lastOrderDate: formData.lastOrderDate || null,
+      createdAt: editingCustomer ? editingCustomer.createdAt : new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
 
     onSubmit(payload);
@@ -129,6 +135,19 @@ export default function CustomerFormModal({
           )}
 
           <div className="space-y-4">
+            <div>
+              <label className="mb-2 block text-sm font-medium text-slate-700">
+                Mã khách hàng
+              </label>
+              <input
+                type="text"
+                name="code"
+                value={formData.code}
+                readOnly
+                className={`${inputClass} bg-slate-50 text-slate-500`}
+              />
+            </div>
+
             <div>
               <label className="mb-2 block text-sm font-medium text-slate-700">
                 Họ và tên
@@ -195,6 +214,47 @@ export default function CustomerFormModal({
                 <option value="VIP">VIP</option>
                 <option value="Bronze">Bronze</option>
               </select>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="mb-2 block text-sm font-medium text-slate-700">
+                  Số đơn hàng
+                </label>
+                <input
+                  type="number"
+                  name="orderCount"
+                  value={formData.orderCount}
+                  onChange={handleChange}
+                  className={inputClass}
+                />
+              </div>
+
+              <div>
+                <label className="mb-2 block text-sm font-medium text-slate-700">
+                  Tổng chi tiêu
+                </label>
+                <input
+                  type="number"
+                  name="totalSpent"
+                  value={formData.totalSpent}
+                  onChange={handleChange}
+                  className={inputClass}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="mb-2 block text-sm font-medium text-slate-700">
+                Đơn hàng cuối
+              </label>
+              <input
+                type="date"
+                name="lastOrderDate"
+                value={formData.lastOrderDate?.slice(0, 10) || ""}
+                onChange={handleChange}
+                className={inputClass}
+              />
             </div>
 
             <div>
