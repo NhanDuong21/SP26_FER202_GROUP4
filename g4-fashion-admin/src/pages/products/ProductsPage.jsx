@@ -57,9 +57,10 @@ export default function ProductsPage() {
     fillEditForm,
     clearErrors,
     handleChangeForm,
+    handleNameChange,
     validateForm,
     buildPayload,
-  } = useProductForm(products);
+  } = useProductForm(products, categories, brands);
 
   const {
     searchTerm,
@@ -114,7 +115,7 @@ export default function ProductsPage() {
   const handleCreateProduct = async (e) => {
     e.preventDefault();
 
-    const errors = validateForm();
+    const errors = validateForm(null);
     if (Object.keys(errors).length > 0) {
       toast.error(t("Vui lòng kiểm tra lại thông tin."));
       return;
@@ -140,7 +141,7 @@ export default function ProductsPage() {
   const handleUpdateProduct = async (e) => {
     e.preventDefault();
 
-    const errors = validateForm();
+    const errors = validateForm(selectedProduct);
     if (Object.keys(errors).length > 0) {
       toast.error(t("Vui lòng kiểm tra lại thông tin."));
       return;
@@ -260,6 +261,7 @@ export default function ProductsPage() {
         brands={brands}
         onClose={onCloseCreate}
         onChange={handleChangeForm}
+        onNameChange={handleNameChange}
         onSubmit={handleCreateProduct}
       />
 
@@ -272,6 +274,7 @@ export default function ProductsPage() {
         brands={brands}
         onClose={onCloseEdit}
         onChange={handleChangeForm}
+        onNameChange={handleNameChange}
         onSubmit={handleUpdateProduct}
       />
 
