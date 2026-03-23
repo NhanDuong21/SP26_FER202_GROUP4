@@ -27,6 +27,19 @@ const getCategoryFormData = (category) => ({
   image: category?.image || "",
 });
 
+const getDescendantCategoryIds = (categoryId, categories = []) => {
+  const children = categories.filter(
+    (item) => String(item.parentId) === String(categoryId),
+  );
+
+  const descendantIds = children.flatMap((child) => [
+    String(child.id),
+    ...getDescendantCategoryIds(child.id, categories),
+  ]);
+
+  return descendantIds;
+};
+
 export default function CategoryFormModal({
   isOpen,
   onClose,
@@ -90,7 +103,7 @@ export default function CategoryFormModal({
             : name === "parentId"
               ? value === ""
                 ? ""
-                : Number(value)
+                : value
               : value,
       };
     });
@@ -144,12 +157,19 @@ export default function CategoryFormModal({
 
     const payload = {
       ...formData,
-      parentId: formData.parentId === "" ? null : Number(formData.parentId),
+      parentId: formData.parentId === "" ? null : String(formData.parentId),
       updatedAt: new Date().toISOString().slice(0, 10),
     };
 
     onSubmit(payload);
   };
+
+  const excludedParentIds = editingCategory
+    ? [
+        String(editingCategory.id),
+        ...getDescendantCategoryIds(editingCategory.id, categories),
+      ]
+    : [];
 
   return (
     <div onClick={handleOverlayClick} className={modalOverlayClass}>
@@ -243,7 +263,9 @@ export default function CategoryFormModal({
               >
                 <option value="">Danh mục gốc</option>
                 {categories
-                  .filter((item) => item.id !== editingCategory?.id)
+                  .filter(
+                    (item) => !excludedParentIds.includes(String(item.id)),
+                  )
                   .map((item) => (
                     <option key={item.id} value={item.id}>
                       {item.name}

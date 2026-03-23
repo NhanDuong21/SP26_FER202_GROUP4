@@ -5,7 +5,8 @@
       "siteDescription": "Hệ thống quản trị cửa hàng thời trang",
       "timezone": "Asia/Ho_Chi_Minh",
       "language": "vi",
-      "id": "1"
+      "id": "1",
+      "theme": "light"
     }
   ],
   "languages": [
@@ -67,7 +68,7 @@
       "date": "2000-01-01",
       "password": "123456",
       "role": "admin",
-      "avatar": "https://avatars.githubusercontent.com/u/199563019?v=4",
+      "avatar": "https://static.vecteezy.com/system/resources/thumbnails/043/900/708/small/user-profile-icon-illustration-vector.jpg",
       "status": "active",
       "phone": "0123456789",
       "address": "123 Tran Hung Dao, Ca Mau City, Viet Nam",
@@ -312,8 +313,8 @@
       "code": "PRD-001",
       "name": "Áo sơ mi nam trắng Premium",
       "slug": "ao-so-mi-nam-trang-premium",
-      "categoryId": "2",
-      "brandId": "4",
+      "categoryId": 2,
+      "brandId": 4,
       "price": 399000,
       "salePrice": 199000,
       "stock": 150,
