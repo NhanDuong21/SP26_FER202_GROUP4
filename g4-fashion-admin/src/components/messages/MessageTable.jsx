@@ -151,14 +151,14 @@ export default function MessageTable({ messages, onReply, onDelete }) {
 
                                     {/* Danh mục */}
                                     <td className="p-4">
-                                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">
+                                        <span className=" whitespace-nowrap px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">
                                             {msg.category}
                                         </span>
                                     </td>
 
                                     {/* Độ ưu tiên */}
                                     <td className="p-4">
-                                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getBadge(msg.priority)}`}>
+                                        <span className={` whitespace-nowrap px-3 py-1 rounded-full text-xs font-semibold ${getBadge(msg.priority)}`}>
                                             {msg.priority}
                                         </span>
                                     </td>
