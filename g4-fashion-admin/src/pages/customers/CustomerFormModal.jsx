@@ -34,6 +34,7 @@ export default function CustomerFormModal({
   useEffect(() => {
     if (!isOpen) return;
     if (editingCustomer) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setFormData({
         code: editingCustomer.code || editingCustomer.id || "",
         name: editingCustomer.name || "",
@@ -66,7 +67,8 @@ export default function CustomerFormModal({
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (["orderCount", "totalSpent", "lastOrderDate", "level"].includes(name)) return;
+    if (["orderCount", "totalSpent", "lastOrderDate", "level"].includes(name))
+      return;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -124,10 +126,14 @@ export default function CustomerFormModal({
             </div>
             <div>
               <h2 className="text-xl font-bold text-slate-800">
-                {editingCustomer ? "Cập nhật khách hàng" : "Thêm khách hàng mới"}
+                {editingCustomer
+                  ? "Cập nhật khách hàng"
+                  : "Thêm khách hàng mới"}
               </h2>
               <p className="mt-1 text-sm text-slate-500">
-                {editingCustomer ? "Chỉnh sửa thông tin cơ bản" : "Nhập thông tin khách hàng mới"}
+                {editingCustomer
+                  ? "Chỉnh sửa thông tin cơ bản"
+                  : "Nhập thông tin khách hàng mới"}
               </p>
             </div>
           </div>
@@ -146,7 +152,9 @@ export default function CustomerFormModal({
 
           {/* Mã khách hàng */}
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">Mã khách hàng</label>
+            <label className="mb-2 block text-sm font-medium text-slate-700">
+              Mã khách hàng
+            </label>
             <input
               type="text"
               value={formData.code || "(tự động)"}
@@ -177,7 +185,10 @@ export default function CustomerFormModal({
               Email <span className="text-red-500">*</span>
             </label>
             <div className="relative">
-              <Mail className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+              <Mail
+                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                size={16}
+              />
               <input
                 type="email"
                 name="email"
@@ -191,9 +202,14 @@ export default function CustomerFormModal({
 
           {/* SĐT */}
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">Số điện thoại</label>
+            <label className="mb-2 block text-sm font-medium text-slate-700">
+              Số điện thoại
+            </label>
             <div className="relative">
-              <Phone className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+              <Phone
+                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                size={16}
+              />
               <input
                 type="tel"
                 name="phone"
@@ -206,7 +222,9 @@ export default function CustomerFormModal({
 
           {/* Cấp độ */}
           <div className="opacity-70">
-            <label className="mb-2 block text-sm font-medium text-slate-700">Cấp độ (tự động từ đơn hàng)</label>
+            <label className="mb-2 block text-sm font-medium text-slate-700">
+              Cấp độ (tự động từ đơn hàng)
+            </label>
             <input
               type="text"
               value={editingCustomer?.level || "Bronze"}
@@ -219,7 +237,9 @@ export default function CustomerFormModal({
           {/* Các trường tự động */}
           <div className="grid grid-cols-2 gap-4 opacity-70">
             <div>
-              <label className="mb-2 block text-sm font-medium text-slate-700">Số đơn hàng</label>
+              <label className="mb-2 block text-sm font-medium text-slate-700">
+                Số đơn hàng
+              </label>
               <input
                 type="number"
                 value={editingCustomer?.orderCount ?? 0}
@@ -229,7 +249,9 @@ export default function CustomerFormModal({
               />
             </div>
             <div>
-              <label className="mb-2 block text-sm font-medium text-slate-700">Tổng chi tiêu</label>
+              <label className="mb-2 block text-sm font-medium text-slate-700">
+                Tổng chi tiêu
+              </label>
               <input
                 type="text"
                 value={formatCurrency(editingCustomer?.totalSpent ?? 0)}
@@ -241,12 +263,16 @@ export default function CustomerFormModal({
           </div>
 
           <div className="opacity-70">
-            <label className="mb-2 block text-sm font-medium text-slate-700">Đơn hàng cuối</label>
+            <label className="mb-2 block text-sm font-medium text-slate-700">
+              Đơn hàng cuối
+            </label>
             <input
               type="text"
               value={
                 editingCustomer?.lastOrderDate
-                  ? new Date(editingCustomer.lastOrderDate).toLocaleDateString("vi-VN")
+                  ? new Date(editingCustomer.lastOrderDate).toLocaleDateString(
+                      "vi-VN",
+                    )
                   : "Chưa có"
               }
               readOnly
@@ -257,7 +283,9 @@ export default function CustomerFormModal({
 
           {/* Trạng thái */}
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">Trạng thái</label>
+            <label className="mb-2 block text-sm font-medium text-slate-700">
+              Trạng thái
+            </label>
             <select
               name="status"
               value={formData.status}
@@ -272,10 +300,18 @@ export default function CustomerFormModal({
 
         {/* Footer cố định */}
         <div className="border-t border-slate-200 px-6 py-4 flex justify-end gap-3">
-          <button type="button" onClick={onClose} className={secondaryButtonClass}>
+          <button
+            type="button"
+            onClick={onClose}
+            className={secondaryButtonClass}
+          >
             Hủy
           </button>
-          <button type="button" onClick={handleSubmit} className={primaryButtonClass}>
+          <button
+            type="button"
+            onClick={handleSubmit}
+            className={primaryButtonClass}
+          >
             {editingCustomer ? "Cập nhật" : "Thêm khách hàng"}
           </button>
         </div>
