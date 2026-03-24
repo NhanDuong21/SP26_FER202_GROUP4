@@ -395,6 +395,21 @@
       "image": "https://boo.vn/media/catalog/product/1/_/1.2.25.1.18.002.225.23.10200011_1__4.webp",
       "description": "Chân váy ngắn trẻ trung, dễ phối đồ.",
       "createdAt": "2024-12-05"
+    },
+    {
+      "id": "dcb9",
+      "code": "PRD-006",
+      "name": "Quần baggy",
+      "slug": "Quần baggy",
+      "categoryId": "0deb",
+      "brandId": "1",
+      "price": 120000,
+      "salePrice": 120000,
+      "stock": 12,
+      "status": "selling",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4dvVQZ153pUgKnBKTlQCkRzLP10T395VEew&s",
+      "description": "quần đẹp",
+      "createdAt": "2026-03-23"
     }
   ],
   "orders": [
