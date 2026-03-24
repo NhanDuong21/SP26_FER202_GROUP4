@@ -10,7 +10,7 @@ import {
   secondaryButtonClass,
   primaryButtonClass,
 } from "../../utils/customers/uiClasses";
-import { formatCurrency } from "../../utils/formatCurrency"; // giả sử bạn có hàm này
+import { formatCurrency } from "../../utils/formatCurrency";
 
 const initialFormData = {
   code: "",
@@ -33,7 +33,6 @@ export default function CustomerFormModal({
 
   useEffect(() => {
     if (!isOpen) return;
-
     if (editingCustomer) {
       setFormData({
         code: editingCustomer.code || editingCustomer.id || "",
@@ -47,13 +46,11 @@ export default function CustomerFormModal({
       setFormData(initialFormData);
       if (nameInputRef.current) nameInputRef.current.focus();
     }
-
     setFormError("");
   }, [editingCustomer, isOpen]);
 
   useEffect(() => {
     if (!isOpen) return;
-
     const handleEsc = (e) => {
       if (e.key === "Escape") onClose();
     };
@@ -69,16 +66,8 @@ export default function CustomerFormModal({
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    // Không cho thay đổi các trường tự động
-    if (["orderCount", "totalSpent", "lastOrderDate", "level"].includes(name)) {
-      return;
-    }
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    if (["orderCount", "totalSpent", "lastOrderDate", "level"].includes(name)) return;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const validate = () => {
@@ -106,7 +95,6 @@ export default function CustomerFormModal({
         : `CUST-${Date.now().toString().slice(-6)}`,
       updatedAt: new Date().toISOString(),
       ...(editingCustomer ? {} : { createdAt: new Date().toISOString() }),
-      // Các trường này sẽ được cập nhật tự động từ orders
       orderCount: editingCustomer?.orderCount ?? 0,
       totalSpent: editingCustomer?.totalSpent ?? 0,
       lastOrderDate: editingCustomer?.lastOrderDate ?? null,
@@ -118,7 +106,17 @@ export default function CustomerFormModal({
 
   return (
     <div onClick={handleOverlayClick} className={modalOverlayClass}>
-      <div className={`${modalContainerClass} max-w-md`}>
+      <div
+        className={`
+          ${modalContainerClass} 
+          max-w-md 
+          max-h-[90vh] 
+          overflow-hidden 
+          flex 
+          flex-col
+        `}
+      >
+        {/* Header cố định */}
         <div className={modalHeaderClass}>
           <div className="flex items-start gap-3">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-100 text-blue-600">
@@ -138,170 +136,149 @@ export default function CustomerFormModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="px-6 py-5">
+        {/* Phần nội dung CUỘN ĐƯỢC */}
+        <div className="flex-1 overflow-y-auto p-6 space-y-5 scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-50 overscroll-contain">
           {formError && (
-            <div className="mb-5 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600 flex items-center gap-2">
+            <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600 flex items-center gap-2">
               <AlertCircle size={16} /> {formError}
             </div>
           )}
 
-          <div className="space-y-4">
-            {/* Mã khách hàng */}
-            <div>
-              <label className="mb-2 block text-sm font-medium text-slate-700">
-                Mã khách hàng
-              </label>
-              <input
-                type="text"
-                value={formData.code || "(tự động)"}
-                readOnly
-                className={`${inputClass} bg-slate-50 text-slate-500 cursor-not-allowed`}
-              />
-            </div>
+          {/* Mã khách hàng */}
+          <div>
+            <label className="mb-2 block text-sm font-medium text-slate-700">Mã khách hàng</label>
+            <input
+              type="text"
+              value={formData.code || "(tự động)"}
+              readOnly
+              className={`${inputClass} bg-slate-50 text-slate-500 cursor-not-allowed`}
+            />
+          </div>
 
-            {/* Tên */}
-            <div>
-              <label className="mb-2 block text-sm font-medium text-slate-700">
-                Họ và tên <span className="text-red-500">*</span>
-              </label>
+          {/* Tên */}
+          <div>
+            <label className="mb-2 block text-sm font-medium text-slate-700">
+              Họ và tên <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className={inputClass}
+              required
+              ref={nameInputRef}
+            />
+          </div>
+
+          {/* Email */}
+          <div>
+            <label className="mb-2 block text-sm font-medium text-slate-700">
+              Email <span className="text-red-500">*</span>
+            </label>
+            <div className="relative">
+              <Mail className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
               <input
-                type="text"
-                name="name"
-                value={formData.name}
+                type="email"
+                name="email"
+                value={formData.email}
                 onChange={handleChange}
-                className={inputClass}
+                className={inputWithIconClass}
                 required
-                ref={nameInputRef}
               />
             </div>
+          </div>
 
-            {/* Email */}
-            <div>
-              <label className="mb-2 block text-sm font-medium text-slate-700">
-                Email <span className="text-red-500">*</span>
-              </label>
-              <div className="relative">
-                <Mail
-                  className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
-                  size={16}
-                />
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className={inputWithIconClass}
-                  required
-                />
-              </div>
-            </div>
-
-            {/* SĐT */}
-            <div>
-              <label className="mb-2 block text-sm font-medium text-slate-700">
-                Số điện thoại
-              </label>
-              <div className="relative">
-                <Phone
-                  className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
-                  size={16}
-                />
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className={inputWithIconClass}
-                />
-              </div>
-            </div>
-
-            {/* Cấp độ - không cho chỉnh thủ công */}
-            <div className="opacity-70">
-              <label className="mb-2 block text-sm font-medium text-slate-700">
-                Cấp độ (tự động từ đơn hàng)
-              </label>
+          {/* SĐT */}
+          <div>
+            <label className="mb-2 block text-sm font-medium text-slate-700">Số điện thoại</label>
+            <div className="relative">
+              <Phone className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
               <input
-                type="text"
-                value={editingCustomer?.level || "Bronze"}
-                readOnly
-                disabled
-                className={`${inputClass} bg-slate-100 cursor-not-allowed`}
-              />
-            </div>
-
-            {/* Các trường tự động - hiển thị thông tin hiện tại */}
-            <div className="grid grid-cols-2 gap-4 opacity-70">
-              <div>
-                <label className="mb-2 block text-sm font-medium text-slate-700">
-                  Số đơn hàng
-                </label>
-                <input
-                  type="number"
-                  value={editingCustomer?.orderCount ?? 0}
-                  readOnly
-                  disabled
-                  className={`${inputClass} bg-slate-100 cursor-not-allowed`}
-                />
-              </div>
-
-              <div>
-                <label className="mb-2 block text-sm font-medium text-slate-700">
-                  Tổng chi tiêu
-                </label>
-                <input
-                  type="text"
-                  value={formatCurrency(editingCustomer?.totalSpent ?? 0)}
-                  readOnly
-                  disabled
-                  className={`${inputClass} bg-slate-100 cursor-not-allowed`}
-                />
-              </div>
-            </div>
-
-            <div className="opacity-70">
-              <label className="mb-2 block text-sm font-medium text-slate-700">
-                Đơn hàng cuối
-              </label>
-              <input
-                type="text"
-                value={
-                  editingCustomer?.lastOrderDate
-                    ? new Date(editingCustomer.lastOrderDate).toLocaleDateString("vi-VN")
-                    : "Chưa có"
-                }
-                readOnly
-                disabled
-                className={`${inputClass} bg-slate-100 cursor-not-allowed`}
-              />
-            </div>
-
-            {/* Trạng thái */}
-            <div>
-              <label className="mb-2 block text-sm font-medium text-slate-700">
-                Trạng thái
-              </label>
-              <select
-                name="status"
-                value={formData.status}
+                type="tel"
+                name="phone"
+                value={formData.phone}
                 onChange={handleChange}
-                className={inputClass}
-              >
-                <option value="active">Hoạt động</option>
-                <option value="inactive">Ngưng hoạt động</option>
-              </select>
+                className={inputWithIconClass}
+              />
             </div>
           </div>
 
-          <div className="mt-6 flex justify-end gap-3">
-            <button type="button" onClick={onClose} className={secondaryButtonClass}>
-              Hủy
-            </button>
-            <button type="submit" className={primaryButtonClass}>
-              {editingCustomer ? "Cập nhật" : "Thêm khách hàng"}
-            </button>
+          {/* Cấp độ */}
+          <div className="opacity-70">
+            <label className="mb-2 block text-sm font-medium text-slate-700">Cấp độ (tự động từ đơn hàng)</label>
+            <input
+              type="text"
+              value={editingCustomer?.level || "Bronze"}
+              readOnly
+              disabled
+              className={`${inputClass} bg-slate-100 cursor-not-allowed`}
+            />
           </div>
-        </form>
+
+          {/* Các trường tự động */}
+          <div className="grid grid-cols-2 gap-4 opacity-70">
+            <div>
+              <label className="mb-2 block text-sm font-medium text-slate-700">Số đơn hàng</label>
+              <input
+                type="number"
+                value={editingCustomer?.orderCount ?? 0}
+                readOnly
+                disabled
+                className={`${inputClass} bg-slate-100 cursor-not-allowed`}
+              />
+            </div>
+            <div>
+              <label className="mb-2 block text-sm font-medium text-slate-700">Tổng chi tiêu</label>
+              <input
+                type="text"
+                value={formatCurrency(editingCustomer?.totalSpent ?? 0)}
+                readOnly
+                disabled
+                className={`${inputClass} bg-slate-100 cursor-not-allowed`}
+              />
+            </div>
+          </div>
+
+          <div className="opacity-70">
+            <label className="mb-2 block text-sm font-medium text-slate-700">Đơn hàng cuối</label>
+            <input
+              type="text"
+              value={
+                editingCustomer?.lastOrderDate
+                  ? new Date(editingCustomer.lastOrderDate).toLocaleDateString("vi-VN")
+                  : "Chưa có"
+              }
+              readOnly
+              disabled
+              className={`${inputClass} bg-slate-100 cursor-not-allowed`}
+            />
+          </div>
+
+          {/* Trạng thái */}
+          <div>
+            <label className="mb-2 block text-sm font-medium text-slate-700">Trạng thái</label>
+            <select
+              name="status"
+              value={formData.status}
+              onChange={handleChange}
+              className={inputClass}
+            >
+              <option value="active">Hoạt động</option>
+              <option value="inactive">Ngưng hoạt động</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Footer cố định */}
+        <div className="border-t border-slate-200 px-6 py-4 flex justify-end gap-3">
+          <button type="button" onClick={onClose} className={secondaryButtonClass}>
+            Hủy
+          </button>
+          <button type="button" onClick={handleSubmit} className={primaryButtonClass}>
+            {editingCustomer ? "Cập nhật" : "Thêm khách hàng"}
+          </button>
+        </div>
       </div>
     </div>
   );
