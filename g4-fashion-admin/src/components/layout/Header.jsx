@@ -13,24 +13,19 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useTheme } from "../../contexts/ThemeContext";
+import { useUser } from "../../contexts/UserContext";
 
 function Header({ isCollapsed, onToggleSidebar, onOpenMobileSidebar }) {
   const navigate = useNavigate();
   const { language, t } = useLanguage();
   const { theme, setTheme } = useTheme();
-  const [user, setUser] = useState(null);
+  const { user, refreshUser } = useUser();
 
   useEffect(() => {
     setToggleSwitch(theme === "dark");
   }, [theme]);
 
   const [toggleSwitch, setToggleSwitch] = useState(false);
-
-  useEffect(() => {
-    fetch("http://localhost:3001/users/1")
-      .then((res) => res.json())
-      .then((data) => setUser(data));
-  }, []);
 
   return (
     <header className="sticky top-0 z-20 border-b border-slate-200 bg-white">

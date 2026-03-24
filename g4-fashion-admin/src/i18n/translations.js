@@ -33,6 +33,8 @@ const translations = {
     "Mật khẩu phải >= 6 ký tự": "Password must be at least 6 characters",
     "Xác nhận mật khẩu không khớp": "Password confirmation does not match",
     "Đổi mật khẩu thành công": "Password changed successfully",
+    "Lỗi đổi mật khẩu": "Error changing password",
+    "Lỗi tải dữ liệu người dùng": "Error loading user data",
     "Đã lưu cài đặt!": "Settings saved!",
     "Trang quản trị": "Admin Dashboard",
     "Dashboard": "Dashboard",

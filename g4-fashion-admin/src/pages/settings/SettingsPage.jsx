@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { Settings, RotateCcw, Save } from "lucide-react";
 import { useLanguage } from "../../contexts/LanguageContext";
+import { useUser } from "../../contexts/UserContext";
 
 function SettingsPage() {
   const { language, setLanguage, t } = useLanguage();
+  const { refreshUser } = useUser();
 
   const [settings, setSettings] = useState({
     siteName: "",
@@ -142,7 +144,15 @@ function SettingsPage() {
               newPassword: "",
               confirmPassword: "",
             });
+
+            refreshUser();
+          }).catch((err) => {
+            console.error("Error changing password:", err);
+            alert(t("Lỗi đổi mật khẩu"));
           });
+        }).catch((err) => {
+          console.error("Error fetching user for password change:", err);
+          alert(t("Lỗi tải dữ liệu người dùng"));
         });
 
       return;
@@ -160,19 +170,45 @@ function SettingsPage() {
         timezone: settings.timezone,
         language: settings.language,
       }),
+    }).then(() => {
+      console.log("Settings updated");
+    }).catch((err) => {
+      console.error("Error saving settings:", err);
+      alert(t("Lỗi lưu cài đặt"));
+      return;
     });
 
     fetch("http://localhost:3001/users/1", {
-      method: "PATCH",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        id: "1",
+        name: "Nguyễn Văn B",
         email: settings.adminEmail,
+        sex: "Male",
+        date: "2000-01-01",
+        password: "123456",
+        role: "admin",
+        avatar: "https://dummyimage.com/100x100/e5e7eb/9ca3af&text=AD",
+        status: "active",
+        phone: "0123456789",
+        address: "123 Tran Hung Dao, Ca Mau City, Viet Nam",
+        createdAt: "2024-12-01"
       }),
+    }).then(() => {
+      console.log("User email updated");
+    }).catch((err) => {
+      console.error("Error updating email:", err);
+      alert(t("Lỗi cập nhật email"));
+      return;
     });
 
     alert(t("Đã lưu cài đặt!"));
+
+    // Refresh user data in context so Header updates
+    refreshUser();
 
     // update app language immediately
     setLanguage(settings.language);
@@ -245,9 +281,9 @@ function SettingsPage() {
               <input
                 type="text"
                 name="siteName"
-                value={settings.siteName}
+                value={settings.siteName || ""}
                 onChange={handleChange}
-                className="rounded-lg border border-slate-300 px-3 py-2"
+                className="rounded-lg border border-slate-300 px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
@@ -258,9 +294,35 @@ function SettingsPage() {
               <input
                 type="email"
                 name="adminEmail"
-                value={settings.adminEmail}
+                value={settings.adminEmail || ""}
                 onChange={handleChange}
-                className="rounded-lg border border-slate-300 px-3 py-2"
+                className="rounded-lg border border-slate-300 px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="text-sm font-medium text-slate-600 mb-1">
+                {t("Mô tả website")}
+              </label>
+              <textarea
+                name="siteDescription"
+                value={settings.siteDescription || ""}
+                onChange={handleChange}
+                rows="3"
+                className="rounded-lg border border-slate-300 px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="text-sm font-medium text-slate-600 mb-1">
+                {t("Múi giờ")}
+              </label>
+              <input
+                type="text"
+                name="timezone"
+                value={settings.timezone || ""}
+                onChange={handleChange}
+                className="rounded-lg border border-slate-300 px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 

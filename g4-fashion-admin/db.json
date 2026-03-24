@@ -1,10 +1,10 @@
 {
   "settings": [
     {
-      "siteName": "G4 Fashion",
+      "siteName": "G3 Fashion",
       "siteDescription": "Hệ thống quản trị cửa hàng thời trang",
       "timezone": "Asia/Ho_Chi_Minh",
-      "language": "en",
+      "language": "vi",
       "id": "1"
     }
   ],
@@ -61,11 +61,11 @@
   "users": [
     {
       "id": "1",
-      "name": "Nguyễn Văn B",
-      "email": "bnguyen@admin.com",
+      "name": "Nguyễn Văn c",
+      "email": "abcguyen@admin.com",
       "sex": "Male",
       "date": "2000-01-01",
-      "password": "123456",
+      "password": "121212",
       "role": "admin",
       "avatar": "https://dummyimage.com/100x100/e5e7eb/9ca3af&text=AD",
       "status": "active",

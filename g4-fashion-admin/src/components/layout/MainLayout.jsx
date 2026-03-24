@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
+import { useUser } from "../../contexts/UserContext";
 
 function MainLayout() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const { refreshUser } = useUser();
 
   const toggleSidebar = () => {
     setIsCollapsed((prev) => !prev);
@@ -18,6 +20,11 @@ function MainLayout() {
   const closeMobileSidebar = () => {
     setIsMobileOpen(false);
   };
+
+  useEffect(() => {
+    // Refresh user data when layout mounts
+    refreshUser();
+  }, [refreshUser]);
 
   useEffect(() => {
     const handleResize = () => {
