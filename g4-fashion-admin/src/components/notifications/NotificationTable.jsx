@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useLanguage } from "../../contexts/LanguageContext";
 import { Eye, Pencil, Trash2, AlertTriangle, CheckCircle, Info } from "lucide-react";
 import { tableCellClass, iconActionButtonClass } from "../../utils/uiClasses";
 
 export default function NotificationTable({ notifications, onView, onEdit, onDelete }) {
+    const { t } = useLanguage();
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
@@ -62,7 +64,7 @@ export default function NotificationTable({ notifications, onView, onEdit, onDel
             {/* Header */}
             <div className="px-6 py-4">
                 <h2 className="text-lg font-semibold text-slate-800">
-                    Danh sách thông báo
+                    {t("Danh sách thông báo")}
                 </h2>
             </div>
 
@@ -72,14 +74,14 @@ export default function NotificationTable({ notifications, onView, onEdit, onDel
 
                     <thead className="bg-slate-50 text-left">
                         <tr>
-                            <th className="p-4">Icon</th>
-                            <th className="p-4">Tiêu đề</th>
-                            <th className="p-4">Loại</th>
-                            <th className="p-4">Độ ưu tiên</th>
-                            <th className="p-4">Trạng thái</th>
-                            <th className="p-4">Đối tượng nhận</th>
-                            <th className="p-4">Thời gian</th>
-                            <th className="p-4 text-center">Thao tác</th>
+                            <th className="p-4">{t("Icon")}</th>
+                            <th className="p-4">{t("Tiêu đề")}</th>
+                            <th className="p-4">{t("Loại")}</th>
+                            <th className="p-4">{t("Độ ưu tiên")}</th>
+                            <th className="p-4">{t("Trạng thái")}</th>
+                            <th className="p-4">{t("Đối tượng nhận")}</th>
+                            <th className="p-4">{t("Thời gian")}</th>
+                            <th className="p-4 text-center">{t("Thao tác")}</th>
                         </tr>
                     </thead>
 
@@ -173,7 +175,7 @@ export default function NotificationTable({ notifications, onView, onEdit, onDel
 
                 {/* LEFT */}
                 <div className="text-slate-600">
-                    Trang {currentPage} / {totalPages}
+                    {t("Trang")} {currentPage} / {totalPages}
                 </div>
 
                 {/* RIGHT */}

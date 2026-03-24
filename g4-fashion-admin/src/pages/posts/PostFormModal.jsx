@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLanguage } from "../../contexts/LanguageContext";
 import { Image, Text, User, X } from "lucide-react";
 import { slugify } from "../../utils/slugify";
 import {
@@ -30,6 +31,7 @@ export default function PostFormModal({
   categories,
   editingPost,
 }) {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState(initialFormData);
   const [formError, setFormError] = useState("");
   const [isAutoSlug, setIsAutoSlug] = useState(true);
@@ -94,9 +96,9 @@ export default function PostFormModal({
   };
 
   const validate = () => {
-    if (!formData.title.trim()) return "Tiêu đề không được để trống.";
-    if (!formData.slug.trim()) return "Slug không được để trống.";
-    if (!formData.author.trim()) return "Tác giả không được để trống.";
+    if (!formData.title.trim()) return t("Tiêu đề không được để trống.");
+    if (!formData.slug.trim()) return t("Slug không được để trống.");
+    if (!formData.author.trim()) return t("Tác giả không được để trống.");
     return "";
   };
 
@@ -124,10 +126,10 @@ export default function PostFormModal({
             </div>
             <div>
               <h2 className="text-xl font-bold text-slate-800">
-                {editingPost ? "Cập nhật bài viết" : "Thêm bài viết"}
+                {editingPost ? t("Cập nhật bài viết") : t("Thêm bài viết")}
               </h2>
               <p className="mt-1 text-sm text-slate-500">
-                Điền thông tin để lưu bài viết
+                {t("Điền thông tin để lưu bài viết")}
               </p>
             </div>
           </div>
@@ -146,7 +148,7 @@ export default function PostFormModal({
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
             <div>
               <label className="mb-2 block text-sm font-medium text-slate-700">
-                Tiêu đề
+                {t("Tiêu đề")}
               </label>
               <input
                 type="text"
@@ -158,7 +160,7 @@ export default function PostFormModal({
             </div>
             <div>
               <label className="mb-2 block text-sm font-medium text-slate-700">
-                Slug
+                {t("Slug")}
               </label>
               <div className="flex gap-2">
                 <input
@@ -173,13 +175,13 @@ export default function PostFormModal({
                   onClick={handleGenerateSlug}
                   className="rounded-2xl border border-slate-300 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
                 >
-                  Tạo slug
+                  {t("Tạo slug")}
                 </button>
               </div>
             </div>
             <div>
               <label className="mb-2 block text-sm font-medium text-slate-700">
-                Tác giả
+                {t("Tác giả")}
               </label>
               <div className="relative">
                 <User
@@ -197,7 +199,7 @@ export default function PostFormModal({
             </div>
             <div>
               <label className="mb-2 block text-sm font-medium text-slate-700">
-                Danh mục
+                {t("Danh mục")}
               </label>
               <select
                 name="categoryId"
@@ -205,7 +207,7 @@ export default function PostFormModal({
                 onChange={handleChange}
                 className={inputClass}
               >
-                <option value="">Chọn danh mục</option>
+                <option value="">{t("Chọn danh mục")}</option>
                 {categories.map((cat) => (
                   <option key={cat.id} value={cat.id}>
                     {cat.name}
@@ -215,7 +217,7 @@ export default function PostFormModal({
             </div>
             <div>
               <label className="mb-2 block text-sm font-medium text-slate-700">
-                Trạng thái
+                {t("Trạng thái")}
               </label>
               <select
                 name="status"
@@ -223,13 +225,13 @@ export default function PostFormModal({
                 onChange={handleChange}
                 className={inputClass}
               >
-                <option value="draft">Bản nháp</option>
-                <option value="published">Đã xuất bản</option>
+                <option value="draft">{t("Bản nháp")}</option>
+                <option value="published">{t("Đã xuất bản")}</option>
               </select>
             </div>
             <div>
               <label className="mb-2 block text-sm font-medium text-slate-700">
-                Ảnh đại diện
+                {t("Ảnh đại diện")}
               </label>
               <input
                 type="text"
@@ -237,12 +239,12 @@ export default function PostFormModal({
                 value={formData.thumbnail}
                 onChange={handleChange}
                 className={inputClass}
-                placeholder="URL ảnh"
+                placeholder={t("URL ảnh")}
               />
             </div>
             <div>
               <label className="mb-2 block text-sm font-medium text-slate-700">
-                Ngày xuất bản
+                {t("Ngày xuất bản")}
               </label>
               <input
                 type="date"
@@ -256,10 +258,10 @@ export default function PostFormModal({
 
           <div className="mt-6 flex justify-end gap-3">
             <button type="button" onClick={onClose} className={secondaryButtonClass}>
-              Hủy
+              {t("Hủy")}
             </button>
             <button type="submit" className={primaryButtonClass}>
-              {editingPost ? "Cập nhật" : "Thêm"}
+              {editingPost ? t("Cập nhật") : t("Thêm")}
             </button>
           </div>
         </form>

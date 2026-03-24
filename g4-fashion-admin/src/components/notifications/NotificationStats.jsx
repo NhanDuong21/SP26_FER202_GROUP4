@@ -1,29 +1,32 @@
 import { Megaphone, CheckCircle, Calendar, FileText, Plus } from "lucide-react";
 import { statCardClass } from "../../utils/uiClasses";
 
+import { useLanguage } from "../../contexts/LanguageContext";
+
 export default function NotificationStats({ stats }) {
+    const { t } = useLanguage();
 
     const items = [
         {
-            title: "Tổng thông báo",
+            title: t("Tổng thông báo"),
             value: stats.total,
             icon: Megaphone,
             iconClass: "bg-blue-100 text-blue-600",
         },
         {
-            title: "Đã xuất bản",
+            title: t("Đã xuất bản"),
             value: stats.published,
             icon: CheckCircle,
             iconClass: "bg-green-100 text-green-600",
         },
         {
-            title: "Đã lên lịch",
+            title: t("Đã lên lịch"),
             value: stats.scheduled,
             icon: Calendar,
             iconClass: "bg-purple-100 text-purple-600",
         },
         {
-            title: "Bản nháp",
+            title: t("Bản nháp"),
             value: stats.draft,
             icon: FileText,
             iconClass: "bg-yellow-100 text-yellow-600",

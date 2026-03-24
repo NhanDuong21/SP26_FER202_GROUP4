@@ -5,9 +5,14 @@ import {
   validateProductForm,
 } from "../../utils/products/productHelpers";
 
-export function useProductForm(products = []) {
+export function useProductForm(
+  products = [],
+  categories = [],
+  brands = [],
+) {
   const [formData, setFormData] = useState(getDefaultProductForm());
   const [formErrors, setFormErrors] = useState({});
+  const [isAutoSlug, setIsAutoSlug] = useState(true);
 
   const resetForm = () => {
     setFormData({
@@ -15,10 +20,12 @@ export function useProductForm(products = []) {
       code: generateProductCode(products),
     });
     setFormErrors({});
+    setIsAutoSlug(true);
   };
 
   const fillEditForm = (product) => {
     setFormData({
+      id: product.id,
       code: product.code || "",
       name: product.name || "",
       slug: product.slug || "",
@@ -33,6 +40,7 @@ export function useProductForm(products = []) {
       createdAt: product.createdAt || new Date().toISOString().split("T")[0],
     });
     setFormErrors({});
+    setIsAutoSlug(false);
   };
 
   const clearErrors = () => {
@@ -47,22 +55,47 @@ export function useProductForm(products = []) {
       [name]: value,
     }));
 
+    if (name === "slug") {
+      setIsAutoSlug(false);
+    }
+
     setFormErrors((prev) => ({
       ...prev,
       [name]: "",
     }));
   };
 
-  const validateForm = () => {
-    const errors = validateProductForm(formData);
+  const handleNameChange = (value) => {
+    setFormData((prev) => ({
+      ...prev,
+      name: value,
+      slug: isAutoSlug ? value : prev.slug,
+    }));
+
+    setFormErrors((prev) => ({
+      ...prev,
+      name: "",
+      slug: "",
+    }));
+  };
+
+  const validateForm = (editingProduct = null) => {
+    const errors = validateProductForm({
+      form: formData,
+      products,
+      editingProduct,
+      categories,
+      brands,
+    });
+
     setFormErrors(errors);
     return errors;
   };
 
   const buildPayload = () => ({
     ...formData,
-    categoryId: Number(formData.categoryId),
-    brandId: Number(formData.brandId),
+    categoryId: String(formData.categoryId),
+    brandId: String(formData.brandId),
     price: Number(formData.price),
     salePrice: Number(formData.salePrice),
     stock: Number(formData.stock),
@@ -76,7 +109,10 @@ export function useProductForm(products = []) {
     fillEditForm,
     clearErrors,
     handleChangeForm,
+    handleNameChange,
     validateForm,
     buildPayload,
+    isAutoSlug,
+    setIsAutoSlug,
   };
 }

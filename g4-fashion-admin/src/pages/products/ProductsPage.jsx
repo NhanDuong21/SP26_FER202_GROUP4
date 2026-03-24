@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useLanguage } from "../../contexts/LanguageContext";
 import { Plus, RefreshCcw } from "lucide-react";
 import toast from "react-hot-toast";
 import {
@@ -56,9 +57,10 @@ export default function ProductsPage() {
     fillEditForm,
     clearErrors,
     handleChangeForm,
+    handleNameChange,
     validateForm,
     buildPayload,
-  } = useProductForm(products);
+  } = useProductForm(products, categories, brands);
 
   const {
     searchTerm,
@@ -75,18 +77,19 @@ export default function ProductsPage() {
     totalPages,
   } = useProductFilters(products);
 
+  const { t } = useLanguage();
   const stats = useMemo(() => getProductStats(products), [products]);
 
   const getCategoryName = (categoryId) => {
     const found = categories.find(
       (item) => String(item.id) === String(categoryId),
     );
-    return found ? found.name : "Không xác định";
+    return found ? found.name : t("Không xác định");
   };
 
   const getBrandName = (brandId) => {
     const found = brands.find((item) => String(item.id) === String(brandId));
-    return found ? found.name : "Không xác định";
+    return found ? found.name : t("Không xác định");
   };
 
   const onOpenCreate = () => {
@@ -112,9 +115,9 @@ export default function ProductsPage() {
   const handleCreateProduct = async (e) => {
     e.preventDefault();
 
-    const errors = validateForm();
+    const errors = validateForm(null);
     if (Object.keys(errors).length > 0) {
-      toast.error("Vui lòng kiểm tra lại thông tin.");
+      toast.error(t("Vui lòng kiểm tra lại thông tin."));
       return;
     }
 
@@ -126,21 +129,21 @@ export default function ProductsPage() {
         createdAt: new Date().toISOString().split("T")[0],
       });
 
-      toast.success("Thêm sản phẩm thành công.");
+      toast.success(t("Thêm sản phẩm thành công."));
       onCloseCreate();
       await fetchData();
     } catch (err) {
-      console.error("Lỗi thêm sản phẩm:", err);
-      toast.error("Thêm sản phẩm thất bại.");
+      console.error(t("Lỗi thêm sản phẩm:"), err);
+      toast.error(t("Thêm sản phẩm thất bại."));
     }
   };
 
   const handleUpdateProduct = async (e) => {
     e.preventDefault();
 
-    const errors = validateForm();
+    const errors = validateForm(selectedProduct);
     if (Object.keys(errors).length > 0) {
-      toast.error("Vui lòng kiểm tra lại thông tin.");
+      toast.error(t("Vui lòng kiểm tra lại thông tin."));
       return;
     }
 
@@ -152,24 +155,24 @@ export default function ProductsPage() {
         ...payload,
       });
 
-      toast.success("Cập nhật sản phẩm thành công.");
+      toast.success(t("Cập nhật sản phẩm thành công."));
       onCloseEdit();
       await fetchData();
     } catch (err) {
-      console.error("Lỗi cập nhật sản phẩm:", err);
-      toast.error("Cập nhật sản phẩm thất bại.");
+      console.error(t("Lỗi cập nhật sản phẩm:"), err);
+      toast.error(t("Cập nhật sản phẩm thất bại."));
     }
   };
 
   const handleDeleteProduct = async () => {
     try {
       await deleteProduct(selectedProduct.id);
-      toast.success("Xóa sản phẩm thành công.");
+      toast.success(t("Xóa sản phẩm thành công."));
       handleCloseDelete();
       await fetchData();
     } catch (err) {
-      console.error("Lỗi xóa sản phẩm:", err);
-      toast.error("Xóa sản phẩm thất bại.");
+      console.error(t("Lỗi xóa sản phẩm:"), err);
+      toast.error(t("Xóa sản phẩm thất bại."));
     }
   };
 
@@ -178,22 +181,22 @@ export default function ProductsPage() {
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <h1 className="text-3xl font-bold text-slate-800">
-            Quản lý sản phẩm
+            {t("Quản lý sản phẩm")}
           </h1>
           <p className="mt-2 text-slate-500">
-            Theo dõi danh sách sản phẩm của shop G4 FASHION
+            {t("Theo dõi danh sách sản phẩm của shop G4 FASHION")}
           </p>
         </div>
 
         <div className="flex flex-wrap gap-3">
           <button onClick={fetchData} className={outlineButtonClass}>
             <RefreshCcw size={18} />
-            Tải lại
+            {t("Tải lại")}
           </button>
 
           <button onClick={onOpenCreate} className={primaryButtonClass}>
             <Plus size={18} />
-            Thêm sản phẩm
+            {t("Thêm sản phẩm")}
           </button>
         </div>
       </div>
@@ -204,10 +207,10 @@ export default function ProductsPage() {
         <div className={sectionHeaderClass}>
           <div>
             <h2 className="text-xl font-bold text-slate-800">
-              Danh sách sản phẩm
+              {t("Danh sách sản phẩm")}
             </h2>
             <p className="mt-1 text-sm text-slate-500">
-              Hiển thị toàn bộ sản phẩm hiện có trong hệ thống
+              {t("Hiển thị toàn bộ sản phẩm hiện có trong hệ thống")}
             </p>
           </div>
         </div>
@@ -226,7 +229,7 @@ export default function ProductsPage() {
         />
 
         {loading ? (
-          <div className="p-6 text-slate-500">Đang tải dữ liệu...</div>
+          <div className="p-6 text-slate-500">{t("Đang tải dữ liệu...")}</div>
         ) : error ? (
           <div className="p-6 text-red-500">{error}</div>
         ) : (
@@ -258,6 +261,7 @@ export default function ProductsPage() {
         brands={brands}
         onClose={onCloseCreate}
         onChange={handleChangeForm}
+        onNameChange={handleNameChange}
         onSubmit={handleCreateProduct}
       />
 
@@ -270,6 +274,7 @@ export default function ProductsPage() {
         brands={brands}
         onClose={onCloseEdit}
         onChange={handleChangeForm}
+        onNameChange={handleNameChange}
         onSubmit={handleUpdateProduct}
       />
 

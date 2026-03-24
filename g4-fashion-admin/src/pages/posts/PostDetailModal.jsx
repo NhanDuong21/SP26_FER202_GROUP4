@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useLanguage } from "../../contexts/LanguageContext";
 import {
   Eye,
   User,
@@ -22,6 +23,7 @@ export default function PostDetailModal({
   post,
   categories,
 }) {
+  const { t } = useLanguage();
   useEffect(() => {
     if (!isOpen) return;
     const handleEsc = (e) => {
@@ -48,8 +50,8 @@ export default function PostDetailModal({
               <FileText size={22} />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-slate-800">Chi tiết bài viết</h2>
-              <p className="mt-1 text-sm text-slate-500">Xem thông tin bài viết</p>
+              <h2 className="text-xl font-bold text-slate-800">{t("Chi tiết bài viết")}</h2>
+              <p className="mt-1 text-sm text-slate-500">{t("Xem thông tin bài viết")}</p>
             </div>
           </div>
           <button onClick={onClose} className={modalCloseButtonClass}>
@@ -69,7 +71,7 @@ export default function PostDetailModal({
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className={infoItemClass}>
               <p className="mb-2 flex items-center gap-2 text-sm text-slate-500">
-                <FileText size={16} /> Tiêu đề
+                <FileText size={16} /> {t("Tiêu đề")}
               </p>
               <p className="font-semibold text-slate-800">{post.title}</p>
             </div>
@@ -82,24 +84,24 @@ export default function PostDetailModal({
             </div>
 
             <div className={infoItemClass}>
-              <p className="mb-2 text-sm text-slate-500">Danh mục</p>
+              <p className="mb-2 text-sm text-slate-500">{t("Danh mục")}</p>
               <p className="font-semibold text-slate-800">{categoryName}</p>
             </div>
 
             <div className={infoItemClass}>
-              <p className="mb-2 text-sm text-slate-500">Lượt xem</p>
+              <p className="mb-2 text-sm text-slate-500">{t("Lượt xem")}</p>
               <p className="font-semibold text-slate-800">{post.views}</p>
             </div>
 
             <div className={infoItemClass}>
-              <p className="mb-2 text-sm text-slate-500">Ngày xuất bản</p>
+              <p className="mb-2 text-sm text-slate-500">{t("Ngày xuất bản")}</p>
               <p className="font-semibold text-slate-800">{post.publishDate}</p>
             </div>
 
             <div className={infoItemClass}>
-              <p className="mb-2 text-sm text-slate-500">Trạng thái</p>
+              <p className="mb-2 text-sm text-slate-500">{t("Trạng thái")}</p>
               <span className={getPostStatusBadgeClass(post.status)}>
-                {post.status === "published" ? "Đã xuất bản" : "Bản nháp"}
+                {post.status === "published" ? t("Đã xuất bản") : t("Bản nháp")}
               </span>
             </div>
           </div>
@@ -107,7 +109,7 @@ export default function PostDetailModal({
 
         <div className="border-t border-slate-200 px-6 py-4 text-right">
           <button onClick={onClose} className={secondaryButtonClass}>
-            Đóng
+            {t("Đóng")}
           </button>
         </div>
       </div>

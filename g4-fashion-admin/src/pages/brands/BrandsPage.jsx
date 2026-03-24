@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useLanguage } from "../../contexts/LanguageContext";
 import {
   Building2,
   Eye,
@@ -36,6 +37,7 @@ export default function BrandsPage() {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [deletingBrand, setDeletingBrand] = useState(null);
 
+  const { t } = useLanguage();
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [selectedBrand, setSelectedBrand] = useState(null);
 
@@ -47,9 +49,9 @@ export default function BrandsPage() {
       const res = await brandService.getAll();
       setBrands(res.data);
     } catch (err) {
-      console.error("Lỗi lấy thương hiệu:", err);
-      setError("Không thể tải dữ liệu thương hiệu.");
-      toast.error("Tải thương hiệu thất bại");
+      console.error(t("Lỗi lấy thương hiệu:"), err);
+      setError(t("Không thể tải dữ liệu thương hiệu."));
+      toast.error(t("Tải thương hiệu thất bại"));
     } finally {
       setLoading(false);
     }
@@ -78,17 +80,17 @@ export default function BrandsPage() {
     try {
       if (editingBrand) {
         await brandService.update(editingBrand.id, payload);
-        toast.success("Cập nhật thương hiệu thành công");
+        toast.success(t("Cập nhật thương hiệu thành công"));
       } else {
         await brandService.create(payload);
-        toast.success("Thêm thương hiệu thành công");
+        toast.success(t("Thêm thương hiệu thành công"));
       }
 
       await fetchBrands();
       handleCloseForm();
     } catch (err) {
-      console.error("Lỗi lưu thương hiệu:", err);
-      toast.error("Không thể lưu thương hiệu");
+      console.error(t("Lỗi lưu thương hiệu:"), err);
+      toast.error(t("Không thể lưu thương hiệu"));
     }
   };
 
@@ -109,8 +111,8 @@ export default function BrandsPage() {
       await fetchBrands();
       handleCloseDelete();
     } catch (err) {
-      console.error("Lỗi xóa thương hiệu:", err);
-      toast.error("Không thể xóa thương hiệu");
+      console.error(t("Lỗi xóa thương hiệu:"), err);
+      toast.error(t("Không thể xóa thương hiệu"));
     }
   };
 
@@ -176,16 +178,16 @@ export default function BrandsPage() {
       <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-slate-800">
-            Quản lý Thương hiệu
+            {t("Quản lý Thương hiệu")}
           </h1>
           <p className="mt-2 text-slate-500">
-            Quản lý thương hiệu và nhà cung cấp sản phẩm
+            {t("Quản lý thương hiệu và nhà cung cấp sản phẩm")}
           </p>
         </div>
 
         <button onClick={handleOpenCreate} className={primaryButtonClass}>
           <Plus size={18} />
-          Thêm thương hiệu
+          {t("Thêm thương hiệu")}
         </button>
       </div>
 
@@ -218,16 +220,16 @@ export default function BrandsPage() {
         <div className={sectionHeaderClass}>
           <div>
             <h2 className="text-lg font-semibold text-slate-800">
-              Danh sách thương hiệu
+              {t("Danh sách thương hiệu")}
             </h2>
             <p className="mt-1 text-sm text-slate-500">
-              Quản lý toàn bộ thương hiệu trong hệ thống
+              {t("Quản lý toàn bộ thương hiệu trong hệ thống")}
             </p>
           </div>
         </div>
 
         {loading ? (
-          <div className="px-6 py-10 text-slate-500">Đang tải dữ liệu...</div>
+          <div className="px-6 py-10 text-slate-500">{t("Đang tải dữ liệu...")}</div>
         ) : error ? (
           <div className="px-6 py-10 text-red-500">{error}</div>
         ) : (
@@ -235,15 +237,15 @@ export default function BrandsPage() {
             <table className="w-full min-w-[1200px] text-sm">
               <thead className="bg-slate-50">
                 <tr>
-                  <th className={tableHeaderCellClass}>Logo</th>
-                  <th className={tableHeaderCellClass}>Thương hiệu</th>
-                  <th className={tableHeaderCellClass}>Quốc gia</th>
-                  <th className={tableHeaderCellClass}>Số sản phẩm</th>
-                  <th className={tableHeaderCellClass}>Nội bật</th>
-                  <th className={tableHeaderCellClass}>Trạng thái</th>
-                  <th className={tableHeaderCellClass}>Website</th>
+                  <th className={tableHeaderCellClass}>{t("Logo")}</th>
+                  <th className={tableHeaderCellClass}>{t("Thương hiệu")}</th>
+                  <th className={tableHeaderCellClass}>{t("Quốc gia")}</th>
+                  <th className={tableHeaderCellClass}>{t("Số sản phẩm")}</th>
+                  <th className={tableHeaderCellClass}>{t("Nổi bật")}</th>
+                  <th className={tableHeaderCellClass}>{t("Trạng thái")}</th>
+                  <th className={tableHeaderCellClass}>{t("Website")}</th>
                   <th className={`${tableHeaderCellClass} text-center`}>
-                    Thao tác
+                    {t("Thao tác")}
                   </th>
                 </tr>
               </thead>
